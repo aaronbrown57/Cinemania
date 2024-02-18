@@ -16,11 +16,11 @@ function Home() {
   // On handleMouseOver, while the curor is over the video, it will play the video and 
   // pause when the cursor is removed from the trailer
   const handleMouseOver = () => {
-    setIsPlaying(true);
+    setVideoIsPlaying(true);
   };
 
   const handleMouseOut = () => {
-    setIsPlaying(false);
+    setVideoIsPlaying(false);
   };
 
   
@@ -36,7 +36,7 @@ function Home() {
             <Nav.Link href="#edit">Edit Profile</Nav.Link>
             <br></br>
             <Link to='Login'>Login</Link>
-            <Link to='Sign-up'>Sign-up</Link>
+           
             <br></br>
             <Link to='AdminLogin'>Admin</Link>
             <Nav.Link href="#order-history">Order History</Nav.Link>

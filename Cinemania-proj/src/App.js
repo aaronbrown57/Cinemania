@@ -7,6 +7,7 @@ import './App.css';
 import Home from './Components/Home';
 import Signup from './Components/Signup';
 import Login from './Components/Login';
+import AuthView from './Components/AuthView/AuthView';
 import axios from 'axios';
 
 
@@ -32,6 +33,7 @@ import axios from 'axios';
           <Route path="/login" element={<Login />} />
           <Route path="/SignUp" element={<Signup />} />
           <Route path="/" element={<Home />} />
+          <Route path='AuthView' element={<AuthView/>}/>
           {/* <Route path="/authView" element={<AuthenticatedView />} />  */}
           
         </Routes>
