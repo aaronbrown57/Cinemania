@@ -8,8 +8,23 @@ import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import React, { useState, useContext } from "react";
 import AdminLogin from './AdminLogin';
-function App() {
+function Home() {
+  const [videoIsPlaying, setVideoIsPlaying] = useState(false);
+  
+  // On handleMouseOver, while the curor is over the video, it will play the video and 
+  // pause when the cursor is removed from the trailer
+  const handleMouseOver = () => {
+    setIsPlaying(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsPlaying(false);
+  };
+
+  
+
   return (
     <div className="App">
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -50,7 +65,9 @@ function App() {
       {/* Carousel that spins the available moves around */}
       <Carousel>
       <Carousel.Item>
-      <img src="https://upload.wikimedia.org/wikipedia/en/5/5b/Pearl_theatricalposter.jpg" alt="alternatetext"/>
+      <img src="https://upload.wikimedia.org/wikipedia/en/5/5b/Pearl_theatricalposter.jpg" alt="alternatetext"
+       />
+      
         <Carousel.Caption>
           <h3>First slide label</h3>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -105,4 +122,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
