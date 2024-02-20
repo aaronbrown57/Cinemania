@@ -6,6 +6,15 @@ const SignUp = () => {
 
 
         <form>
+               <label htmlFor="email">Email:</label>
+                <input type="text" id="email" name="email" />
+                <br />
+                <label htmlFor="fname">First name:</label>
+                <input type="text" id="fname" name="fname" />
+                <br />
+                <label htmlFor="lname">Last name:</label>
+                <input type="text" id="lname" name="lname" />
+                <br />
                 <label htmlFor="username">Username:</label>
                 <input type="text" id="username" name="username" />
                 <br />
