@@ -19,19 +19,19 @@ router.use(function(req, res, next) {
 
 router.post('/', (req,res) => {
     const body = req.body;
-    Pin.create(body)
+    Movie.create(body)
     .then((item) => res.json({msg: 'Movie added successfully'}))
     .catch((err) => console.log(err));
 }); 
 
 router.get('/', (req, res) => {
-    Pin.find()
+    Movie.find()
     .then((items) => res.json(items))
     .catch((err) => res.status(404).json(err));
 });
 
 router.get('/:id', (req, res) => {
-    Pin.findById(req.params.id)
+    Movie.findById(req.params.id)
     .then((item) => res.json(item))
     .catch((err) => res.status(404).json("Connection failed"));
 });
@@ -39,13 +39,13 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     const id = req.params.id;
     const body = req.body;
-    Pin.findByIdAndUpdate(id, body)
+    Movie.findByIdAndUpdate(id, body)
     .then((item) => res.json({msg: 'Updated successfully'}))
     .catch((err) => res.status(404).json(err));
 });
 
 router.delete('/:id', (req, res) => {
-    Pin.findByIdAndDelete(req.params.id)
+    Movie.findByIdAndDelete(req.params.id)
     .then((item) => res.json({msg: 'Item entry deleted successfully'}))
     .catch((err) => res.status(404).json(err));
 });
