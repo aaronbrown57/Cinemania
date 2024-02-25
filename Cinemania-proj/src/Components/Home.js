@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import React, { useState, useContext } from "react";
-import AdminLogin from './AdminLogin';
+
 function Home() {
   const [videoIsPlaying, setVideoIsPlaying] = useState(false);
   
