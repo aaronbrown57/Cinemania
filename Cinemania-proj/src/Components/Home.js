@@ -38,7 +38,7 @@ function Home() {
             <Link to='Login'>Login</Link>
            
             <br></br>
-            <Link to='AdminLogin'>Admin</Link>
+           
             <Nav.Link href="#order-history">Order History</Nav.Link>
             <Form inline>
         <Row>
