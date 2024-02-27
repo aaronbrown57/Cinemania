@@ -36,7 +36,7 @@ import ConfirmAccountCreation from './Components/ConfirmAccountCreation';
           <Route path="/" element={<Home />} />
           <Route path='/AuthView' element={<AuthView/>}/>
           <Route path='/admin' element={<AdminView/>}/>
-          {/* <Route path="/authView" element={<AuthenticatedView />} />  */}
+          <Route path='/logout' element={<Home />} />
           
         </Routes>
     
@@ -47,6 +47,4 @@ import ConfirmAccountCreation from './Components/ConfirmAccountCreation';
   }
  
 export default App;
-
-//mongodb+srv://aaronbrown:vaVAeEdShNSD1UKf@4050.zybm3er.mongodb.net/
 

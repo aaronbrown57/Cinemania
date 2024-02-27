@@ -3,7 +3,7 @@ import NavMenu from "../Navigation/NavMenu";
 const AdminView = () => {
     return(
         <div className="App">
-        <NavMenu></NavMenu>
+        <NavMenu loggedIn={true} admin={true}></NavMenu>
         <h1>This is the Admin View</h1>
     </div>
     )

@@ -1,10 +1,10 @@
 import NavMenu from '../Navigation/NavMenu';
-const AuthView = () => {
+const AuthView = (loggedIn) => {
 
        
   return (
     <div className="App">
-        <NavMenu></NavMenu>
+        <NavMenu loggedIn={true}></NavMenu>
     </div>
   );
     

@@ -4,7 +4,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import NavMenu from './Navigation/NavMenu.js'
 import React, { useState, useContext } from "react";
 
-function Home() {
+function Home( loggedOut) {
   const [videoIsPlaying, setVideoIsPlaying] = useState(false);
   
   // On handleMouseOver, while the curor is over the video, it will play the video and 
@@ -21,7 +21,7 @@ function Home() {
 
   return (
     <div className="App">
-      <NavMenu></NavMenu>
+      <NavMenu loggedOut={true}></NavMenu>
     <Container>
       <hr></hr>
       <h1>Now Playing</h1> <hr></hr>

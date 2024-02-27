@@ -8,21 +8,23 @@ import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import React, { useState, useContext } from "react";
-function NavMenu () {
+function NavMenu ( {loggedIn, loggedOut, admin}) {
     return(
         <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <h3>Cinemania</h3>
+        <h3>Cinemania </h3>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#edit">Edit Profile</Nav.Link>
+            {loggedIn && <Nav.Link href="/edit">Edit Profile</Nav.Link>}
+            {admin && <Nav.Link href="/EditMovies">Edit Movies</Nav.Link>}
             <br></br>
-            <Link to='Login'>Login</Link>
+            {loggedIn && <Nav.Link href='/Logout'>Logout</Nav.Link>}
+            {loggedOut && <Nav.Link href='/Login'>Login</Nav.Link>}
            
             <br></br>
            
-            <Nav.Link href="#order-history">Order History</Nav.Link>
+            {loggedIn && <Nav.Link href="/order-history">Order History</Nav.Link>}
             <Form inline>
         <Row>
           <Col xs="auto">

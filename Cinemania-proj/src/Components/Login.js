@@ -19,7 +19,7 @@ const Login = () => {
     }
     return (
         <div>
-            <NavMenu></NavMenu>
+            <NavMenu loggedOut={true}></NavMenu>
             <h1>This is the log in page</h1>
 
             <form onSubmit={handleSubmit}>
