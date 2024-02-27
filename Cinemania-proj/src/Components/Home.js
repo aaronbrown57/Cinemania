@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import React, { useState, useContext } from "react";
-import AdminLogin from './AdminLogin';
+
 function Home() {
   const [videoIsPlaying, setVideoIsPlaying] = useState(false);
   
@@ -38,7 +38,7 @@ function Home() {
             <Link to='Login'>Login</Link>
            
             <br></br>
-            <Link to='AdminLogin'>Admin</Link>
+           
             <Nav.Link href="#order-history">Order History</Nav.Link>
             <Form inline>
         <Row>

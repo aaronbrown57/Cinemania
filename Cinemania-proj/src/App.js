@@ -9,6 +9,7 @@ import Signup from './Components/Signup';
 import Login from './Components/Login';
 import AuthView from './Components/AuthView/AuthView';
 import axios from 'axios';
+import AdminView from './Components/Admin/AdminView';
 
 
 
@@ -33,7 +34,8 @@ import axios from 'axios';
           <Route path="/login" element={<Login />} />
           <Route path="/SignUp" element={<Signup />} />
           <Route path="/" element={<Home />} />
-          <Route path='AuthView' element={<AuthView/>}/>
+          <Route path='/AuthView' element={<AuthView/>}/>
+          <Route path='/admin' element={<AdminView/>}/>
           {/* <Route path="/authView" element={<AuthenticatedView />} />  */}
           
         </Routes>
