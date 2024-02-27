@@ -10,7 +10,7 @@ import Login from './Components/Login';
 import AuthView from './Components/AuthView/AuthView';
 import axios from 'axios';
 import AdminView from './Components/Admin/AdminView';
-
+import ConfirmAccountCreation from './Components/ConfirmAccountCreation';
 
 
 
@@ -30,7 +30,7 @@ import AdminView from './Components/Admin/AdminView';
       <Router>
     
         <Routes>
-         
+         <Route path="/ConfirmAccountCreation" element={<ConfirmAccountCreation/>}/>
           <Route path="/login" element={<Login />} />
           <Route path="/SignUp" element={<Signup />} />
           <Route path="/" element={<Home />} />
