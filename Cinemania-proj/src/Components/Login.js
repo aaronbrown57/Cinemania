@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthView from './AuthView/AuthView';
+import NavMenu from './Navigation/NavMenu';
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ const Login = () => {
     }
     return (
         <div>
+            <NavMenu></NavMenu>
             <h1>This is the log in page</h1>
 
             <form onSubmit={handleSubmit}>
