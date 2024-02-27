@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
 import NavMenu from './Navigation/NavMenu.js'
 import React, { useState, useContext } from "react";
+import MovieDisplay from "./MovieDisplays/MovieDisplay.js"
 
 function Home( loggedOut) {
   const [videoIsPlaying, setVideoIsPlaying] = useState(false);
@@ -81,6 +82,7 @@ function Home( loggedOut) {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
+    <MovieDisplay></MovieDisplay>
     </Container>
     </div>
   );
