@@ -54,7 +54,7 @@ function Home() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-      <img src="https://upload.wikimedia.org/wikipedia/en/0/06/Mean_girls_2024_poster.jpg" alt="alternatetext"/>
+      <img src="https://upload.wikimedia.org/wikipedia/en/0/05/Argylle_poster.jpg" alt="alternatetext"/>
         <Carousel.Caption>
           <h3>Third slide label</h3>
           <p>
@@ -63,7 +63,7 @@ function Home() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-      <img src="https://upload.wikimedia.org/wikipedia/en/0/06/Mean_girls_2024_poster.jpg" alt="alternatetext"/>
+      <img src="https://upload.wikimedia.org/wikipedia/en/a/a1/Dune_2_poster.jpg" alt="alternatetext"/>
         <Carousel.Caption>
           <h3>Third slide label</h3>
           <p>
