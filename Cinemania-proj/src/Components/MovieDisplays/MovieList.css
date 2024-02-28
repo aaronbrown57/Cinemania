@@ -1,12 +1,16 @@
 .MovieList {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+    /* display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px; */
+    display: flex;
+    flex-direction: row;
     padding: 1rem;
     background-color: rgb(10, 10, 10);
     margin: 2rem auto;
-    width: 150;
-    max-width: 95%;
+    max-height: 55%;
+    max-width: 55%;
   }
 button {
     display: grid;

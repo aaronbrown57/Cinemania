@@ -8,18 +8,21 @@ const DummyMovies = [
         title: 'Argylle',
         director: 'Matthew Vaughn',
         img: "https://upload.wikimedia.org/wikipedia/en/0/05/Argylle_poster.jpg",
+        trailer: "https://www.youtube.com/watch?v=7mgu9mNZ8Hk",
     },
     {
         id: 'mdw',
         title: 'Madame Web',
         director: 'S. J. Clarkson',
         img: "https://upload.wikimedia.org/wikipedia/en/f/f0/Madame_Web_%28film%29_poster.jpg",
+        trailer: "https://www.youtube.com/watch?v=s_76M4c4LTo",
     },
     {
         id: 'mean girls',
         title: 'Mean Girls',
         director: 'Samantha Jayne , Arturo Perez Jr.',
         img: "https://upload.wikimedia.org/wikipedia/en/0/06/Mean_girls_2024_poster.jpg",
+        trailer: "https://www.youtube.com/watch?v=fFtdbEgnUOk",
     },
 ];
 

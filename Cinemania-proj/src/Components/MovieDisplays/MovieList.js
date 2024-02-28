@@ -11,6 +11,7 @@ const MovieList = (props) => {
           title = {movie.title}
           pieces = {movie.director}
           img = {movie.img}
+          trailer = {movie.trailer}
           />
         ))} 
       </Card>
