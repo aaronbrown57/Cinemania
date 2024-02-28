@@ -1,5 +1,4 @@
 import Container from "react-bootstrap/Container";
-import Argylle from "./Argylle.js"
 import React, { useState, useContext } from "react";
 import MovieList from "./MovieList.js"
 const DummyMovies = [
@@ -33,11 +32,7 @@ const MovieDisplay = ()  => {
         });
       };
     return(
-        
-        <Container>
-            <MovieList items={movie}></MovieList>
-                <Argylle></Argylle>
-        </Container>
+        <MovieList items={movie}></MovieList>
     )
 }
 
