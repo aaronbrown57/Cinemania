@@ -4,7 +4,8 @@ const AuthView = (loggedIn) => {
        
   return (
     <div className="App">
-        <NavMenu loggedIn={true}></NavMenu>
+        <NavMenu loggedIn={true} admin={false}></NavMenu>
+        <h1>Welcome back Username!</h1>
     </div>
   );
     

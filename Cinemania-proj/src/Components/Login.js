@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthView from './AuthView/AuthView';
+import Nav from 'react-bootstrap/Nav';
 import NavMenu from './Navigation/NavMenu';
 const Login = () => {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Login = () => {
     return (
         <div>
             <NavMenu loggedOut={true}></NavMenu>
-            <h1>This is the log in page</h1>
+            <h1>Enter email and password</h1>
 
             <form onSubmit={handleSubmit}>
                 <label htmlFor="Username">Email:</label>
@@ -31,9 +32,9 @@ const Login = () => {
                 <br />
                 <button type="submit">Login</button>
             </form>
-
+            <br></br>
             <p>Or</p>
-            <Link to="/SignUp">Signup</Link>
+            <Nav.Link href="/SignUp">Signup</Nav.Link>
         </div>
     );
 };

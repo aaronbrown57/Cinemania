@@ -25,60 +25,46 @@ function Home( loggedOut) {
       <NavMenu loggedOut={true}></NavMenu>
     <Container>
       <hr></hr>
-      <h1>Now Playing</h1> <hr></hr>
+      <h1>Now Playing!</h1> <hr></hr>
 
-      {/* Carousel that spins the available moves around */}
+      {/* Carousel that spins the available movies around */}
       <Carousel>
       <Carousel.Item>
       <img src="https://upload.wikimedia.org/wikipedia/en/5/5b/Pearl_theatricalposter.jpg" alt="alternatetext"
        />
       
         <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          {/* <h3>First slide label</h3> */}
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
       <img src="https://upload.wikimedia.org/wikipedia/en/0/06/Bob_Marley_One_Love.jpg" alt="alternatetext"/>
         <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          {/* <h3>Second slide label</h3> */}
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
       <img src="https://upload.wikimedia.org/wikipedia/en/0/06/Mean_girls_2024_poster.jpg" alt="alternatetext"/>
         <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
+          {/* <h3>Third slide label</h3> */}
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
       <img src="https://upload.wikimedia.org/wikipedia/en/0/05/Argylle_poster.jpg" alt="alternatetext"/>
         <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
+          {/* <h3>Third slide label</h3> */}
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
       <img src="https://upload.wikimedia.org/wikipedia/en/a/a1/Dune_2_poster.jpg" alt="alternatetext"/>
         <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
+          {/* <h3>Third slide label</h3> */}
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
       <img src="https://upload.wikimedia.org/wikipedia/en/f/f0/Madame_Web_%28film%29_poster.jpg" alt="alternatetext"/>
         <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
+          {/* <h3>Third slide label</h3> */}
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>

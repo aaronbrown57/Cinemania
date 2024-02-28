@@ -15,8 +15,9 @@ function NavMenu ( {loggedIn, loggedOut, admin}) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {loggedIn && <Nav.Link href="/edit">Edit Profile</Nav.Link>}
-            {admin && <Nav.Link href="/EditMovies">Edit Movies</Nav.Link>}
+            {loggedIn && admin === false && <Nav.Link href="/Edit">Edit Profile</Nav.Link>}
+            {admin && <Nav.Link href="/Manage Users">Manage Users</Nav.Link>}
+            {admin && <Nav.Link href="/Movie Scheduling">Movie Scheduling</Nav.Link>}
             <br></br>
             {loggedIn && <Nav.Link href='/Logout'>Logout</Nav.Link>}
             {loggedOut && <Nav.Link href='/Login'>Login</Nav.Link>}
@@ -24,6 +25,7 @@ function NavMenu ( {loggedIn, loggedOut, admin}) {
             <br></br>
            
             {loggedIn && <Nav.Link href="/order-history">Order History</Nav.Link>}
+            {admin && <Nav.Link href="/manage-promos">Manage Promotions</Nav.Link>}
             <Form inline>
         <Row>
           <Col xs="auto">
