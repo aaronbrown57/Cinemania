@@ -16,8 +16,8 @@ function NavMenu ( {loggedIn, loggedOut, admin}) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {loggedIn && admin === false && <Nav.Link href="/Edit">Edit Profile</Nav.Link>}
-            {admin && <Nav.Link href="/Manage Users">Manage Users</Nav.Link>}
-            {admin && <Nav.Link href="/Movie Scheduling">Movie Scheduling</Nav.Link>}
+            {admin && <Nav.Link href="/manage-Users">Manage Users</Nav.Link>}
+            {admin && <Nav.Link href="/manage-Movies">Manage Movies</Nav.Link>}
             <br></br>
             {loggedIn && <Nav.Link href='/Logout'>Logout</Nav.Link>}
             {loggedOut && <Nav.Link href='/Login'>Login</Nav.Link>}

@@ -16,6 +16,9 @@ const Movie = (props) => {
   const bookingClickHandler = () => {
     navigate("/select-showtime")
   }
+  const editMovieHandler = () => {
+    // Implement functionality with movie form to edit the details of the movie
+  }
     return (
         <>
         <Card className='Movie'>
@@ -27,6 +30,7 @@ const Movie = (props) => {
           <button onClick={clickHandler}>Details</button>
           <button onClick={bookingClickHandler}>Book Tickets</button>
           <button onClick={() => trailerClickHandler(props.trailer)}>View Trailer</button>
+          {props.admin && <button onClick={editMovieHandler}>Edit Movie</button>}
         </Card>
         {trailer && <YoutubeVideo videoId={trailer} />}
       </>      
