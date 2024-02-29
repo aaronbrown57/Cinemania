@@ -1,5 +1,5 @@
 import Card from "react-bootstrap/Card";
-import VideoPlayer from "../VideoPlayer";
+import YoutubeVideo from "../YoutubeVideo";
 import React, {useState} from "react"
 const Movie = (props) => {
 
@@ -17,14 +17,14 @@ const Movie = (props) => {
         <Card className='Movie'>
           <img src={props.img} className="movie-img" alt={props.title} />
           <div className='Movie__description'>
-            <h2>{props.title}</h2>
+            <h4>{props.title}</h4>
             {/* <div className='Director'>{props.director}</div> */}
           </div>
           <button onClick={clickHandler}>Details</button>
           <button onClick={clickHandler}>Book Tickets</button>
           <button onClick={() => trailerClickHandler(props.trailer)}>View Trailer</button>
         </Card>
-        {trailer && <VideoPlayer trailer={trailer} />}
+        {trailer && <YoutubeVideo videoId={trailer} />}
       </>      
       );
 }
