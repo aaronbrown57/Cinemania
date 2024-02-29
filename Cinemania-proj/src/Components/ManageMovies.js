@@ -81,7 +81,7 @@ const ManageMovies = () => {
             />
           </label>
           <label>
-            Category:
+            Image:
             <input
               type="text"
               value={category}
@@ -89,17 +89,9 @@ const ManageMovies = () => {
               required
             />
           </label>
+          
           <label>
-            Cast (Separate by comma):
-            <input
-              type="text"
-              value={cast.join(', ')}
-              onChange={handleCastChange}
-              required
-            />
-          </label>
-          <label>
-            Director:
+            Trailer Video ID:
             <input
               type="text"
               value={director}
@@ -107,90 +99,6 @@ const ManageMovies = () => {
               required
             />
           </label>
-          <label>
-            Producer:
-            <input
-              type="text"
-              value={producer}
-              onChange={(e) => setProducer(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Synopsis:
-            <input
-              type="text"
-              value={synopsis}
-              onChange={(e) => setSynopsis(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Reviews:
-            <input
-              type="text"
-              value={reviews}
-              onChange={(e) => setReviews(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Trailer Picture:
-            <input
-              type="text"
-              value={trailerPicture}
-              onChange={(e) => setTrailerPicture(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Trailer Video:
-            <input
-              type="text"
-              value={trailerVideo}
-              onChange={(e) => setTrailerVideo(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Rating:
-            <input
-              type="text"
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Coming Soon:
-            <input
-              type="checkbox"
-              checked={comingSoon}
-              onChange={(e) => setComingSoon(e.target.checked)}
-            />
-          </label>
-          {!comingSoon && (
-            <>
-              <label>
-                Show Date:
-                <input
-                  type="text"
-                  value={showDate}
-                  onChange={(e) => setShowDate(e.target.value)}
-                  required={!comingSoon}
-                />
-              </label>
-              <label>
-                Show Time:
-                <input
-                  type="text"
-                  value={showTime}
-                  onChange={(e) => setShowTime(e.target.value)}
-                  required={!comingSoon}
-                />
-              </label>
-            </>
-          )}
 
           <button type="submit">Submit</button>
         </form>
