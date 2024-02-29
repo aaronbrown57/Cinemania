@@ -67,7 +67,7 @@ const MovieDisplay = ({ isAdmin })  => {
         {isAdmin && <AddMovie addMovie={addMovie} />}
         <br />
         <h1>Upcoming Movies!</h1>
-        
+        <MovieList items={upcomingMovie}></MovieList>
       </div>
     )
 }

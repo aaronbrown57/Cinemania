@@ -6,7 +6,7 @@ const MovieList = (props) => {
     return (
       <Card className="MovieList">
         {props.items.map((movie) => (
-          <Movie admin={false}
+          <Movie isAdmin={props.isAdmin}
           key = {movie.id}
           title = {movie.title}
           pieces = {movie.director}

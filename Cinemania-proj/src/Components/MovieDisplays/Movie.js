@@ -32,7 +32,7 @@ const Movie = (props) => {
           <button onClick={clickHandler}>Details</button>
           <button onClick={bookingClickHandler}>Book Tickets</button>
           <button onClick={() => trailerClickHandler(props.trailer)}>View Trailer</button>
-          {props.admin && <button onClick={editMovieHandler}>Edit Movie</button>}
+          {props.isAdmin && <button onClick={editMovieHandler}>Edit Movie</button>}
         </Card>
         {trailer && <YoutubeVideo videoId={trailer} />}
       </>      
