@@ -7,9 +7,20 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import React, { useState, useContext } from "react";
-function NavMenu ( {loggedIn, loggedOut, admin}) {
-    return(
-        <Navbar expand="lg" className="bg-body-tertiary">
+import { useNavigate } from 'react-router-dom';
+
+
+function NavMenu({ loggedIn, loggedOut, admin }) {
+  const history = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(''); // state to store the query
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //goes to search results withthe query
+    history(`/searchresults?query=${encodeURIComponent(searchQuery)}`);
+  };
+  return (
+    <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <h3>Cinemania </h3>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -17,34 +28,36 @@ function NavMenu ( {loggedIn, loggedOut, admin}) {
           <Nav className="me-auto">
             {loggedIn && admin === false && <Nav.Link href="/Edit">Edit Profile</Nav.Link>}
             {admin && <Nav.Link href="/manage-Users">Manage Users</Nav.Link>}
-            {admin && <Nav.Link href="/manageMovies">Manage Movies</Nav.Link>}
+            {admin && <Nav.Link href="/manage-Movies">Manage Movies</Nav.Link>}
             <br></br>
             {loggedIn && <Nav.Link href='/Logout'>Logout</Nav.Link>}
             {loggedOut && <Nav.Link href='/Login'>Login</Nav.Link>}
-           
+
             <br></br>
-           
+
             {loggedIn && <Nav.Link href="/order-history">Order History</Nav.Link>}
             {admin && <Nav.Link href="/manage-promos">Manage Promotions</Nav.Link>}
-            <Form inline>
-        <Row>
-          <Col xs="auto">
-            <Form.Control
-              type="text"
-              placeholder="Search"
-              className=" mr-sm-2"
-            />
-          </Col>
-          <Col xs="auto">
-            <Button type="submit">Submit</Button>
-          </Col>
-        </Row>
-      </Form>
+            <Form inline onSubmit={handleSubmit}>
+              <Row>
+                <Col xs="auto">
+                  <Form.Control
+                    type="text"
+                    placeholder="Search"
+                    className="mr-sm-2"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </Col>
+                <Col xs="auto">
+                  <Button type="submit">Submit</Button>
+                </Col>
+              </Row>
+            </Form>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    )
+  )
 }
 
 export default NavMenu;
