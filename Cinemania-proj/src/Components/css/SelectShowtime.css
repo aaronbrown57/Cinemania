@@ -1,0 +1,21 @@
+/* SelectShowtime.css */
+.showtime-container {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .showtime-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .showtime-button:hover {
+    background-color: #0056b3;
+  }
+  

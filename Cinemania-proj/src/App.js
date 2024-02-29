@@ -11,7 +11,13 @@ import AuthView from './Components/AuthView/AuthView';
 import axios from 'axios';
 import AdminView from './Components/Admin/AdminView';
 import ConfirmAccountCreation from './Components/ConfirmAccountCreation';
-
+// Importing new components
+import SelectShowtime from './Components/SelectShowtime';
+import SelectSeats from './Components/SelectSeats';
+import OrderSummary from './Components/OrderSummary';
+import CheckoutForm from './Components/CheckoutForm';
+import OrderConfirmation from './Components/OrderConfirmation';
+import SelectTicketAge from './Components/SelectTicketAge';
 
 
 
@@ -37,7 +43,13 @@ import ConfirmAccountCreation from './Components/ConfirmAccountCreation';
           <Route path='/AuthView' element={<AuthView/>}/>
           <Route path='/admin' element={<AdminView/>}/>
           <Route path='/logout' element={<Home />} />
-          
+          {/* Adding new routes for the movie ticket booking process */}
+          <Route path='/select-showtime' element={<SelectShowtime />} />
+          <Route path='/select-seats' element={<SelectSeats />} />
+          <Route path="/select-ticket-age" element={<SelectTicketAge />} />
+          <Route path='/order-summary' element={<OrderSummary />} />
+          <Route path='/checkout' element={<CheckoutForm />} />
+          <Route path='/order-confirmation' element={<OrderConfirmation />} />
         </Routes>
     
       </Router>

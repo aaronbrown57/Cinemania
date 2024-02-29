@@ -1,0 +1,40 @@
+/* SelectSeats.css */
+.seats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Adjusted for a 4x4 grid */
+    gap: 10px;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .seat {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .seat.selected {
+    background-color: #dc3545;
+  }
+  
+  .seat:hover {
+    background-color: #218838;
+  }
+  
+  .confirm-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .confirm-button:hover {
+    background-color: #0053ac;
+  }
