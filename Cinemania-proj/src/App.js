@@ -18,7 +18,8 @@ import OrderSummary from './Components/OrderSummary';
 import CheckoutForm from './Components/CheckoutForm';
 import OrderConfirmation from './Components/OrderConfirmation';
 import SelectTicketAge from './Components/SelectTicketAge';
-
+import ManagePromos from "./Components/ManagePromos"
+import ManageMovies from "./Components/ManageMovies.js"
 
 
   const App = () => {
@@ -50,6 +51,9 @@ import SelectTicketAge from './Components/SelectTicketAge';
           <Route path='/order-summary' element={<OrderSummary />} />
           <Route path='/checkout' element={<CheckoutForm />} />
           <Route path='/order-confirmation' element={<OrderConfirmation />} />
+          {/* Routes for Admin processes */}
+          <Route path='/manageMovies' element={<ManageMovies />} />
+          <Route path='/manage-promos' element={<ManagePromos />} />
         </Routes>
     
       </Router>

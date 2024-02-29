@@ -18,7 +18,7 @@ app.use(function(req, res, next) {
 app.use(express.json({ extended: false }));
 
 
-const conn_str = "mongodb+srv://grantprusik5:fP0xugxfu5EERhQK@cluster0.m3q4sbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const conn_str = "mongodb+srv://grantprusik5:Temppass2024@cluster0.m3q4sbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.set('strictQuery', false);
 mongoose.connect(conn_str, {
     useUnifiedTopology : true,
