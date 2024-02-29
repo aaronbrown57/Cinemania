@@ -6,9 +6,11 @@ const SelectTicketAge = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [ticketAges, setTicketAges] = useState({});
+  const chosenMovie = location.state?.chosenMovie || 'Unknown Movie';
+  const { showtime } = location.state || { showtime: 'Unknown Showtime' };
+  const selectedSeats = location.state?.selectedSeats;
   
   useEffect(() => {
-    const selectedSeats = location.state?.selectedSeats;
     if (selectedSeats) {
       setTicketAges(selectedSeats.reduce((acc, seat) => ({ ...acc, [seat]: 'Adult' }), {}));
     } else {
@@ -28,7 +30,7 @@ const SelectTicketAge = () => {
   };
 
   const handleSubmit = () => {
-    navigate('/order-summary', { state: { ticketAges } });
+    navigate('/order-summary', { state: { chosenMovie, showtime, selectedSeats, ticketAges } });
   };
 
   return (

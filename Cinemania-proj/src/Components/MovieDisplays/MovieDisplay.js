@@ -24,6 +24,7 @@ const DummyMovies = [
         img: "https://upload.wikimedia.org/wikipedia/en/0/06/Mean_girls_2024_poster.jpg",
         trailer: "fFtdbEgnUOk",
     },
+    
 ];
 
       
@@ -40,3 +41,4 @@ const MovieDisplay = ()  => {
 }
 
 export default MovieDisplay;
+export { DummyMovies };

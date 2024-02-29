@@ -2,11 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/SelectSeats.css';
 import React, { useState } from 'react';
 // import SelectShowtime from './SelectShowtime'; // Remove if not used in this component
-import { useNavigate } from 'react-router-dom'; // Make sure to import useNavigate
+import { useNavigate, useLocation } from 'react-router-dom'; // Make sure to import useNavigate
 
-const SelectSeats = () => { // Removed the prop onSeatsSelected to avoid conflict
+const SelectSeats = () => {
+  const location = useLocation(); 
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const navigate = useNavigate(); // Correctly set up for navigation
+  const navigate = useNavigate();
+  const chosenMovie = location.state?.chosenMovie || 'Unknown Movie';
+  const { showtime } = location.state || { showtime: 'Unknown Showtime' };
 
   const toggleSeatSelection = (seat) => {
     if (selectedSeats.includes(seat)) {
@@ -17,7 +20,7 @@ const SelectSeats = () => { // Removed the prop onSeatsSelected to avoid conflic
   };
 
   const handleConfirmSeats = () => { // Renamed to avoid conflict with prop
-    navigate('/select-ticket-age', { state: { selectedSeats } });
+    navigate('/select-ticket-age', { state: { chosenMovie, showtime, selectedSeats } });
   };
 
   // Placeholder for seat selection logic
@@ -25,6 +28,7 @@ const SelectSeats = () => { // Removed the prop onSeatsSelected to avoid conflic
 
   return (
     <div>
+    <h2>Select seats for {chosenMovie} at {showtime}</h2>
       <div className="seats-container">
         {seats.map((seat, index) => (
           <button

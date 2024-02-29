@@ -2,6 +2,7 @@ import Card from "react-bootstrap/Card";
 import YoutubeVideo from "../YoutubeVideo";
 import React, {useState} from "react"
 import {useNavigate} from "react-router-dom"
+import './Movie.css'
 const Movie = (props) => {
     const navigate = useNavigate();
     const clickHandler = () => {
@@ -13,9 +14,11 @@ const Movie = (props) => {
     const trailerClickHandler = (videoLink) => {
     setTrailer(videoLink);
   };
+  
   const bookingClickHandler = () => {
-    navigate("/select-showtime")
-  }
+    navigate("/select-showtime", { state: { chosenMovie: props.title } });
+  };
+  
     return (
         <>
         <Card className='Movie'>

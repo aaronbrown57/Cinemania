@@ -1,0 +1,7 @@
+.custom-carousel-img {
+    width: 250px; /* Set width to 30% of the screen */
+    height: 400px;
+    margin: auto; /* Center the image horizontally */
+    display: block; /* Ensure the image is a block-level element to allow margin auto to work */
+  }
+  

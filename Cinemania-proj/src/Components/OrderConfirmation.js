@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 
 const OrderConfirmation = () => {
   const location = useLocation();
-  const { selectedSeats, movieTime, chosenMovie, ticketAges, total } = location.state || {};
+  const { selectedSeats, showtime, chosenMovie, ticketAges, total } = location.state || {};
 
   if (!location.state) {
     return <div>No order details found. Please start your order again.</div>;
@@ -18,8 +18,8 @@ const OrderConfirmation = () => {
           <p className="card-text">Here are your order details:</p>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">Movie: {chosenMovie}</li>
-            <li className="list-group-item">Showtime: {movieTime}</li>
-            {Object.entries(selectedSeats).map(([seat, age], index) => (
+            <li className="list-group-item">Showtime: {showtime}</li>
+            {Object.entries(ticketAges).map(([seat, age], index) => (
               <li key={index} className="list-group-item">Seat {seat}: {age}</li>
             ))}
             <li className="list-group-item">Total Paid: ${total.toFixed(2)}</li>

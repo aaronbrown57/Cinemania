@@ -5,6 +5,9 @@ const OrderSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { ticketAges } = location.state || {};
+  const chosenMovie = location.state?.chosenMovie || 'Unknown Movie';
+  const { showtime } = location.state || { showtime: 'Unknown Showtime' };
+  const selectedSeats = location.state?.selectedSeats;
 
   // Ticket prices
   const ticketPrices = {
@@ -23,7 +26,7 @@ const OrderSummary = () => {
   const total = subtotal + (subtotal * salesTaxRate);
 
   const handleSubmit = () => {
-    navigate('/confirmation'); // Navigate to confirmation or payment page
+    navigate('/order-confirmation', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total } });
   };
 
   if (!ticketAges) {
