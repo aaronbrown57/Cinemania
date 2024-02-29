@@ -17,7 +17,7 @@ function NavMenu ( {loggedIn, loggedOut, admin}) {
           <Nav className="me-auto">
             {loggedIn && admin === false && <Nav.Link href="/Edit">Edit Profile</Nav.Link>}
             {admin && <Nav.Link href="/manage-Users">Manage Users</Nav.Link>}
-            {admin && <Nav.Link href="/manage-Movies">Manage Movies</Nav.Link>}
+            {admin && <Nav.Link href="/manageMovies">Manage Movies</Nav.Link>}
             <br></br>
             {loggedIn && <Nav.Link href='/Logout'>Logout</Nav.Link>}
             {loggedOut && <Nav.Link href='/Login'>Login</Nav.Link>}
