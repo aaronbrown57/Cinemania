@@ -23,7 +23,7 @@ const OrderSummary = () => {
   const total = subtotal + (subtotal * salesTaxRate);
 
   const handleSubmit = () => {
-    navigate('/confirmation'); // Navigate to confirmation or payment page
+    navigate('/order-confirmation'); // Navigate to confirmation or payment page
   };
 
   if (!ticketAges) {
