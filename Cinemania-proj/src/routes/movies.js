@@ -18,7 +18,7 @@ router.use(function(req, res, next) {
     next();
 });
 
-router.post('../Components/Admin/AdminView', async (req,res) => {
+router.post('/ManageMovies', async (req,res) => {
     try {
         const { title, category, cast, director, producer, synopsis, reviews, trailerPicture, trailerVideo, rating, showDate, showTime } = req.body;
         const newMovie = new Movie({ title, category, cast, director, producer, synopsis, reviews, trailerPicture, trailerVideo, rating, showDate, showTime });

@@ -52,7 +52,7 @@ import ManageMovies from "./Components/ManageMovies.js"
           <Route path='/checkout' element={<CheckoutForm />} />
           <Route path='/order-confirmation' element={<OrderConfirmation />} />
           {/* Routes for Admin processes */}
-          <Route path='/manageMovies' element={<ManageMovies />} />
+          <Route path='/manage-movies' element={<ManageMovies />} />
           <Route path='/manage-promos' element={<ManagePromos />} />
         </Routes>
     
