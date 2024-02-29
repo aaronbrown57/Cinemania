@@ -57,18 +57,14 @@ const MovieDisplay = ({ isAdmin })  => {
     const [movie, setMovies] = useState(DummyMovies);
     const [upcomingMovie, setUpcomingMovies] = useState(DummyUpcomingMovies);
    
-    const addMovieHandler = (newMovie, type) => {
-        if (type === 'nowPlaying') {
-          setMovies(prevMovies => [newMovie, ...prevMovies]);
-        } else if (type === 'upcoming') {
-          setUpcomingMovies(prevUpcomingMovies => [newMovie, ...prevUpcomingMovies]);
-        }
+    const addMovie = (newMovie) => {
+        setMovies([...movie, newMovie]);
       };
     return(
         <div>
         <h1>Now Playing!</h1>
         <MovieList items={movie} />
-        {isAdmin && <AddMovie onAddMovie={newMovie => addMovieHandler(newMovie, 'nowPlaying')} />}
+        {isAdmin && <AddMovie addMovie={addMovie} />}
         <br />
         <h1>Upcoming Movies!</h1>
         

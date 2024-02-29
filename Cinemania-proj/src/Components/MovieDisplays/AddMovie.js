@@ -12,7 +12,12 @@ const AddMovie = ({ addMovie }) => {
 
   const submitHandler = () => {
     if (title && img && trailer) {
-      addMovie({ title, img, trailer });
+      // Pass the details of the Bee Movie when the submit button is clicked
+      addMovie({ 
+        title: "Bee Movie",
+        img: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTxDF9D2njpnpIrsGC9BaRA06W-HLRZrypy8opr7EQ3r_Pt8iSi",
+        trailer: "https://www.youtube.com/watch?v=VONRQMx78YI" // Example trailer ID
+      });
       setTitle('');
       setImg('');
       setTrailer('');
@@ -42,7 +47,7 @@ const AddMovie = ({ addMovie }) => {
         value={trailer}
         onChange={(e) => setTrailer(e.target.value)}
       />
-      <button onClick={submitHandler}>Add Movie</button>
+      <button  onClick={submitHandler} style={{ margin: "0 auto", display: "block" }}>Add Movie</button>
     </div>
   );
 };
