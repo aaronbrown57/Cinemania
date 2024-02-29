@@ -1,6 +1,7 @@
 import Container from "react-bootstrap/Container";
 import React, { useState, useContext } from "react";
 import MovieList from "./MovieList.js"
+import AddMovie from './AddMovie';
 const DummyMovies = [
     // add other movie details to this 
     {
@@ -52,22 +53,26 @@ const DummyUpcomingMovies = [
 ];
 
       
-const MovieDisplay = ()  => {
+const MovieDisplay = ({ isAdmin })  => {
     const [movie, setMovies] = useState(DummyMovies);
     const [upcomingMovie, setUpcomingMovies] = useState(DummyUpcomingMovies);
-    const addMovieHandler = movie => {
-        setMovies((prevMovies) => {
-          return [movie, ...prevMovies];
-        });
+   
+    const addMovieHandler = (newMovie, type) => {
+        if (type === 'nowPlaying') {
+          setMovies(prevMovies => [newMovie, ...prevMovies]);
+        } else if (type === 'upcoming') {
+          setUpcomingMovies(prevUpcomingMovies => [newMovie, ...prevUpcomingMovies]);
+        }
       };
     return(
         <div>
         <h1>Now Playing!</h1>
-        <MovieList items={movie}></MovieList>
-        <br></br>
+        <MovieList items={movie} />
+        {isAdmin && <AddMovie onAddMovie={newMovie => addMovieHandler(newMovie, 'nowPlaying')} />}
+        <br />
         <h1>Upcoming Movies!</h1>
-        <MovieList items={upcomingMovie}></MovieList>
-        </div>
+        
+      </div>
     )
 }
 
