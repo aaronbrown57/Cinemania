@@ -4,4 +4,24 @@
     margin: auto; /* Center the image horizontally */
     display: block; /* Ensure the image is a block-level element to allow margin auto to work */
   }
+
+  div{
+    background-color: rgb(41, 41, 130);
+  }
   
+  h1{
+    color: aliceblue;
+  }
+
+  label{
+    color:aliceblue
+  }
+
+  .carousel-caption {
+    /* Your custom styles here */
+    opacity: 0.5;
+}
+
+.carousel-indicators{
+  opacity: 0.5;
+}
