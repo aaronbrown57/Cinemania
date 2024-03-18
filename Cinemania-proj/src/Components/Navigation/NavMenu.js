@@ -49,7 +49,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
                   />
                 </Col>
                 <Col xs="auto">
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" className='btn-primary'>Search</Button>
                 </Col>
               </Row>
             </Form>
