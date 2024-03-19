@@ -47,7 +47,7 @@ const Login = () => {
 <br></br>
 
           <Form.Text className="sign-up">
-             Or Sign Up <a>here</a>
+             Or Sign Up <a href="/Signup">here</a>
             </Form.Text>
 
         </Form>
