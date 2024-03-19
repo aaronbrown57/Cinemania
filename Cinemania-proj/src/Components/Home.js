@@ -19,8 +19,7 @@ function Home() {
       <NavMenu loggedOut={true}></NavMenu>
       <Container>
         <hr />
-        <h1>Now Playing</h1>
-        <hr />
+    
          
         <HeaderCarousel/>
         <MovieDisplay onMovieSelect={handleMovieSelect} />

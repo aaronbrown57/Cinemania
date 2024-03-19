@@ -20,7 +20,7 @@
 
   .carousel-caption {
     /* Your custom styles here */
-    opacity: 0.5;
+    opacity: 0.1;
 }
 
 .carousel-indicators{
@@ -36,7 +36,8 @@ Button :hover{
   background-color: #457b9d;
 }
 
-.container h2 {
+.web-name {
+  font-size: 56;
   font-family: "Nabla", system-ui;
   font-optical-sizing:none;
   font-weight: 400;
@@ -46,6 +47,12 @@ Button :hover{
     "EHLT" 12;
   color:#c1dbdb;
 }
+
+.login-form{
+  width: 600px; /* Set the width to 100 pixels */
+  border:black;
+}
+
 
 .nav-bar{
   background-color: #1D3557;
@@ -97,3 +104,8 @@ Button :hover{
     gap: 20px; /* Gap between cards */
 }
 
+
+.sign-up{
+  color: #c1dbdb;
+  font-size: 12;
+}
