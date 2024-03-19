@@ -20,12 +20,12 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
     history(`/searchresults?query=${encodeURIComponent(searchQuery)}`);
   };
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="nav-bar">
       <Container>
-        <h3>Cinemania </h3>
+        <h2 className='web=name'>Cinemania </h2>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="nav">
             {loggedIn && admin === false && <Nav.Link href="/Edit">Edit Profile</Nav.Link>}
             {admin && <Nav.Link href="/manage-Users">Manage Users</Nav.Link>}
             {admin && <Nav.Link href="/manage-Movies">Manage Movies</Nav.Link>}
@@ -43,13 +43,13 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
                   <Form.Control
                     type="text"
                     placeholder="Search"
-                    className="mr-sm-2"
+                    className="search-box"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </Col>
                 <Col xs="auto">
-                  <Button type="submit" className='btn-primary'>Search</Button>
+                  <Button type="submit" className='search-btn'>Search</Button>
                 </Col>
               </Row>
             </Form>

@@ -23,15 +23,18 @@ const Movie = (props) => {
   }
     return (
         <>
-        <Card className='Movie'>
+        <Card className='movie-card'>
           <img src={props.img} className="movie-img" alt={props.title} />
-          <div className='Movie__description'>
+          <div className='movie-description'>
             <h4>{props.title}</h4>
             {/* <div className='Director'>{props.director}</div> */}
+            <div className="movie-info">
+            <h6 onClick={clickHandler}>Details</h6>
+          <h6 onClick={bookingClickHandler}>Book Tickets</h6>
+          <h6 className='play-trailer' onClick={() => trailerClickHandler(props.trailer)}>View Trailer</h6>
           </div>
-          <button onClick={clickHandler}>Details</button>
-          <button onClick={bookingClickHandler}>Book Tickets</button>
-          <button onClick={() => trailerClickHandler(props.trailer)}>View Trailer</button>
+          </div>
+         
           {props.isAdmin && <button onClick={editMovieHandler}>Edit Movie</button>}
         </Card>
         {trailer && <YoutubeVideo videoId={trailer} />}

@@ -23,6 +23,6 @@ button {
     flex: 0 0 55%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 55% */
   }
 
-.Movie__description{
+.movie-description{
   flex: 0 0 11%;
 }

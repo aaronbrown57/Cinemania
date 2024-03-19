@@ -7,15 +7,15 @@
   }
 
   div{
-    background-color: rgb(41, 41, 130);
+    background-color: #1D3557;
   }
   
   h1{
-    color: aliceblue;
+    color: #c1dbdb;
   }
 
   label{
-    color:aliceblue
+    color:#c1dbdb;
   }
 
   .carousel-caption {
@@ -27,7 +27,73 @@
   opacity: 0.5;
 }
 
-.btn-primary{
+.search-btn{
   background-color: rgb(20, 20, 68);
   border-color: rgb(41, 41, 130);
 }
+
+Button :hover{
+  background-color: #457b9d;
+}
+
+.container h2 {
+  font-family: "Nabla", system-ui;
+  font-optical-sizing:none;
+  font-weight: 400;
+  font-style:normal;
+  font-variation-settings:
+    "EDPT" 100,
+    "EHLT" 12;
+  color:#c1dbdb;
+}
+
+.nav-bar{
+  background-color: #1D3557;
+}
+
+.search-box{
+  background-color: #c1dbdb;
+}
+
+.nav a{
+  color: #c1dbdb;
+}
+
+
+.movie-card{
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+.movie-description{
+  color: #c1dbdb;
+
+}
+
+
+.movie-img{
+  max-width: 100%; /* Set maximum width to fill the card */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.Movie{
+  padding: 10px; /* Reduced padding */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    /* Adjust width and height as needed */
+    width: 100%; /* Full width */
+    max-width: 200px; /* Maximum width */
+    height: 100%; /* Full height */
+    max-height: 100px; /* Maximum height */
+
+}
+
+
+.movie-list{
+  display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    gap: 20px; /* Gap between cards */
+}
+
