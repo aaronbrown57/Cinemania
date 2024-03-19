@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import 'react-credit-cards/es/styles-compiled.css'; // Import CSS styles
 import { CreditCardInput } from 'react-credit-card-input';
 
 const CreditCardIntake = () => {
