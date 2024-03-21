@@ -14,33 +14,41 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const form = e.target;
-    const formData = new FormData(form);
-    const requiredFields = [
-      "firstname",
-      "lastname",
-      "email",
-      "password",
-      "confirmPassword",
-      "billingAddress",
-      "homeAddress",
-    ];
-
-    const allFieldsFilled = requiredFields.every((field) => formData.get(field));
-
-    if (!allFieldsFilled) {
-      setError("Please fill out all required fields.");
-      return;
+    // Check if the event target is an HTMLFormElement
+    if (e.target instanceof HTMLFormElement) {
+      const formData = new FormData(e.target); // Access form data directly from the event target
+      const requiredFields = [
+        "firstname",
+        "lastname",
+        "email",
+        "password",
+        "confirmPassword",
+        "billingAddress",
+        "homeAddress",
+      ];
+  
+      const allFieldsFilled = requiredFields.every((field) => formData.get(field));
+  
+      if (!allFieldsFilled) {
+        setError("Please fill out all required fields.");
+        return;
+      }
+  
+      navigate("/ConfirmAccountCreation");
+    } else {
+      setError("Invalid form submission.");
     }
-
-    navigate("/ConfirmAccountCreation");
   };
 
   return (
     <div className="signupDiv">
       <NavMenu></NavMenu>
       <h1>Become a Cinemaniac!</h1>
-      <Form className="login-form">
+      <Form className="login-form" onSubmit={handleSubmit}>
+        <Form.Group controlId="formBasicFirstName">
+          <Form.Label>First name</Form.Label>
+          <Form.Control type="text" placeholder="Enter your first name" name="firstname" />
+        </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>First name</Form.Label>
           <Form.Control type="firstname" placeholder="First name" />
@@ -87,7 +95,7 @@ function SignUp() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
+        <Button variant="primary" type="submit" >
           Register
         </Button>
       </Form>
