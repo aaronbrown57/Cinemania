@@ -3,20 +3,20 @@ const app = express();
 const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const cors = require('cors');
-app.use(cors());
+// app.use(cors());
 const router= require('./routes/movies');
 const routerUser = require('./routes/users');
 
 
 // Connect Database
-// app.use(cors({ origin: true, credentials: 'http://localhost:3000' }));
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", 'http://localhost:3000');
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-//     next();
-// });
+ app.use(cors({ origin: true, credentials: 'http://localhost:3000' }));
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", 'http://localhost:3000');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    next();
+});
 app.use(express.json({ extended: false }));
 app.use('/movies', router);
 app.use('/users', routerUser);
