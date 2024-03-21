@@ -1,10 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import Carousel from 'react-bootstrap/Carousel';
 import NavMenu from './Navigation/NavMenu.js';
 import MovieDisplay from "./MovieDisplays/MovieDisplay.js"; // Assuming this is the correct path
-import { DummyMovies } from "./MovieDisplays/MovieDisplay"; 
 import './css/Home.css'
 import HeaderCarousel from './HeaderCarousel.js';
 function Home() {

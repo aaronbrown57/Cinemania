@@ -38,9 +38,9 @@ const ManageMovies = () => {
       comingSoon,
       showDate,
       showTime,
-    };
+    }; 
     try {
-      const response = await fetch('/api/addMovie', {
+      const response = await fetch('./../backend/routes/movies/addMovie', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
