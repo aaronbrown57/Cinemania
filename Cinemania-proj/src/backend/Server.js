@@ -1,12 +1,12 @@
 const MovieSchema = require('./models/Movie'); // Import the Movie model from movie.js
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const cors = require('cors');
 const users = require('./routes/movies');
 app.use('/movies', users);
-
+app.get('/', (req, res) => res.send('Hello world!'));
 // Connect Database
 app.use(cors({ origin: true, credentials: 'http://localhost:3000' }));
 app.use(function (req, res, next) {
