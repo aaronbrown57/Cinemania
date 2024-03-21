@@ -38,6 +38,31 @@ router.get('/allMovies', async (req, res) => {
     }
 });
 
+router.delete('/deleteMovie/:id', async (req, res) => {
+    try {
+        const movieId = req.params.id;
+        const deletedMovie = await Movie.findByIdAndDelete(movieId);
+        if (!deletedMovie) {
+            return res.status(404).json({ error: 'Movie not found' });
+        }
+        res.json({ msg: 'Movie deleted successfully', deletedMovie });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.put('/updateMovie/:id', async (req, res) => {
+    try {
+        const movieId = req.params.id;
+        const updatedMovie = await Movie.findByIdAndUpdate(movieId, req.body, { new: true });
+        if (!updatedMovie) {
+            return res.status(404).json({ error: 'Movie not found' });
+        }
+        res.json({ msg: 'Movie updated successfully', updatedMovie });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 
