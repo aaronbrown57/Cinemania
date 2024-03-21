@@ -25,6 +25,7 @@ const Login = () => {
     }
     return (
         <div >
+          <NavMenu loggedOut={true}></NavMenu>
         <Form className='login-form'>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
