@@ -19,7 +19,7 @@ router.use(function(req, res, next) {
     next();
 });
 
-router.post('/newMovie', async (req, res) => {
+router.post('/addMovie', async (req, res) => {
     try {
         const newMovie = await Movie.create(req.body);
         res.json({ msg: 'Movie added successfully', movie: newMovie });
