@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import NavMenu from './Navigation/NavMenu';
+import "./css/ManageMovies.css";
 
 const ManageMovies = () => {
   const [showForm, setShowForm] = useState(false);
@@ -10,7 +11,7 @@ const ManageMovies = () => {
   const [producer, setProducer] = useState('');
   const [synopsis, setSynopsis] = useState('');
   const [reviews, setReviews] = useState('');
-  const [trailerPicture, setTrailerPicture] = useState('');
+  const [poster, setPoster] = useState('');
   const [trailerVideo, setTrailerVideo] = useState('');
   const [rating, setRating] = useState('');
   const [comingSoon, setComingSoon] = useState(false);
@@ -32,7 +33,7 @@ const ManageMovies = () => {
       producer,
       synopsis,
       reviews,
-      trailerPicture,
+      poster,
       trailerVideo,
       rating,
       comingSoon,
@@ -51,7 +52,7 @@ const ManageMovies = () => {
     setProducer('');
     setSynopsis('');
     setReviews('');
-    setTrailerPicture('');
+    setPoster('');
     setTrailerVideo('');
     setRating('');
     setComingSoon(false);
@@ -70,7 +71,7 @@ const ManageMovies = () => {
       <NavMenu loggedIn={true} admin={true}></NavMenu>
       <h2>Manage Movies</h2>
       {showForm ? (
-        <form onSubmit={handleSubmit}>
+        <form id='form-container' onSubmit={handleSubmit}>
           <label>
             Title:
             <input
@@ -81,11 +82,38 @@ const ManageMovies = () => {
             />
           </label>
           <label>
-            Image:
+            Category:
             <input
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Cast:
+            <input
+              type="text"
+              value={cast}
+              onChange={(e) => setCast(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Director:
+            <input
+              type="text"
+              value={director}
+              onChange={(e) => setDirector(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Image:
+            <input
+              type="text"
+              value={poster}
+              onChange={(e) => setPoster(e.target.value)}
               required
             />
           </label>
@@ -94,13 +122,69 @@ const ManageMovies = () => {
             Trailer Video ID:
             <input
               type="text"
-              value={director}
-              onChange={(e) => setDirector(e.target.value)}
+              value={trailerVideo}
+              onChange={(e) => setTrailerVideo(e.target.value)}
               required
             />
           </label>
 
-          <button type="submit">Submit</button>
+          <label>
+            Producer:
+            <input
+              type="text"
+              value={producer}
+              onChange={(e) => setProducer(e.target.value)}
+              required
+            />
+          </label>
+
+          <label>
+            Synopsis:
+            <input
+              type="text"
+              value={synopsis}
+              onChange={(e) => setSynopsis(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Reviews:
+            <input
+              type="text"
+              value={reviews}
+              onChange={(e) => setReviews(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Rating:
+            <input
+              type="text"
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Show Dates:
+            <input
+              type="text"
+              value={showDate}
+              onChange={(e) => setShowDate(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Show Times:
+            <input
+              type="text"
+              value={showTime}
+              onChange={(e) => setShowTime(e.target.value)}
+              required
+            />
+          </label>
+
+          <button id = "form-submit" type="submit">Submit</button>
         </form>
       ) : (
         <button onClick={addMovie}>Add Movie</button>
