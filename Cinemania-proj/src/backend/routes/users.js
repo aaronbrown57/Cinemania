@@ -38,7 +38,31 @@ router.get('/allUsers', async (req, res) => {
     }
 });
 
+router.delete('/deleteUser/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json({ msg: 'User deleted successfully', deletedUser });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
+router.put('/updateUser/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+        if (!updatedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json({ msg: 'User updated successfully', updatedUser });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 module.exports = router;
