@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require("jsonwebtoken");
+
+// const jwt = require("jsonwebtoken");
 //const auth = require("../middleware/auth");
 const bodyParser = require('body-parser')
 const cors = require('cors');
-const User = require('../models/Movie');
+const Movie = require('../models/Movie');
 
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
@@ -18,18 +19,26 @@ router.use(function(req, res, next) {
     next();
 });
 
-router.post('/ManageMovies', async (req,res) => {
+router.post('/newMovie', async (req, res) => {
     try {
-        const { title, category, cast, director, producer, synopsis, reviews, trailerPicture, trailerVideo, rating, showDate, showTime } = req.body;
-        const newMovie = new Movie({ title, category, cast, director, producer, synopsis, reviews, trailerPicture, trailerVideo, rating, showDate, showTime });
-
-        const savedMovie = await newMovie.save();
-        console.log(savedMovie.title);
-        res.json(savedMovie);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+        const newMovie = await Movie.create(req.body);
+        res.json({ msg: 'Movie added successfully', movie: newMovie });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 });
+
+// Route to get all movies
+router.get('/allMovies', async (req, res) => {
+    try {
+        const movies = await Movie.find();
+        res.json(movies);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 
 
 module.exports = router;
