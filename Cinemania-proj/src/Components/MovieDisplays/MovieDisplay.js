@@ -64,7 +64,6 @@ const MovieDisplay = ({ isAdmin })  => {
         <div>
         <h1>Now Playing!</h1>
         <MovieList items={movie} />
-        {isAdmin && <AddMovie addMovie={addMovie} />}
         <br />
         <h1>Upcoming Movies!</h1>
         <MovieList items={upcomingMovie}></MovieList>
