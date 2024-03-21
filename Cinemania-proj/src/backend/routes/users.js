@@ -31,7 +31,6 @@ router.post('/newUser', async (req, res) => {
 // Route to get all users
 router.get('/allUsers', async (req, res) => {
     try {
-        console.log("Get users was initiated");
         const users = await User.find();
         res.json(users);
     } catch (error) {
