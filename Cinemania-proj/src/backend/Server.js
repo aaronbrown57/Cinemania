@@ -18,7 +18,7 @@ const router= require('./routes/movies');
 // });
 app.use(express.json({ extended: false }));
 app.use('/movies', router);
-const conn_str = "mongodb+srv://grantprusik5:Temppass2024@cluster0.m3q4sbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const conn_str = "mongodb+srv://grantprusik5:Temppass2024@cluster0.m3q4sbt.mongodb.net/Cinemania?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.set('strictQuery', false);
 
 
