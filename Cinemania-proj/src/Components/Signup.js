@@ -40,10 +40,54 @@ function SignUp() {
     <div className="signupDiv">
       <NavMenu></NavMenu>
       <h1>Become a Cinemaniac!</h1>
-      {error && <div className="error-message">{error}</div>}
-      <Form className="login-form" onSubmit={handleSubmit}>
-        {/* Form fields here */}
-        <Button variant="primary" type="submit">
+      <Form className="login-form">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>First name</Form.Label>
+          <Form.Control type="firstname" placeholder="First name" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Last name</Form.Label>
+          <Form.Control type="lastname" placeholder="last name" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control type="textarea" placeholder="Enter email" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" />
+        </Form.Group>
+
+        <br></br>
+
+        <CreditCardInput />
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Billing Address</Form.Label>
+          <Form.Control type="address" placeholder="Billing Address" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Home Address</Form.Label>
+          <Form.Control type="address" placeholder="Home Address" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check
+            type="checkbox"
+            label="Subscribe to Promotional Content"
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
           Register
         </Button>
       </Form>
