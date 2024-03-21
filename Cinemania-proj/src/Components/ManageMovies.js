@@ -22,10 +22,9 @@ const ManageMovies = () => {
     setShowForm(true);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Here you can implement logic to add the movie with all the form fields
-    console.log('Adding movie:', {
+    const movieData = {
       title,
       category,
       cast,
@@ -39,7 +38,25 @@ const ManageMovies = () => {
       comingSoon,
       showDate,
       showTime,
-    });
+    };
+    try {
+      const response = await fetch('/api/addMovie', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(movieData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add movie');
+      }
+
+      console.log('Movie added successfully!');
+    } catch (error) {
+      console.error('Error adding movie:', error.message);
+    }
+
     // Reset form state and hide the form after submission
     resetForm();
   };
@@ -71,7 +88,7 @@ const ManageMovies = () => {
       <NavMenu loggedIn={true} admin={true}></NavMenu>
       <h2>Manage Movies</h2>
       {showForm ? (
-        <form id='form-container' onSubmit={handleSubmit}>
+        <form id="form-container" onSubmit={handleSubmit}>
           <label>
             Title:
             <input
@@ -92,10 +109,9 @@ const ManageMovies = () => {
           </label>
           <label>
             Cast:
-            <input
-              type="text"
-              value={cast}
-              onChange={(e) => setCast(e.target.value)}
+            <textarea
+              value={cast.join(', ')}
+              onChange={handleCastChange}
               required
             />
           </label>
@@ -184,7 +200,7 @@ const ManageMovies = () => {
             />
           </label>
 
-          <button id = "form-submit" type="submit">Submit</button>
+          <button id="form-submit" type="submit">Submit</button>
         </form>
       ) : (
         <button onClick={addMovie}>Add Movie</button>
