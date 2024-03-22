@@ -11,7 +11,7 @@ function SignUp() {
   const navigate = useNavigate();
   const [error, setError] = useState(''); // Define error state variable with initial value ''
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Check if the event target is an HTMLFormElement
@@ -34,7 +34,30 @@ function SignUp() {
         return;
       }
   
-      navigate("/ConfirmAccountCreation");
+      // Convert formData to JSON object
+      const userData = {};
+      formData.forEach((value, key) => {
+        userData[key] = value;
+      });
+  
+      try {
+        const response = await fetch('./../backend/routes/users/newUser', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to create account");
+        }
+  
+        console.log("Account created successfully!");
+        navigate("/ConfirmAccountCreation");
+      } catch (error) {
+        setError("Error creating account: " + error.message);
+      }
     } else {
       setError("Invalid form submission.");
     }
@@ -49,43 +72,44 @@ function SignUp() {
           <Form.Label>First name</Form.Label>
           <Form.Control type="text" placeholder="Enter your first name" name="firstname" />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>First name</Form.Label>
-          <Form.Control type="firstname" placeholder="First name" />
-        </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasicLastName">
           <Form.Label>Last name</Form.Label>
-          <Form.Control type="lastname" placeholder="last name" />
+          <Form.Control type="lastname" placeholder="Enter your last name" name="lastname"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control type="firstname" placeholder="Enter your email" name="email"/>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
           <Form.Label>Phone Number</Form.Label>
-          <Form.Control type="textarea" placeholder="Enter email" />
+          <Form.Control type="tel" placeholder="Enter phone number" name="phoneNumber"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control type="password" placeholder="Enter a password" name="password"/>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
           <Form.Label>Confirm Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control type="password" placeholder="Confirm password" name="confirmPassword"/>
         </Form.Group>
 
         <br></br>
 
         <CreditCardInput />
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formBasicBillingAddress">
           <Form.Label>Billing Address</Form.Label>
-          <Form.Control type="address" placeholder="Billing Address" />
+          <Form.Control type="address" placeholder="Enter your Billing Address" name="billingAddress"/>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formBasicHomeAddress">
           <Form.Label>Home Address</Form.Label>
-          <Form.Control type="address" placeholder="Home Address" />
+          <Form.Control type="address" placeholder="Enter your Home Address" name="homeAddress"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
