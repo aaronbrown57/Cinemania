@@ -6,7 +6,7 @@ const MovieDisplay = ({ isAdmin }) => {
     const [upcomingMovies, setUpcomingMovies] = useState([]);
 
     useEffect(() => {
-        fetch('api/movies/AllMovies?' + new Date().getTime())
+        fetch('http://localhost:5000/movies/AllMovies')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch movies');
