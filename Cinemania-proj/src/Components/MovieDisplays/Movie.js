@@ -2,7 +2,8 @@ import Card from "react-bootstrap/Card";
 import YoutubeVideo from "../YoutubeVideo";
 import React, {useState} from "react"
 import {useNavigate} from "react-router-dom"
-import './Movie.css'
+import './Movie.css';
+import './../css/Home.css';
 const Movie = (props) => {
     const navigate = useNavigate();
     const clickHandler = () => {
@@ -30,7 +31,7 @@ const Movie = (props) => {
             {/* <div className='Director'>{props.director}</div> */}
             <div className="movie-info">
             <h6 onClick={clickHandler}>Details</h6>
-          <h6 onClick={bookingClickHandler}>Book Tickets</h6>
+          {props.showing && <button onClick={bookingClickHandler}>Book Tickets</button>}
           <h6 className='play-trailer' onClick={() => trailerClickHandler(props.trailer)}>View Trailer</h6>
           </div>
           </div>

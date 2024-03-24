@@ -1,40 +1,39 @@
 const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const routerMovies = require('./routes/movies');
+const routerUsers = require('./routes/users');
+
 const app = express();
 const port = process.env.PORT || 5000;
-const mongoose = require('mongoose');
-const cors = require('cors');
-app.use(cors());
-const router= require('./routes/movies');
-const routerUser = require('./routes/users');
-
-
-// Connect Database
-// app.use(cors({ origin: true, credentials: 'http://localhost:3000' }));
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", 'http://localhost:3000');
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-//     next();
-// });
-app.use(express.json({ extended: false }));
-app.use('/movies', router);
-app.use('/users', routerUser);
 const conn_str = "mongodb+srv://grantprusik5:Temppass2024@cluster0.m3q4sbt.mongodb.net/Cinemania?retryWrites=true&w=majority&appName=Cluster0";
-mongoose.set('strictQuery', false);
 
+// Enable CORS with specific options
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
 
-app.get('/', (req, res) => res.send('Hello world!'));
+// Handle preflight requests for all routes
+app.options('*', cors());
 
+// Parse JSON bodies in incoming requests
+app.use(express.json({ extended: false }));
+
+// Mount routers
+app.use('/movies', routerMovies);
+app.use('/users', routerUsers);
+
+// Connect to MongoDB
 mongoose.connect(conn_str, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 })
 .then(() => {
     console.log('MongoDB Connection Succeeded...');
+    // Start the server
     app.listen(port, () => console.log(`Server running on port ${port}`));
 })
 .catch(err => {
     console.error(`Error in DB Connection: ${err.message}`);
 });
-   

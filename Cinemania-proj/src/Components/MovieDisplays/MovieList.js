@@ -7,12 +7,12 @@ const MovieList = (props) => {
       <div className="movie-list">
      
         {props.items.map((movie) => (
-          <Movie isAdmin={props.isAdmin}
-          key = {movie.id}
-          title = {movie.title}
-          pieces = {movie.director}
-          img = {movie.img}
-          trailer = {movie.trailer}
+          <Movie isAdmin={props.isAdmin} showing={props.showing}
+          key={movie._id}
+          title={movie.movieTitle}
+          pieces={movie.director}
+          img={movie.trailerPictureURL}
+          trailer={movie.trailerVideoURL}
           />
         ))} 
      
