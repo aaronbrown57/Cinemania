@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import React, { useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
+import SearchResults from '../SearchResults';
 
 
 function NavMenu({ loggedIn, loggedOut, admin }) {
@@ -37,7 +38,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
 
             {loggedIn && <Nav.Link href="/order-history">Order History</Nav.Link>}
             {admin && <Nav.Link href="/manage-promos">Manage Promotions</Nav.Link>}
-            <Form inline onSubmit={handleSubmit}>
+            {/* <Form inline onSubmit={handleSubmit}>
               <Row>
                 <Col xs="auto">
                   <Form.Control
@@ -52,7 +53,8 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
                   <Button type="submit" className='search-btn'>Search</Button>
                 </Col>
               </Row>
-            </Form>
+            </Form> */}
+            <SearchResults/>
           </Nav>
         </Navbar.Collapse>
       </Container>
