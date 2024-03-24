@@ -4,7 +4,6 @@ const router = express.Router();
 // const jwt = require("jsonwebtoken");
 //const auth = require("../middleware/auth");
 const bodyParser = require('body-parser')
-const cors = require('cors');
 const Movie = require('../models/Movie');
 
 router.use(bodyParser.urlencoded({extended: true}));
