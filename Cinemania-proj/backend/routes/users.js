@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const auth = require("../middleware/auth");
+const jwt = require("jsonwebtoken");
+const bcryptjs = require('bcryptjs');
 
 // const jwt = require("jsonwebtoken");
 //const auth = require("../middleware/auth");
@@ -16,14 +19,58 @@ router.use(bodyParser.json());
 //     next();
 // });
 
-router.post('/newUser', async (req, res) => {
+///Signup Router
+router.post("/signup", async (req, res) => {
     try {
-        const newUser = await User.create(req.body);
-        res.json({ msg: 'User added successfully', user: newUser });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+        const { email, password, confirmPassword, firstName, lastName, phone, creditCard, billingAddress, homeAddress, promoSubscription } = req.body;
+        
+        // Check if all required fields are present in the request body
+        if (!email || !password || !confirmPassword || !firstName || !lastName || !phone || !homeAddress) {
+            return res.status(400).json({ msg: "Please enter all required fields" });
+        }
+
+        // Password length check
+        if (password.length < 6) {
+            return res.status(400).json({ msg: "Password should be at least 6 characters long" });
+        }
+
+        // Password matching check
+        if (confirmPassword !== password) {
+            return res.status(400).json({ msg: "Passwords do not match" });
+        }
+
+        // Check if the user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ msg: "User with the same email already exists" });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcryptjs.hash(password, 8);
+
+        // Create a new user instance
+        const newUser = new User({
+            email,
+            password: hashedPassword,
+            firstName,
+            lastName,
+            phone,
+            creditCard, // Assuming creditCard is an object containing card details
+            billingAddress,
+            homeAddress,
+            promoSubscription,
+            status: 1, 
+            type: 1 
+        });
+
+        // Save the new user to the database
+        const savedUser = await newUser.save();
+        res.status(201).json(savedUser); // Return 201 for successful creation
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
+
 
 router.post('/login', async (req, res) => {
     try {
@@ -74,6 +121,34 @@ router.put('/updateUser/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
+//CHECK TOKEN VALID
+router.post("/tokenIsValid", async(req, res) => {
+    try {
+        const token = req.header("x-auth-token");
+        if (!token) return res.json(false);
+        const verified = jwt.verify(token, "passwordKey");
+        if (!verified) return res.json(false);
+        const user = await User.findById(verified.id);
+        if (!user) return res.json(false);
+        console.log('Received token request');
+        return res.json(true);
+    } catch (err) {
+        res.status(500).json({ error: err.message});
+    }
+});
+
+// to get the users credentials
+// we provide a get request on the user / (root) route to get a user's username and token.
+router.get("/", auth, async (req, res) => {
+    const user = await User.findById(req.user);
+    res.json({
+        username: user.username,
+        id: user._id,
+    });
+});
+
 
 
 module.exports = router;
