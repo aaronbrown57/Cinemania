@@ -41,7 +41,7 @@ import ManageMovies from "./Components/ManageMovies.js"
           <Route path="/login" element={<Login />} />
           <Route path="/SignUp" element={<Signup />} />
           <Route path="/" element={<Home />} />
-          <Route path='/AuthView' element={<AuthView/>}/>
+          <Route path="/AuthView/:userId" element={<AuthView/>} />
           <Route path='/admin' element={<AdminView/>}/>
           <Route path='/logout' element={<Home />} />
           {/* Adding new routes for the movie ticket booking process */}

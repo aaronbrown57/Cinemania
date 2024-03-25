@@ -26,7 +26,8 @@ const Login = () => {
       if (user) {
         // Handle successful login
         console.log('Login successful');
-        navigate('/'); // Redirect to the home page after successful login
+        const userId = user.firstName;
+        navigate(`/AuthView/${userId}`); // Redirect to the home page after successful login
       } else {
         setError('Invalid email or password');
       }
