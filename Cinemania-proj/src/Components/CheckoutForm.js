@@ -1,10 +1,16 @@
 import React from 'react';
-import {navigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
 
-const handleSubmit = () => {
-  // navigate('/order-confirmation', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total } });
-};
 const CheckoutForm = ({ onSubmit }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { selectedSeats, showtime, chosenMovie, ticketAges, total } = location.state || {};
+
+  const handleSubmit = () => {
+    navigate('/order-confirmation', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total } });
+  };
+
   return (
     <form onSubmit={onSubmit}>
       {/* Form fields for checkout information */}
