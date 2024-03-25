@@ -67,7 +67,7 @@ function SignUp() {
       });
       localStorage.setItem("auth-token",loginRes.data.token);
       setLoading(false);
-      navigate('/authView')
+      navigate('/AuthView')
         }catch (err) {
           console.error("Error:", err);
           setLoading(false);

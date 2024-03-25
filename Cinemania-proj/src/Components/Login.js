@@ -1,54 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react'; // Import useContext hook
 import { Link, useNavigate } from 'react-router-dom';
 import NavMenu from './Navigation/NavMenu';
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { UserContext } from "../context/UserContext"; // Import UserContext
+import axios from 'axios';
 
 const Login = () => {
+  
+  const [enteredEmail, setEnteredEmail] = useState('');
+  const [enteredPassword, setEnteredPassword] = useState('');
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { setUserData } = useContext(UserContext); // Use useContext hook to access UserContext
 
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
-
+  async function submitHandler(event){
+    event.preventDefault();
+    setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/users/allUsers');
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data');
-      }
-      const users = await response.json();
+      const loginData={
+        email:enteredEmail,
+        password:enteredPassword,
+      };
 
-      const user = users.find((user) => user.email === email && user.password === password);
+      console.log(loginData);
 
-      if (user) {
-        // Handle successful login
-        console.log('Login successful');
-        const userId = user.firstName;
-        navigate(`/AuthView/${userId}`); // Redirect to the home page after successful login
-      } else {
-        setError('Invalid email or password');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Failed to login. Please try again later.');
+      const loginRes = await axios.post("http://localhost:5000/users/login", loginData)
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
+      
+      localStorage.setItem("auth-token", loginRes.data.token);
+      setLoading(false);
+      navigate(`/AuthView/${loginRes.data.user.firstName}`);
+
+    } catch (err) {
+      setLoading(false);
+      err.response.data.msg && setError(err.response.data.msg);
     }
-  };
+    setEnteredEmail('');
+    setEnteredPassword('');
+  }
 
   return (
     <div>
       <NavMenu loggedOut={true} />
       <Container>
-        <Form className="login-form" onSubmit={handleSubmit}>
+        <Form className="login-form" onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={enteredEmail}
+              onChange={(e) => setEnteredEmail(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -56,8 +64,8 @@ const Login = () => {
             <Form.Control
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={enteredPassword}
+              onChange={(e) => setEnteredPassword(e.target.value)}
             />
           </Form.Group>
           {error && <div>{error}</div>}
@@ -75,4 +83,3 @@ const Login = () => {
 };
 
 export default Login;
-
