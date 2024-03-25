@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Movie from './Movie'; // Assuming you have a Movie component
 
 const MovieList = (props) => {

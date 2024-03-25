@@ -41,6 +41,14 @@ const SearchResults = () => {
           autoComplete
           autoHighlight
           options={movieList}
+          filterOptions={(options, state) => {
+            if (state.inputValue === '') {
+              return [];
+            }
+            return options.filter(option =>
+              option.toLowerCase().includes(state.inputValue.toLowerCase())
+            );
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
