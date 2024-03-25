@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import CreditCardInput from "react-credit-card-input";
 import CreditCardIntake from "./CreditCardIntake";
 
+
 function SignUp() {
   const navigate = useNavigate();
   const [error, setError] = useState(''); // Define error state variable with initial value ''

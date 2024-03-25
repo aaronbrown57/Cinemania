@@ -7,8 +7,9 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import React, { useState, useContext } from "react";
-import { useNavigate } from 'react-router-dom';
 import SearchResults from '../SearchResults';
+import { NavLink, useNavigate } from 'react-router-dom'; // Import NavLink and useNavigate
+
 
 
 function NavMenu({ loggedIn, loggedOut, admin }) {
@@ -27,17 +28,15 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav">
-            {loggedIn && admin === false && <Nav.Link href="/Edit">Edit Profile</Nav.Link>}
-            {admin && <Nav.Link href="/manage-Users">Manage Users</Nav.Link>}
-            {admin && <Nav.Link href="/manage-Movies">Manage Movies</Nav.Link>}
+            {loggedIn && admin === false && <NavLink to="/edit" className="nav-link">Edit Profile</NavLink>}
+            {admin && <NavLink to="/manage-Users" className="nav-link">Manage Users</NavLink>}
+            {admin && <NavLink to="/manage-Movies" className="nav-link">Manage Movies</NavLink>}
             <br></br>
-            {loggedIn && <Nav.Link href='/Logout'>Logout</Nav.Link>}
-            {loggedOut && <Nav.Link href='/Login'>Login</Nav.Link>}
-
+            {loggedIn && <NavLink to='/Logout' className="nav-link">Logout</NavLink>}
+            {loggedOut && <NavLink to='/Login' className="nav-link">Login</NavLink>}
             <br></br>
-
-            {loggedIn && <Nav.Link href="/order-history">Order History</Nav.Link>}
-            {admin && <Nav.Link href="/manage-promos">Manage Promotions</Nav.Link>}
+            {loggedIn && <NavLink to="/order-history" className="nav-link">Order History</NavLink>}
+            {admin && <NavLink to="/manage-promos" className="nav-link">Manage Promotions</NavLink>}
             {/* <Form inline onSubmit={handleSubmit}>
               <Row>
                 <Col xs="auto">

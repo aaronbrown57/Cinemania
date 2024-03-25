@@ -1,4 +1,4 @@
-import { useState,useEffect,useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 // import {BrowserRouter as Router, Route,Routes}from react-router-dom;
 import { BrowserRouter as Router, Route, Link, Routes, UNSAFE_useScrollRestoration } from 'react-router-dom';
 
@@ -20,47 +20,51 @@ import OrderConfirmation from './Components/OrderConfirmation';
 import SelectTicketAge from './Components/SelectTicketAge';
 import ManagePromos from "./Components/ManagePromos"
 import ManageMovies from "./Components/ManageMovies.js"
+import Edit from './Components/Edit'; // Import Edit component
 
 
-  const App = () => {
-    const [userData, setUserData] = useState({
-      token: undefined,
+
+
+const App = () => {
+  const [userData, setUserData] = useState({
+    token: undefined,
     user: undefined,
-    });
-  
+  });
 
 
 
-   //I used the current routes
-   return (
+
+  //I used the current routes
+  return (
     // <UserContext.Provider value={{ userData, setUserData }}>
-      <Router>
-    
-        <Routes>
-         <Route path="/ConfirmAccountCreation" element={<ConfirmAccountCreation/>}/>
-          <Route path="/login" element={<Login />} />
-          <Route path="/SignUp" element={<Signup />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/AuthView/:userId" element={<AuthView/>} />
-          <Route path='/admin' element={<AdminView/>}/>
-          <Route path='/logout' element={<Home />} />
-          {/* Adding new routes for the movie ticket booking process */}
-          <Route path='/select-showtime' element={<SelectShowtime />} />
-          <Route path='/select-seats' element={<SelectSeats />} />
-          <Route path="/select-ticket-age" element={<SelectTicketAge />} />
-          <Route path='/order-summary' element={<OrderSummary />} />
-          <Route path='/checkout' element={<CheckoutForm />} />
-          <Route path='/order-confirmation' element={<OrderConfirmation />} />
-          {/* Routes for Admin processes */}
-          <Route path='/manage-movies' element={<ManageMovies />} />
-          <Route path='/manage-promos' element={<ManagePromos />} />
-        </Routes>
-    
-      </Router>
-    // </UserContext.Provider>
-   )
+    <Router>
 
-  }
- 
+      <Routes>
+        <Route path="/ConfirmAccountCreation" element={<ConfirmAccountCreation />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/SignUp" element={<Signup />} />
+        <Route path="/edit" element={<Edit userData={userData} />} /> {/* Pass userData as props */}
+        <Route path="/" element={<Home />} />
+        <Route path="/AuthView/:userId" element={<AuthView />} />
+        <Route path='/admin' element={<AdminView />} />
+        <Route path='/logout' element={<Home />} />
+        {/* Adding new routes for the movie ticket booking process */}
+        <Route path='/select-showtime' element={<SelectShowtime />} />
+        <Route path='/select-seats' element={<SelectSeats />} />
+        <Route path="/select-ticket-age" element={<SelectTicketAge />} />
+        <Route path='/order-summary' element={<OrderSummary />} />
+        <Route path='/checkout' element={<CheckoutForm />} />
+        <Route path='/order-confirmation' element={<OrderConfirmation />} />
+        {/* Routes for Admin processes */}
+        <Route path='/manage-movies' element={<ManageMovies />} />
+        <Route path='/manage-promos' element={<ManagePromos />} />
+      </Routes>
+
+    </Router>
+    // </UserContext.Provider>
+  )
+
+}
+
 export default App;
 
