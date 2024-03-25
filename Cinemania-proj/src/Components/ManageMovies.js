@@ -4,15 +4,15 @@ import "./css/ManageMovies.css";
 
 const ManageMovies = () => {
   const [showForm, setShowForm] = useState(false);
-  const [title, setTitle] = useState('');
+  const [movieTitle, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [cast, setCast] = useState([]);
   const [director, setDirector] = useState('');
   const [producer, setProducer] = useState('');
   const [synopsis, setSynopsis] = useState('');
   const [reviews, setReviews] = useState('');
-  const [poster, setPoster] = useState('');
-  const [trailerVideo, setTrailerVideo] = useState('');
+  const [trailerPictureURL, setPoster] = useState('');
+  const [trailerVideoURL, setTrailerVideo] = useState('');
   const [rating, setRating] = useState('');
   const [comingSoon, setComingSoon] = useState(false);
   const [showDate, setShowDate] = useState('');
@@ -25,22 +25,22 @@ const ManageMovies = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const movieData = {
-      title,
       category,
       cast,
       director,
       producer,
-      synopsis,
       reviews,
-      poster,
-      trailerVideo,
+      synopsis,
+      trailerPictureURL,
+      trailerVideoURL,
+      movieTitle,
       rating,
       comingSoon,
       showDate,
       showTime,
     }; 
     try {
-      const response = await fetch('./../backend/routes/movies/addMovie', {
+      const response = await fetch('http://localhost:5000/movies/addMovie', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const ManageMovies = () => {
             Title:
             <input
               type="text"
-              value={title}
+              value={movieTitle}
               onChange={(e) => setTitle(e.target.value)}
               required
             />
@@ -128,7 +128,7 @@ const ManageMovies = () => {
             Image:
             <input
               type="text"
-              value={poster}
+              value={trailerPictureURL}
               onChange={(e) => setPoster(e.target.value)}
               required
             />
@@ -138,7 +138,7 @@ const ManageMovies = () => {
             Trailer Video ID:
             <input
               type="text"
-              value={trailerVideo}
+              value={trailerVideoURL}
               onChange={(e) => setTrailerVideo(e.target.value)}
               required
             />
@@ -182,23 +182,35 @@ const ManageMovies = () => {
             />
           </label>
           <label>
-            Show Dates:
+          Coming Soon:
             <input
-              type="text"
-              value={showDate}
-              onChange={(e) => setShowDate(e.target.value)}
-              required
+              type="checkbox"
+              checked={comingSoon}
+              onChange={(e) => setComingSoon(e.target.checked)}
             />
           </label>
-          <label>
-            Show Times:
-            <input
-              type="text"
-              value={showTime}
-              onChange={(e) => setShowTime(e.target.value)}
-              required
-            />
-          </label>
+          {!comingSoon && (
+            <>
+              <label>
+                Show Dates:
+                <input
+                  type="text"
+                  value={showDate}
+                  onChange={(e) => setShowDate(e.target.value)}
+                  required
+                />
+              </label>
+              <label>
+                Show Times:
+                <input
+                  type="text"
+                  value={showTime}
+                  onChange={(e) => setShowTime(e.target.value)}
+                  required
+                />
+              </label>
+            </>
+          )}
 
           <button id="form-submit" type="submit">Submit</button>
         </form>
