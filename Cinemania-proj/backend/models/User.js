@@ -4,6 +4,8 @@ const UserSchema = new mongoose.Schema({
     type: {
         type: Number,
         required: true,
+        default: 0
+        //0 means inactive
     },
     firstName: {
         type: String,
@@ -22,9 +24,8 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
     promoSubscription: {
-        type: String,
-        enum: ['YES', 'NO'], 
-        default: 'NO',
+        type: Boolean, 
+        default: false 
     },
     status: {
         type: Number,
