@@ -26,7 +26,7 @@ const OrderSummary = () => {
   const total = subtotal + (subtotal * salesTaxRate);
 
   const handleSubmit = () => {
-    navigate('/order-confirmation', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total } });
+    navigate('/checkout', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total } });
   };
 
   if (!ticketAges) {
