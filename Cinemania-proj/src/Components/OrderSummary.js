@@ -1,4 +1,5 @@
 import React from 'react';
+import './css/OrderSummary.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const OrderSummary = () => {
@@ -43,13 +44,16 @@ const OrderSummary = () => {
           </li>
         ))}
       </ul>
-      <p className="mt-3">Subtotal: ${subtotal.toFixed(2)}</p>
-      <p>Sales Tax (7%): ${(subtotal * salesTaxRate).toFixed(2)}</p>
-      <h5>Total: ${total.toFixed(2)}</h5>
+      <div className='order'>
+        <p className="mt-3">Subtotal: ${subtotal.toFixed(2)}</p>
+        <p>Sales Tax (7%): ${(subtotal * salesTaxRate).toFixed(2)}</p>
+        <h5>Total: ${total.toFixed(2)}</h5>
+      </div>
       <div className="mt-3">
-        <button className="btn btn-primary" onClick={handleSubmit}>Confirm Order</button>
-        <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
-
+        <div className='button-container'>
+          <button className="btn btn-primary" onClick={handleSubmit}>Confirm Order</button>
+          <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
+        </div>
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 import React from 'react';
+import './css/OrderConfirmation.css'
 import { useLocation, Link } from 'react-router-dom';
 
 const OrderConfirmation = () => {
   const location = useLocation();
-  const { selectedSeats, showtime, chosenMovie, ticketAges, total } = location.state || {};
+  const { showtime, chosenMovie, ticketAges, total } = location.state || {};
 
   if (!location.state) {
     return <div>No order details found. Please start your order again.</div>;
@@ -14,8 +15,10 @@ const OrderConfirmation = () => {
       <h2>Order Confirmation</h2>
       <div className="card">
         <div className="card-body">
+          <div className='order'>
           <h5 className="card-title">Thank you for your purchase!</h5>
           <p className="card-text">Here are your order details:</p>
+          </div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">Movie: {chosenMovie}</li>
             <li className="list-group-item">Showtime: {showtime}</li>
