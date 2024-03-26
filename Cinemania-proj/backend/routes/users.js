@@ -50,7 +50,7 @@ const sendVerificationEmail = (email, uniqueCode) => {
 ///Signup Router
 router.post("/signup", async (req, res) => {
     try {
-        const { email, password, confirmPassword, firstName, lastName, phone, creditCard, billingAddress, homeAddress, promoSubscription } = req.body;
+        const { type,email, password, confirmPassword, firstName, lastName, phone, creditCard, billingAddress, homeAddress, promoSubscription } = req.body;
 
         // Check if all required fields are present in the request body
         if (!email || !password || !confirmPassword || !firstName || !lastName || !phone || !homeAddress) {

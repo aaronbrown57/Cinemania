@@ -4,6 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+<<<<<<< HEAD
+=======
+        
+       
+>>>>>>> 34356370d0e1e0a8683be2e82d268c06796ae223
         "test": "echo \"Error: no test specified\" && exit 1",
         "app": "nodemon app.js",
         "start": "node app.js"
@@ -25,5 +30,13 @@
     },
     "devDependencies": {
         "nodemon": "^3.0.1"
+<<<<<<< HEAD
     }
 }
+=======
+        
+    }
+}
+
+
+>>>>>>> 34356370d0e1e0a8683be2e82d268c06796ae223
