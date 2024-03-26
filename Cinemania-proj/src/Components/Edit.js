@@ -67,7 +67,14 @@ const Edit = () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify(userData),
+                body: JSON.stringify({
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    email: userData.email,
+                    password: userData.password,
+                    promoSubscription: userData.promoSubscription,
+                    // Include other fields as needed
+                }),
             });
     
             if (!response.ok) {
@@ -76,7 +83,10 @@ const Edit = () => {
     
             const updatedUserData = await response.json();
             console.log('Updated user data:', updatedUserData); // Log updated user data
-            navigate(`/profile/${userData._id}`); // Redirect to user profile page after successful update
+            
+            // Redirect to homepage upon successful update
+            navigate('/');
+    
         } catch (error) {
             console.error('Error updating user:', error);
         }

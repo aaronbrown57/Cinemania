@@ -33,6 +33,7 @@ const Login = () => {
         user: loginRes.data.user,
       });
       
+      const userName = loginRes.data.user.firstName; //use later
       localStorage.setItem("auth-token", loginRes.data.token);
       setLoading(false);
       navigate(`/AuthView/${loginRes.data.user.firstName}`);
