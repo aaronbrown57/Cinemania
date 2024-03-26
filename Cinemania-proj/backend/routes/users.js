@@ -243,18 +243,33 @@ router.delete('/deleteUser/:id', async (req, res) => {
     }
 });
 
-router.put('/updateUser/:id', async (req, res) => {
+router.put('/updateUser/:id', auth, async (req, res) => {
     try {
         const userId = req.params.id;
+        
+        // Check if the user ID is valid
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: 'Invalid user ID' });
+        }
+
+        // Check if the authenticated user has permission to update this user
+        if (req.user !== userId) {
+            return res.status(403).json({ error: 'You are not authorized to update this user' });
+        }
+
         const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' });
         }
+
         res.json({ msg: 'User updated successfully', updatedUser });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error updating user:', error);
+        res.status(500).json({ error: 'An error occurred while updating user' });
     }
 });
+
 
 
 //CHECK TOKEN VALID
