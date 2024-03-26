@@ -246,17 +246,29 @@ router.delete('/deleteUser/:id', async (req, res) => {
 router.put('/updateUser/:id', auth, async (req, res) => {
     try {
         const userId = req.params.id;
-        
+        console.log('User ID:', userId); // Debugging statement
+
         // Check if the user ID is valid
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ error: 'Invalid user ID' });
         }
 
-        // Check if the authenticated user has permission to update this user
-        if (req.user !== userId) {
+        // Debugging statement to check the token
+        const token = req.header("x-auth-token");
+        console.log('Token:', token); // Debugging statement
+        if (!token) return res.status(401).json({ error: 'No auth token, access denied' });
+
+        // Verify the token
+        const verified = jwt.verify(token, "passwordKey");
+        console.log('Verified:', verified); // Debugging statement
+        if (!verified) return res.status(401).json({ error: 'Token verification failed' });
+
+        // Check if the verified user ID matches the requested user ID
+        if (verified.id !== userId) {
             return res.status(403).json({ error: 'You are not authorized to update this user' });
         }
 
+        // Update the user
         const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
 
         if (!updatedUser) {
@@ -269,6 +281,7 @@ router.put('/updateUser/:id', auth, async (req, res) => {
         res.status(500).json({ error: 'An error occurred while updating user' });
     }
 });
+
 
 
 
