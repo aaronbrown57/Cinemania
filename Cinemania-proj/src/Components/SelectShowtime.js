@@ -22,7 +22,7 @@ const SelectShowtime = () => {
   };
 
   return (
-    <div>
+    <div className="main-container"> {/* Wrapper div for centering content with margin */}
       <h2>Select a Showtime for {chosenMovie}</h2>
       <div className="showtime-container">
         {showtimes.map((time, index) => (
@@ -31,7 +31,9 @@ const SelectShowtime = () => {
           </button>
         ))}
       </div>
-      <button className="btn btn-secondary mt-3" onClick={() => navigate('/')}>Cancel</button>
+      <div className="cancel-container">
+        <button className="btn btn-secondary mt-3" onClick={() => navigate('/')}>Cancel</button>
+      </div>
     </div>
   );
 };
