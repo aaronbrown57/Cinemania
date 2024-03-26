@@ -52,7 +52,7 @@ const ConfirmAccountCreation =  ({ userEmail, userName })=> {
     return (
         
         <div className="confirmationDiv">
-            <h1>Thank yo {userName} for creating your account</h1>
+            <h1>Thank you {userName} for creating your account</h1>
             <h4>Please confirm the 4 digit code sent to your email</h4>
             <form onSubmit={confirmCode}>
                 <label htmlFor="code">Enter 4 digit code:</label>
