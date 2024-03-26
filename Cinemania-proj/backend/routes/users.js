@@ -243,7 +243,8 @@ router.delete('/deleteUser/:id', async (req, res) => {
     }
 });
 
-router.put('/updateUser/:id', auth, async (req, res) => {
+// Update user route (no auth token required)
+router.put('/updateUser/:id', async (req, res) => {
     try {
         const userId = req.params.id;
         console.log('User ID:', userId); // Debugging statement
@@ -253,23 +254,23 @@ router.put('/updateUser/:id', auth, async (req, res) => {
             return res.status(400).json({ error: 'Invalid user ID' });
         }
 
-        // Debugging statement to check the token
-        const token = req.header("x-auth-token");
-        console.log('Token:', token); // Debugging statement
-        if (!token) return res.status(401).json({ error: 'No auth token, access denied' });
+        // Fetch user data from the request body
+        const { firstName, lastName, email, phone, creditCard, billingAddress, homeAddress, promoSubscription } = req.body;
 
-        // Verify the token
-        const verified = jwt.verify(token, "passwordKey");
-        console.log('Verified:', verified); // Debugging statement
-        if (!verified) return res.status(401).json({ error: 'Token verification failed' });
-
-        // Check if the verified user ID matches the requested user ID
-        if (verified.id !== userId) {
-            return res.status(403).json({ error: 'You are not authorized to update this user' });
-        }
+        // Construct the updated user object
+        const updatedUserData = {
+            firstName,
+            lastName,
+            email,
+            phone,
+            creditCard,
+            billingAddress,
+            homeAddress,
+            promoSubscription,
+        };
 
         // Update the user
-        const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+        const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
 
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' });
