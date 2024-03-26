@@ -178,7 +178,7 @@ router.post("/login", async (req,res) => {
             return res.status(400).send({msg: "Incorrect password."});
         }
         const token = jwt.sign({ id: user._id}, "passwordKey");
-        res.json({ token, user: { id: user._id, username: user.username } });
+        res.json({ token, user: { id: user._id, firstName: user.firstName } });
         console.log('Received login request');
     } catch (err) {
         res.status(500).json({ error: err.message});

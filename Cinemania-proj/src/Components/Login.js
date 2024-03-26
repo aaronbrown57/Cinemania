@@ -25,19 +25,16 @@ const Login = () => {
         password:enteredPassword,
       };
 
-      console.log(loginData);
-
       const loginRes = await axios.post("http://localhost:5000/users/login", loginData)
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
+        firstName: loginRes.data.firstName
       });
-      
-      const userName = loginRes.data.user.firstName; //use later
+      const firstName = loginRes.data.firstName;
       localStorage.setItem("auth-token", loginRes.data.token);
       setLoading(false);
-      navigate(`/AuthView/${loginRes.data.user.firstName}`);
-
+      navigate(`/AuthView/${firstName}`);
     } catch (err) {
       setLoading(false);
       err.response.data.msg && setError(err.response.data.msg);
