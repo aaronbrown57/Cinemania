@@ -69,6 +69,10 @@ const Login = () => {
               onChange={(e) => setEnteredPassword(e.target.value)}
             />
           </Form.Group>
+          <Form.Text className="sign-up">
+            <Link to="/forgot-password">Forgot password?</Link>
+          </Form.Text>
+          <br />
           {error && <div>{error}</div>}
           <Button variant="primary" type="submit">
             Signin

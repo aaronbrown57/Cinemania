@@ -264,6 +264,22 @@ router.get("/", auth, async (req, res) => {
     });
 });
 
+router.post("/check-email", async (req, res) => {
+    try {
+        const { email } = req.body;
+        
+        // Check if the email exists in the database
+        const existingUser = await User.findOne({ email });
+
+        // Send response indicating whether the email exists
+        res.json({ exists: !!existingUser, email: email });
+    } catch (error) {
+        console.error('Error checking email existence:', error);
+        // Send an error response if something went wrong
+        res.status(500).json({ error: 'An error occurred while checking email existence' });
+    }
+});
+
 
 
 module.exports = router;
