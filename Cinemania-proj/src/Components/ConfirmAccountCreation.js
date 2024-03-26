@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import React, {useState} from 'react';
 import AuthView from './AuthView/AuthView';
 import axios from 'axios';
-const ConfirmAccountCreation =  ({ userEmail, userName })=> {
+const ConfirmAccountCreation =  ({ userEmail, userName, userType })=> {
     const [formData, setFormData] = useState({
         email: userEmail,
         verificationCode: ''
@@ -27,8 +27,12 @@ const ConfirmAccountCreation =  ({ userEmail, userName })=> {
         try{
             console.log(formData)
         const response = await axios.post('http://localhost:5000/users/confirm-account', formData);
+        if (userType === 2) {
+            // Redirect to the admin view
+            navigate('/admin');
+        } else {
         navigate(`/AuthView/${userName}`);
-
+        }
             alert('You are now a Cinemania member! Click here to return to the home screen') 
         }    
             catch (error) {
