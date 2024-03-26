@@ -49,7 +49,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
                 </Col>
               </Row>
             </Form> */}
-            {admin === false && <SearchResults/>}
+            {!admin && (loggedIn || loggedOut) && <SearchResults />}
           </Nav>
         </Navbar.Collapse>
       </Container>
