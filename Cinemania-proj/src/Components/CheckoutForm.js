@@ -1,4 +1,5 @@
 import React from 'react';
+import './css/CheckoutForm.css'
 import {useNavigate, useLocation} from 'react-router-dom'
 
 const CheckoutForm = ({ onSubmit }) => {
@@ -12,6 +13,7 @@ const CheckoutForm = ({ onSubmit }) => {
   };
 
   return (
+    <div className='checkoutForm'>
     <form onSubmit={onSubmit}>
       {/* Form fields for checkout information */}
       <div>
@@ -30,8 +32,12 @@ const CheckoutForm = ({ onSubmit }) => {
     <label for="zip_code">Zip Code:</label>
     <input type="text" id="zip_code" name="zip_code" required></input>
   </div>
-      <button onClick={handleSubmit} type="submit">Submit</button>
+    <div className='button-container'>
+      <button className="confirm-button-checkout" onClick={handleSubmit} type="submit">Submit</button>
+      <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
+    </div>
     </form>
+    </div>
   );
 };
 

@@ -1,0 +1,26 @@
+.checkoutForm {
+    margin: 25px;
+}
+
+.confirm-button-checkout {
+    background-color: #007bff;
+}
+
+.confirm-button-checkout:hover {
+    background-color: #0056b3;
+  }
+
+.button-container {
+    display: flex;
+}
+
+.button-container button{
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px
+}
+
