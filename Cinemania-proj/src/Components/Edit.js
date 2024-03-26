@@ -2,18 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavMenu from './Navigation/NavMenu';
 import { Container, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+
 
 const Edit = () => {
     const navigate = useNavigate();
+    const [currentEmail, setCurrentEmail] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [userId, setUserId] = useState(null); // Separate state for user ID
     const [userData, setUserData] = useState({
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        billingAddress: '',
-        homeAddress: '',
-        phoneNumber: '',
+        firstName: '', // Initialize with empty string
+        lastName: '', // Initialize with empty string
+        email: '', // Initialize with empty string
+        password: '', // Initialize with empty string
+        confirmPassword: '', // Initialize with empty string
+        billingAddress: '', // Initialize with empty string
+        homeAddress: '', // Initialize with empty string
+        phoneNumber: '', // Initialize with empty string
         promoSubscription: false,
     });
 
@@ -24,6 +29,14 @@ const Edit = () => {
 
     const fetchUserData = async () => {
         try {
+            const loginData = {
+                email: currentEmail,
+                password: currentPassword,
+            };
+    
+            const loginRes = await axios.post("http://localhost:5000/users/login", loginData);
+            console.log('Login Response:', loginRes.data); // Log the response data for debugging
+    
             const response = await fetch('http://localhost:5000/users/allUsers', {
                 method: 'GET',
                 headers: {
@@ -31,37 +44,52 @@ const Edit = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
-
+    
             if (!response.ok) {
                 throw new Error('Failed to fetch user data');
             }
-
+    
             const userData = await response.json();
             console.log('Fetched user data:', userData); // Log fetched user data
-
-            // Find user by first name (replace 'John' with the actual first name to search for)
-            const user = userData.find(user => user.firstName === 'John');
-
+    
+            const user = userData.find(user => user.email === currentEmail);
+            console.log('Found user:', user); // Log the found user
+    
             if (user) {
-                console.log('Found user:', user); // Log the found user
-                setUserData(user);
+                setUserId(user.id); // Set user ID
+                setUserData(prevUserData => ({
+                    ...prevUserData,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    password: currentPassword,
+                    promoSubscription: user.promoSubscription,
+                    // Add other fields as needed
+                }));
             } else {
-                console.error('User not found'); // Log if user is not found
+                console.error('Current user not found'); // Log if current user is not found
             }
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
     };
 
+    const handleSubmitCurrentInfo = async (e) => {
+        e.preventDefault();
+        console.log('Submit Current Info Button clicked'); // Debug log for button click
 
-    const handleSubmit = async (e) => {
+        // Fetch current user data based on entered email and password
+        fetchUserData();
+    };
+
+    const handleSubmitUpdateUser = async (e) => {
         e.preventDefault();
         console.log('Button clicked'); // Debug log for button click
     
         try {
             console.log('Starting user update request...'); // Debug log for starting request
     
-            const response = await fetch(`http://localhost:5000/users/updateUser/${userData._id}`, {
+            const response = await fetch(`http://localhost:5000/users/updateUser/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,7 +119,6 @@ const Edit = () => {
             console.error('Error updating user:', error);
         }
     };
-    
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -107,7 +134,34 @@ const Edit = () => {
             <NavMenu />
             <Container>
                 <h1>Edit Profile</h1>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmitCurrentInfo}>
+                    <Form.Group controlId="formBasicCurrentEmail">
+                        <Form.Label>Current Email</Form.Label>
+                        <Form.Control
+                            type="email"
+                            name="currentEmail"
+                            value={currentEmail}
+                            onChange={(e) => setCurrentEmail(e.target.value)}
+                            placeholder="Enter your current email"
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicCurrentPassword">
+                        <Form.Label>Current Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            name="currentPassword"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            placeholder="Enter your current password"
+                        />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Submit Current Info
+                    </Button>
+                </Form>
+
+                <Form onSubmit={handleSubmitUpdateUser}>
                     <Form.Group controlId="formBasicFirstName">
                         <Form.Label>First Name</Form.Label>
                         <Form.Control
