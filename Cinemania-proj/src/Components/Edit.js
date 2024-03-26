@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavMenu from './Navigation/NavMenu';
 import { Container, Form, Button } from 'react-bootstrap';
+import CreditCardInput from "react-credit-card-input";
 import axios from 'axios';
 
 
@@ -14,6 +15,10 @@ const Edit = () => {
         firstName: '', // Initialize with empty string
         lastName: '', // Initialize with empty string
         email: '', // Initialize with empty string
+        creditCard: {
+            cardNumber: "",
+            expiry: "",
+          },
         password: '', // Initialize with empty string
         confirmPassword: '', // Initialize with empty string
         billingAddress: '', // Initialize with empty string
@@ -61,11 +66,13 @@ const Edit = () => {
                     ...prevUserData,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    email: "385 River Road, Athens, GA, 30114",
+                    email: user.email,
                     password: currentPassword,
                     promoSubscription: user.promoSubscription,
-                    card: '1234-1234-1234-1234',
-                    // Add other fields as needed
+                    creditCard: {
+                        cardNumber: user.creditCard ? user.creditCard.cardNumber : '', // Check if creditCard object exists
+                        expiry: user.creditCard ? user.creditCard.expiry : '', // Check if creditCard object exists
+                    },
                 }));
             } else {
                 console.error('Current user not found'); // Log if current user is not found
@@ -78,7 +85,6 @@ const Edit = () => {
     const handleSubmitCurrentInfo = async (e) => {
         e.preventDefault();
         console.log('Submit Current Info Button clicked'); // Debug log for button click
-
         // Fetch current user data based on entered email and password
         fetchUserData();
     };
@@ -97,12 +103,7 @@ const Edit = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
                 body: JSON.stringify({
-                    firstName: userData.firstName,
-                    lastName: userData.lastName,
-                    email: userData.email,
-                    password: userData.password,
-                    promoSubscription: userData.promoSubscription,
-                    // Include other fields as needed
+                   userData
                 }),
             });
 
@@ -114,7 +115,7 @@ const Edit = () => {
             console.log('Updated user data:', updatedUserData); // Log updated user data
 
             // Redirect to homepage upon successful update
-            navigate('/');
+            navigate(`/AuthView/${userData.firstName}`);
 
         } catch (error) {
             console.error('Error updating user:', error);
@@ -196,16 +197,38 @@ const Edit = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formBasicCard">
-                        <Form.Label>Card</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="card"
-                            value={userData.card || ''}
-                            onChange={handleChange}
-                            placeholder=""
-                        />
-                    </Form.Group>
+                    <p >Add payment method</p>
+                   
+                    <CreditCardInput
+                        cardNumberInputProps={{
+                            value: userData.creditCard.cardNumber,
+                            onChange: (e) => {
+                                setUserData(prevUserData => ({
+                                    ...prevUserData,
+                                    creditCard: {
+                                        ...prevUserData.creditCard,
+                                        cardNumber: e.target.value
+                                    }
+                                }));
+                            }
+                        }}
+                        cardExpiryInputProps={{
+                            value: userData.creditCard.expiry,
+                            onChange: (e) => {
+                                setUserData(prevUserData => ({
+                                    ...prevUserData,
+                                    creditCard: {
+                                        ...prevUserData.creditCard,
+                                        expiry: e.target.value
+                                    }
+                                }));
+                            }
+                        }}
+                        fieldClassName="input"
+                    />
+
+
+          fieldClassName="input"
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
