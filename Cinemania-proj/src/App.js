@@ -7,6 +7,7 @@ import './App.css';
 import Home from './Components/Home';
 import Signup from './Components/Signup';
 import Login from './Components/Login';
+import ForgotPassword from './Components/ForgotPassword';
 import AuthView from './Components/AuthView/AuthView';
 import axios from 'axios';
 import AdminView from './Components/Admin/AdminView';
@@ -77,6 +78,7 @@ const App = () => {
         <Routes>
          <Route path="/ConfirmAccountCreation" element={<ConfirmAccountCreation/>}/>
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/SignUp" element={<Signup />} />
           <Route path="/" element={<Home />} />
           <Route path="/AuthView/:userId" element={<AuthView/>} />
