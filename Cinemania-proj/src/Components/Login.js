@@ -9,8 +9,8 @@ import axios from 'axios';
 
 const Login = () => {
   
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
+  const [email, setEnteredEmail] = useState('');
+  const [password, setEnteredPassword] = useState('');
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,20 +21,29 @@ const Login = () => {
     setLoading(true);
     try {
       const loginData={
-        email:enteredEmail,
-        password:enteredPassword,
+        email,
+        password,
       };
 
       const loginRes = await axios.post("http://localhost:5000/users/login", loginData)
+      const userType = loginRes.data.user.type;
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
-        firstName: loginRes.data.firstName
+        firstName: loginRes.data.firstName,
+        type: loginRes.data.user.type,
       });
       const firstName = loginRes.data.firstName;
+      console.log(firstName);
+      console.log(loginRes.data.user.userType)
       localStorage.setItem("auth-token", loginRes.data.token);
       setLoading(false);
-      navigate(`/AuthView/${firstName}`);
+       // Redirect based on user type
+       if (userType === 1) {
+        navigate(`/AuthView/${firstName}`); // Redirect regular users to AuthView
+      } else if (userType === 2) {
+        navigate('/admin'); // Redirect admins to AdminView
+      }
     } catch (err) {
       setLoading(false);
       err.response.data.msg && setError(err.response.data.msg);
@@ -53,7 +62,7 @@ const Login = () => {
             <Form.Control
               type="email"
               placeholder="Enter email"
-              value={enteredEmail}
+              value={email}
               onChange={(e) => setEnteredEmail(e.target.value)}
             />
           </Form.Group>
@@ -62,7 +71,7 @@ const Login = () => {
             <Form.Control
               type="password"
               placeholder="Password"
-              value={enteredPassword}
+              value={password}
               onChange={(e) => setEnteredPassword(e.target.value)}
             />
           </Form.Group>
