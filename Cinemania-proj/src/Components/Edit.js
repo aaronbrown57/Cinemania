@@ -33,10 +33,10 @@ const Edit = () => {
                 email: currentEmail,
                 password: currentPassword,
             };
-    
+
             const loginRes = await axios.post("http://localhost:5000/users/login", loginData);
             console.log('Login Response:', loginRes.data); // Log the response data for debugging
-    
+
             const response = await fetch('http://localhost:5000/users/allUsers', {
                 method: 'GET',
                 headers: {
@@ -44,26 +44,27 @@ const Edit = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
-    
+
             if (!response.ok) {
                 throw new Error('Failed to fetch user data');
             }
-    
+
             const userData = await response.json();
             console.log('Fetched user data:', userData); // Log fetched user data
-    
+
             const user = userData.find(user => user.email === currentEmail);
             console.log('Found user:', user); // Log the found user
-    
+
             if (user) {
                 setUserId(user.id); // Set user ID
                 setUserData(prevUserData => ({
                     ...prevUserData,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    email: user.email,
+                    email: "385 River Road, Athens, GA, 30114",
                     password: currentPassword,
                     promoSubscription: user.promoSubscription,
+                    card: '1234-1234-1234-1234',
                     // Add other fields as needed
                 }));
             } else {
@@ -85,10 +86,10 @@ const Edit = () => {
     const handleSubmitUpdateUser = async (e) => {
         e.preventDefault();
         console.log('Button clicked'); // Debug log for button click
-    
+
         try {
             console.log('Starting user update request...'); // Debug log for starting request
-    
+
             const response = await fetch(`http://localhost:5000/users/updateUser/${userId}`, {
                 method: 'PUT',
                 headers: {
@@ -104,17 +105,17 @@ const Edit = () => {
                     // Include other fields as needed
                 }),
             });
-    
+
             if (!response.ok) {
                 throw new Error('Failed to update user');
             }
-    
+
             const updatedUserData = await response.json();
             console.log('Updated user data:', updatedUserData); // Log updated user data
-            
+
             // Redirect to homepage upon successful update
             navigate('/');
-    
+
         } catch (error) {
             console.error('Error updating user:', error);
         }
@@ -169,7 +170,7 @@ const Edit = () => {
                             name="firstName"
                             value={userData.firstName || ''}
                             onChange={handleChange}
-                            placeholder="Enter your first name"
+                            placeholder=""
                         />
                     </Form.Group>
 
@@ -180,18 +181,29 @@ const Edit = () => {
                             name="lastName"
                             value={userData.lastName || ''}
                             onChange={handleChange}
-                            placeholder="Enter your last name"
+                            placeholder=""
                         />
                     </Form.Group>
 
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email Address</Form.Label>
+                        <Form.Label>Billing Address</Form.Label>
                         <Form.Control
                             type="email"
                             name="email"
                             value={userData.email || ''}
                             onChange={handleChange}
-                            placeholder="Enter your email address"
+                            placeholder=""
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicCard">
+                        <Form.Label>Card</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="card"
+                            value={userData.card || ''}
+                            onChange={handleChange}
+                            placeholder=""
                         />
                     </Form.Group>
 
@@ -202,23 +214,9 @@ const Edit = () => {
                             name="password"
                             value={userData.password || ''}
                             onChange={handleChange}
-                            placeholder="Enter your password"
+                            placeholder=""
                         />
                     </Form.Group>
-
-                    <Form.Group controlId="formBasicPromoSubscription">
-                        <Form.Label>Promo Subscription</Form.Label>
-                        <Form.Control
-                            as="select"
-                            name="promoSubscription"
-                            value={userData.promoSubscription || 'NO'}
-                            onChange={handleChange}
-                        >
-                            <option value="YES">YES</option>
-                            <option value="NO">NO</option>
-                        </Form.Control>
-                    </Form.Group>
-
                     <Button variant="primary" type="submit">
                         Save Changes
                     </Button>
