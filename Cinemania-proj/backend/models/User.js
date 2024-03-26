@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    verified:{
+        type:Boolean,
+        default:false
+    }
 });
 
 module.exports = User = mongoose.model('User', UserSchema);
