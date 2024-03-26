@@ -4,6 +4,7 @@ const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require('bcryptjs');
 const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');
 
 // const jwt = require("jsonwebtoken");
 //const auth = require("../middleware/auth");
