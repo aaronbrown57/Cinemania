@@ -3,27 +3,55 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require('bcryptjs');
+const nodemailer = require('nodemailer');
 
 // const jwt = require("jsonwebtoken");
 //const auth = require("../middleware/auth");
 const bodyParser = require('body-parser')
 const User = require('../models/User');
+const UserVerification= require('../models/UserVerification')
 
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
-// router.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", 'http://localhost:5000');
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-//     next();
-// });
+
+ // Function to generate a random 4-digit verification code
+const generateVerificationCode = () => {
+    return Math.floor(1000 + Math.random() * 9000);
+};
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    port: 465,
+    secure: true,
+    secureConnection:false,
+    debug:true,
+    logger:true,
+        auth: {
+            user: 'cinemaniateam@gmail.com',
+            pass: 'balx bias kmmh btku'
+        },
+    tls:{
+        rejectUnauthorized:true
+    }
+});
+
+const sendVerificationEmail = (email, uniqueCode) => {
+    // Prepare email
+    const mailOptions = {
+        from: 'cinemaniateam@gmail.com',
+        to: email,
+        subject: 'Account Verification Code',
+        text: `Your verification code is: ${uniqueCode}`
+    };
+
+    return transporter.sendMail(mailOptions);
+}
 
 ///Signup Router
 router.post("/signup", async (req, res) => {
     try {
         const { email, password, confirmPassword, firstName, lastName, phone, creditCard, billingAddress, homeAddress, promoSubscription } = req.body;
-        
+
         // Check if all required fields are present in the request body
         if (!email || !password || !confirmPassword || !firstName || !lastName || !phone || !homeAddress) {
             return res.status(400).json({ msg: "Please enter all required fields" });
@@ -59,15 +87,72 @@ router.post("/signup", async (req, res) => {
             billingAddress,
             homeAddress,
             promoSubscription,
-            status: 1, 
-            type: 1 
+            status: 1,
+            type: 1,
+            verified: false
         });
 
         // Save the new user to the database
         const savedUser = await newUser.save();
-        res.status(201).json(savedUser); // Return 201 for successful creation
+
+        // Generate verification code
+        const uniqueCode = generateVerificationCode();
+
+        // Save verification code to database
+        const newVerification = new UserVerification({
+            userId: savedUser._id,
+            verificationCode: uniqueCode,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 6000000, // gives user 10 minutes
+        });
+
+        await newVerification.save();
+
+        // Send verification email
+        await sendVerificationEmail(email, uniqueCode);
+
+        res.status(201).json({ msg: 'User registered successfully. Verification email sent.' });
     } catch (err) {
+        console.error(err.message);
         res.status(500).json({ error: err.message });
+    }
+});
+
+// Endpoint for confirming account creation
+router.post('/confirm-account', async (req, res) => {
+    try {
+        const { email, verificationCode } = req.body;
+
+        // Find the user by email
+        const user = await User.findOne({ email });
+
+        // Check if the user exists
+        if (!user) {
+            return res.status(400).json({ msg: 'User not found' });
+        }
+
+        // Check if the verification code matches
+        const verification = await UserVerification.findOne({ userId: user._id, verificationCode });
+
+        if (!verification) {
+            return res.status(400).json({ msg: 'Invalid verification code' });
+        }
+
+        // Check if the verification code has expired
+        const currentTime = new Date();
+        if (currentTime > verification.expiresAt) {
+            return res.status(400).json({ msg: 'Verification code has expired' });
+        }
+
+        // Update the user's account status
+        user.verified = true;
+        await user.save();
+
+        res.json({ msg: 'Account verified successfully' });
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
 });
 

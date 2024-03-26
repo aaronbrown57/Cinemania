@@ -2,10 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import React, { useState, useContext } from "react";
 import SearchResults from '../SearchResults';
 import { NavLink, useNavigate } from 'react-router-dom'; // Import NavLink and useNavigate
@@ -35,7 +31,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
             {loggedIn && <NavLink to='/Logout' className="nav-link">Logout</NavLink>}
             {loggedOut && <NavLink to='/Login' className="nav-link">Login</NavLink>}
             <br></br>
-            {loggedIn && <NavLink to="/order-history" className="nav-link">Order History</NavLink>}
+            {loggedIn && admin === false &&<NavLink to="/order-history" className="nav-link">Order History</NavLink>}
             {admin && <NavLink to="/manage-promos" className="nav-link">Manage Promotions</NavLink>}
             {/* <Form inline onSubmit={handleSubmit}>
               <Row>
@@ -53,7 +49,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
                 </Col>
               </Row>
             </Form> */}
-            <SearchResults/>
+            {admin === false && <SearchResults/>}
           </Nav>
         </Navbar.Collapse>
       </Container>
