@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0
-        //0 means inactive
+       //0=web 1=registered, 2=admin
     },
     firstName: {
         type: String,
@@ -30,6 +30,7 @@ const UserSchema = new mongoose.Schema({
     status: {
         type: Number,
         required: true,
+         //0 means inactive
     },
     verified:{
         type:Boolean,
