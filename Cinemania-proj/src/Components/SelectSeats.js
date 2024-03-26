@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/SelectSeats.css';
 import React, { useState } from 'react';
-// import SelectShowtime from './SelectShowtime'; // Remove if not used in this component
 import { useNavigate, useLocation } from 'react-router-dom'; // Make sure to import useNavigate
 
 const SelectSeats = () => {
