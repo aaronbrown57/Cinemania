@@ -1,47 +1,56 @@
-import React, { useState, useContext } from 'react'; // Import useContext hook
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NavMenu from './Navigation/NavMenu';
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { UserContext } from "../context/UserContext"; // Import UserContext
+import { UserContext } from "../context/UserContext";
 import axios from 'axios';
 
 const Login = () => {
-  
   const [email, setEnteredEmail] = useState('');
   const [password, setEnteredPassword] = useState('');
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUserData } = useContext(UserContext); // Use useContext hook to access UserContext
+  const { setUserData } = useContext(UserContext);
 
   async function submitHandler(event){
     event.preventDefault();
     setLoading(true);
     try {
-      const loginData={
+      const loginData = {
         email,
         password,
       };
 
-      const loginRes = await axios.post("http://localhost:5000/users/login", loginData)
-      const userType = loginRes.data.user.type;
-      setUserData({
-        token: loginRes.data.token,
-        user: loginRes.data.user,
-        firstName: loginRes.data.firstName,
-        type: loginRes.data.user.type,
-      });
-      const firstName = loginRes.data.firstName;
-      console.log(firstName);
-      console.log(loginRes.data.user.userType)
-      localStorage.setItem("auth-token", loginRes.data.token);
+      console.log('Submitting login data:', loginData);
+
+      const loginRes = await axios.post("http://localhost:5000/users/login", loginData);
+
+      console.log('Login response:', loginRes.data);
+      
+      const userData = loginRes.data.user;
+      const token = loginRes.data.token;
+      
+      console.log('user data: ', userData);
+      console.log('token:', token)
+
+
+      // Set user data and token in context
+      setUserData({ user: userData, token });
+      localStorage.setItem("auth-token", token);
+      
+      console.log('user type is: ', userData.type);
+
       setLoading(false);
-       // Redirect based on user type
-       if (userType === 1) {
-        navigate(`/AuthView/${firstName}`); // Redirect regular users to AuthView
-      } else if (userType === 2) {
+
+      // Redirect based on user type
+      if (userData.type === 1) {
+        console.log('Redirecting to AuthView');
+        navigate(`/AuthView/${userData.firstName}`); // Redirect regular users to AuthView
+      } else if (userData.type === 2) {
+        console.log('Redirecting to Admin');
         navigate('/admin'); // Redirect admins to AdminView
       }
     } catch (err) {

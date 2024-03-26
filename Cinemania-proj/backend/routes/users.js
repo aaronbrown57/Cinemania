@@ -158,32 +158,51 @@ router.post('/confirm-account', async (req, res) => {
 
 
 //Login Route
-router.post("/login", async (req,res) => {
+router.post("/login", async (req, res) => {
     try {
-        const {email, password} = req.body;
+        const { email, password } = req.body;
         if (!email || !password) {
-            return res.status(400).json({msg: "Please enter all the fields!"});
+            return res.status(400).json({ msg: "Please enter all the fields!" });
         }
 
-        const user = await User.findOne({ email});
+        const user = await User.findOne({ email });
         if (!user) {
-            return res
-                .status(400)
-                .send({msg: "User with this email does not exists"});
+            return res.status(400).json({ msg: "User with this email does not exist" });
         }
 
         const isMatch = await bcryptjs.compare(password, user.password);
 
-        if(!isMatch) {
-            return res.status(400).send({msg: "Incorrect password."});
+        if (!isMatch) {
+            return res.status(400).json({ msg: "Incorrect password." });
         }
-        const token = jwt.sign({ id: user._id}, "passwordKey");
-        res.json({ token, user: { id: user._id, firstName: user.firstName } });
+
+        const token = jwt.sign({ id: user._id }, "passwordKey");
+
+        // Include all user fields in the response
+        res.json({
+            token,
+            user: {
+                id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                phone: user.phone,
+                creditCard: user.creditCard,
+                billingAddress: user.billingAddress,
+                homeAddress: user.homeAddress,
+                promoSubscription: user.promoSubscription,
+                status: user.status,
+                type: user.type,
+                verified: user.verified
+                // Add more fields as needed
+            }
+        });
         console.log('Received login request');
     } catch (err) {
-        res.status(500).json({ error: err.message});
+        res.status(500).json({ error: err.message });
     }
 });
+
 
 //CHECK TOKEN VALID
 router.post("/tokenIsValid", async(req, res) => {
