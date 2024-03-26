@@ -27,6 +27,7 @@ function SignUp() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [registrationCompleted, setRegistrationCompleted] = useState(false);
   const { setUserData } = useContext(UserContext);
 
 
@@ -42,11 +43,14 @@ function SignUp() {
     });
   };
 
+
+
   const handleSubmit= async (e)=> {
       e.preventDefault();
       setLoading(true);
+      
       try {
-        const newUser = {...datastate};
+        const newUser = { ...datastate};
         
           // Check if correct axios stuff
        
@@ -73,6 +77,7 @@ function SignUp() {
           setLoading(false);
           err.response.data.msg && setError(err.response.data.msg);
       }
+      setRegistrationCompleted(true);
   }
   return (
     <div className="signupDiv">
@@ -219,6 +224,7 @@ function SignUp() {
           Register
         </Button>
       </Form>
+      {registrationCompleted && <ConfirmAccountCreation userEmail={datastate.email} />}
     </div>
   );
 }

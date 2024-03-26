@@ -11,7 +11,7 @@ const ConfirmAccountCreation = () => {
     //  but for now this is good
 
     const confirmCode=()=>{
-        navigate('/authView');
+        navigate('/AuthView');
         return(
             alert('You are now a Cinemania member! Click here to return to the home screen') 
         )
