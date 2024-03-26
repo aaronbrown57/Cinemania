@@ -6,7 +6,11 @@
     display: block; /* Ensure the image is a block-level element to allow margin auto to work */
   }
 
-  div{
+  .carousel {
+    padding-bottom: 5%;
+  }
+
+  div {
     background-color: #1D3557;
   }
   
@@ -56,6 +60,7 @@ Button :hover{
 
 .nav-bar{
   background-color: #1D3557;
+  margin: 20px;
 }
 
 .search-box{
@@ -71,7 +76,7 @@ Button :hover{
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: left;
+  text-align: center;
 }
 .movie-description{
   color: #c1dbdb;
@@ -80,8 +85,8 @@ Button :hover{
 
 
 .movie-img{
-  max-width: 100%; /* Set maximum width to fill the card */
-  height: auto; /* Maintain aspect ratio */
+  max-width: auto; /* Set maximum width to fill the card */
+  height: 100%; /* Maintain aspect ratio */
 }
 
 .Movie{
@@ -108,4 +113,13 @@ Button :hover{
 .sign-up{
   color: #c1dbdb;
   font-size: 12;
+}
+
+.book-tickets-button {
+  background-color: #f6f6f6;
+  border-radius: 10px;
+}
+
+.book-tickets-button:hover {
+  background-color: #f6f6f681;
 }

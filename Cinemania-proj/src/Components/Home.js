@@ -19,7 +19,7 @@ function Home() {
         <hr />
     
          
-        <HeaderCarousel/>
+        <HeaderCarousel className="carousel"/>
         <MovieDisplay onMovieSelect={handleMovieSelect} />
       </Container>
     </div>

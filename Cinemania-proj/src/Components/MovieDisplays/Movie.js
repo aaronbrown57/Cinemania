@@ -31,7 +31,7 @@ const Movie = (props) => {
             {/* <div className='Director'>{props.director}</div> */}
             <div className="movie-info">
             <h6 onClick={clickHandler}>Details</h6>
-          {props.showing && <button onClick={bookingClickHandler}>Book Tickets</button>}
+          {props.showing && <button className="book-tickets-button" onClick={bookingClickHandler}>Book Tickets</button>}
           <h6 className='play-trailer' onClick={() => trailerClickHandler(props.trailer)}>View Trailer</h6>
           </div>
           </div>
