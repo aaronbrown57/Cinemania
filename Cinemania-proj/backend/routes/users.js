@@ -268,17 +268,55 @@ router.post("/check-email", async (req, res) => {
     try {
         const { email } = req.body;
         
-        // Check if the email exists in the database
         const existingUser = await User.findOne({ email });
 
-        // Send response indicating whether the email exists
-        res.json({ exists: !!existingUser, email: email });
+        const newPassword = generateRandomPassword();
+
+        const hashedPassword = await bcryptjs.hash(newPassword, 8);
+
+        existingUser.password = hashedPassword;
+        await existingUser.save();
+
+        res.json({ exists: true, email: email, newpassword: hashedPassword });
+
+        await sendResetPasswordEmail(email, newPassword);
+
     } catch (error) {
         console.error('Error checking email existence:', error);
-        // Send an error response if something went wrong
+        
         res.status(500).json({ error: 'An error occurred while checking email existence' });
     }
 });
+
+const generateRandomPassword = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let newPassword = '';
+    for (let i = 0; i < 8; i++) {
+        newPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return newPassword;
+};
+
+const sendResetPasswordEmail = async (email, newPassword) => {
+    try {
+        const mailOptions = {
+            from: 'cinemaniateam@gmail.com',
+            to: email,
+            subject: 'Account Password Reset',
+            html: `
+                <p>Your new password is: <strong>${newPassword}</strong></p>
+                <p>In order to change your password, please edit your profile once logged in.</p>
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+    } catch (error) {
+        throw new Error('Error sending reset password email: ' + error.message);
+    }
+};
+
+
+
 
 
 
