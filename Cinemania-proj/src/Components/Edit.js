@@ -94,38 +94,49 @@ const Edit = () => {
   const handleSubmitUpdateUser = async (e) => {
     e.preventDefault();
     console.log('Button clicked'); // Debug log for button click
-
+  
     try {
-        console.log('Starting user update request...'); // Debug log for starting request
-
-        // Log userData before sending update request
-        console.log('UserData:', userData);
-
-        const response = await fetch(`http://localhost:5000/users/updateUser/${userId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({
-                userData,
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to update user');
-        }
-
-        const updatedUserData = await response.json();
-        console.log('Updated user data:', updatedUserData); // Log updated user data
-
-        // Redirect to homepage upon successful update
-        navigate(`/AuthView/${userData.firstName}`);
+      console.log('Starting user update request...'); // Debug log for starting request
+  
+      // Create a new userData object without the password field
+      const updatedUserData = {
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        creditCard: userData.creditCard,
+        billingAddress: userData.billingAddress,
+        homeAddress: userData.homeAddress,
+        phoneNumber: userData.phoneNumber,
+        promoSubscription: userData.promoSubscription,
+      };
+  
+      // Log updatedUserData before sending update request
+      console.log('Updated User Data:', updatedUserData);
+  
+      const response = await fetch(`http://localhost:5000/users/updateUser/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(updatedUserData), // Send updatedUserData without the password field
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to update user');
+      }
+  
+      const responseData = await response.json();
+      console.log('Response Data:', responseData); // Log response data
+  
+      // Redirect to homepage upon successful update
+      navigate(`/AuthView/${userData.firstName}`);
     } catch (error) {
-        console.error('Error updating user:', error);
+      console.error('Error updating user:', error);
     }
-};
-
+  };
+  
+  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

@@ -4,6 +4,7 @@ const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require('bcryptjs');
 const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');
 
 // const jwt = require("jsonwebtoken");
 //const auth = require("../middleware/auth");
@@ -243,21 +244,34 @@ router.delete('/deleteUser/:id', async (req, res) => {
     }
 });
 
-router.put('/updateUser/:id', auth, async (req, res) => {
+// Update user route (no auth token required)
+router.put('/updateUser/:id', async (req, res) => {
     try {
         const userId = req.params.id;
-        
+        console.log('User ID:', userId); // Debugging statement
+
         // Check if the user ID is valid
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ error: 'Invalid user ID' });
         }
 
-        // Check if the authenticated user has permission to update this user
-        if (req.user !== userId) {
-            return res.status(403).json({ error: 'You are not authorized to update this user' });
-        }
+        // Fetch user data from the request body
+        const { firstName, lastName, email, phone, creditCard, billingAddress, homeAddress, promoSubscription } = req.body;
 
-        const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+        // Construct the updated user object
+        const updatedUserData = {
+            firstName,
+            lastName,
+            email,
+            phone,
+            creditCard,
+            billingAddress,
+            homeAddress,
+            promoSubscription,
+        };
+
+        // Update the user
+        const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
 
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' });
@@ -269,6 +283,7 @@ router.put('/updateUser/:id', auth, async (req, res) => {
         res.status(500).json({ error: 'An error occurred while updating user' });
     }
 });
+
 
 
 
