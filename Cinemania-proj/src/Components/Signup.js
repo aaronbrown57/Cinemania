@@ -224,7 +224,9 @@ function SignUp() {
           Register
         </Button>
       </Form>
-      {registrationCompleted && <ConfirmAccountCreation userEmail={datastate.email} />}
+      {registrationCompleted && <ConfirmAccountCreation  
+      userEmail={datastate.email}
+      userName={datastate.firstName} />}
     </div>
   );
 }
