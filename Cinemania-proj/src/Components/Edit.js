@@ -135,8 +135,6 @@ const Edit = () => {
       console.error('Error updating user:', error);
     }
   };
-  
-  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -145,7 +143,7 @@ const Edit = () => {
       ...prevUserData,
       [name]: newValue,
     }));
-  };
+  };    
 
   return (
     <div>
