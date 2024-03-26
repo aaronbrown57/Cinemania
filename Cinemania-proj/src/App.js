@@ -21,6 +21,7 @@ import SelectTicketAge from './Components/SelectTicketAge';
 import ManagePromos from "./Components/ManagePromos"
 import ManageMovies from "./Components/ManageMovies.js"
 import { UserContext } from './context/UserContext.js';
+import Edit from "./Components/Edit.js";
 
 
 const App = () => {
@@ -82,6 +83,7 @@ const App = () => {
           <Route path="/AuthView/:userId" element={<AuthView/>} />
           <Route path='/admin' element={<AdminView/>}/>
           <Route path='/logout' element={<Home />} />
+          <Route path='/edit' element={<Edit />}/>
           {/* Adding new routes for the movie ticket booking process */}
           <Route path='/select-showtime' element={<SelectShowtime />} />
           <Route path='/select-seats' element={<SelectSeats />} />
