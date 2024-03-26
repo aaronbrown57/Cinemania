@@ -53,6 +53,7 @@ const SelectTicketAge = () => {
           </div>
         </div>
       ))}
+      <div className='button-container'>
       <button 
         className="btn btn-primary" 
         onClick={handleSubmit} 
@@ -60,6 +61,7 @@ const SelectTicketAge = () => {
         Confirm Selections
       </button>
       <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
+      </div>
     </div>
   );
 };
