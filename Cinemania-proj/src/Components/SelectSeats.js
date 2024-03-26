@@ -27,7 +27,7 @@ const SelectSeats = () => {
 
   return (
     <div>
-    <h2>Select seats for {chosenMovie} at {showtime}</h2>
+    <h2 className='movie-select'>Select seats for {chosenMovie} at {showtime}</h2>
       <div className="seats-container">
         {seats.map((seat, index) => (
           <button
@@ -37,12 +37,14 @@ const SelectSeats = () => {
             {seat}
           </button>
         ))}
+        <div className='button-container'>
         <button 
           disabled={selectedSeats.length === 0} // Ensures button is only clickable when at least one seat is selected
           className="confirm-button" 
           onClick={handleConfirmSeats}>Confirm Seats
         </button>
         <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
+        </div>
       </div>
     </div>
   );
