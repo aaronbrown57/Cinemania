@@ -15,7 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { setUserData } = useContext(UserContext);
 
-  async function submitHandler(event){
+  async function submitHandler(event) {
     event.preventDefault();
     setLoading(true);
     try {
@@ -23,11 +23,11 @@ const Login = () => {
         email,
         password,
       };
-
+  
       console.log('Submitting login data:', loginData);
-
+  
       const loginRes = await axios.post("http://localhost:5000/users/login", loginData);
-
+  
       console.log('Login response:', loginRes.data);
       
       const userData = loginRes.data.user;
@@ -35,16 +35,22 @@ const Login = () => {
       
       console.log('user data: ', userData);
       console.log('token:', token)
-
-
+  
+      // Check if the user is verified before proceeding
+      if (!userData.verified) {
+        setLoading(false);
+        setError('User is not verified. Please verify your account.');
+        return;
+      }
+  
       // Set user data and token in context
       setUserData({ user: userData, token });
       localStorage.setItem("auth-token", token);
       
       console.log('user type is: ', userData.type);
-
+  
       setLoading(false);
-
+  
       // Redirect based on user type
       if (userData.type === 1) {
         console.log('Redirecting to AuthView');
@@ -60,6 +66,7 @@ const Login = () => {
     setEnteredEmail('');
     setEnteredPassword('');
   }
+  
 
   return (
     <div>
