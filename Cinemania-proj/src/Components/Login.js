@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { UserContext } from "../context/UserContext";
 import axios from 'axios';
+import "./css/Home.css";
 
 const Login = () => {
   const [email, setEnteredEmail] = useState('');
@@ -92,7 +93,7 @@ const Login = () => {
             />
           </Form.Group>
           <Form.Text className="sign-up">
-            <Link to="/forgot-password">Forgot password?</Link>
+            <Link to="/forgot-password" className='LinkClass'>Forgot password?</Link>
           </Form.Text>
           <br />
           {error && <div>{error}</div>}
@@ -101,7 +102,7 @@ const Login = () => {
           </Button>
           <br />
           <Form.Text className="sign-up">
-            Or Sign Up <Link to="/Signup">here</Link>
+            Or Sign Up <Link to="/Signup" className='LinkClass'>Here!</Link>
           </Form.Text>
         </Form>
       </Container>

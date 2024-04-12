@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import axios from 'axios';
+import "./css/Home.css";
 
 const SearchResults = () => {
   const [movieList, setMovielist] = useState([]);
@@ -54,6 +55,7 @@ const SearchResults = () => {
               {...params}
               variant="outlined"
               label="Search Box"
+              className="Search"
             />
           )}
         />
