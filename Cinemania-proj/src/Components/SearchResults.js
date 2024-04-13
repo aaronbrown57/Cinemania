@@ -46,9 +46,10 @@ const SearchResults = () => {
             if (state.inputValue === '') {
               return [];
             }
-            return options.filter(option =>
+            const filterOptions = options.filter(option =>
               option.toLowerCase().includes(state.inputValue.toLowerCase())
             );
+            return filterOptions.length > 0 ? filterOptions : ['No results found'];
           }}
           renderInput={(params) => (
             <TextField
