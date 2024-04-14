@@ -18,11 +18,7 @@ const ShowtimeSchema = new mongoose.Schema({
     date: {
         type: String,
         required: true,
-    },
-    title: {
-        type: String,
-        default: 'Showtimes', 
-    },
-});
+    }
+}, { collection: 'showtime' }); // Specify the collection name here
 
-module.exports = Showtime = mongoose.model('Showtime', ShowtimeSchema);
+module.exports = mongoose.model('Showtime', ShowtimeSchema);
