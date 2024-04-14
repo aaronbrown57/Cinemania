@@ -1,12 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/SelectShowtime.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
-const SelectShowtime = () => {
-  const location = useLocation();
-  // Safely access `chosenMovie` from `location.state` or set a fallback value
-  const chosenMovie = location.state?.chosenMovie || 'Unknown Movie';
+//I could not figure out how to fix this code so that the title is rendered properly.
+const SelectShowtime = (props) => {
+  const { movie } = props; // Access movie from props
+  const [chosenMovie, setChosenMovie] = useState(props.movie);
   const navigate = useNavigate();
   const [showtimes, setShowtimes] = useState([]);
 

@@ -14,6 +14,7 @@ import AdminView from './Components/Admin/AdminView';
 import ConfirmAccountCreation from './Components/ConfirmAccountCreation';
 // Importing new components
 import SelectShowtime from './Components/SelectShowtime';
+import MovieDetails from './Components/MovieDisplays/MovieDetails.js';
 import SelectSeats from './Components/SelectSeats';
 import OrderSummary from './Components/OrderSummary';
 import CheckoutForm from './Components/CheckoutForm';
@@ -86,6 +87,8 @@ const App = () => {
           <Route path='/admin' element={<AdminView/>}/>
           <Route path='/logout' element={<Home />} />
           <Route path='/edit' element={<Edit />}/>
+          <Route path="/movie/:title" element={<MovieDetails />} />
+
           {/* Adding new routes for the movie ticket booking process */}
           <Route path='/select-showtime' element={<SelectShowtime />} />
           <Route path='/select-seats' element={<SelectSeats />} />
@@ -99,7 +102,7 @@ const App = () => {
         </Routes>
     
       </Router>
-    // </UserContext.Provider>
+    </UserContext.Provider>
   )
 
 }

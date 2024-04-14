@@ -1,7 +1,7 @@
 import React from 'react';
-import Movie from './Movie'; // Assuming you have a Movie component
+import Movie from './Movie';
 
-const MovieList = ({ items, isAdmin, showing, toggleModal }) => {
+const MovieList = ({ items, isAdmin, showing }) => {
   return (
     <div className="movie-list">
       {items.map((movie) => (
@@ -9,7 +9,6 @@ const MovieList = ({ items, isAdmin, showing, toggleModal }) => {
           isAdmin={isAdmin}
           showing={showing}
           key={movie._id}
-          toggleModal={toggleModal} // Pass toggleModal down to Movie component
           title={movie.movieTitle}
           director={movie.director}
           img={movie.trailerPictureURL}

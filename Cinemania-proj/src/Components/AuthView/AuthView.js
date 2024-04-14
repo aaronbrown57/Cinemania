@@ -6,12 +6,6 @@ import { useParams } from 'react-router-dom';
 
 const AuthView = ({ loggedIn }) => { // Modify the props destructuring to include loggedIn
   const { userId } = useParams();
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
-
-  // Function to toggle the modal open/close
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
 
   return (
     <div className="App">
@@ -19,7 +13,7 @@ const AuthView = ({ loggedIn }) => { // Modify the props destructuring to includ
       <h1>Welcome back {userId}!</h1>
       <Container>
         {/* Pass toggleModal down to MovieDisplay */}
-        <MovieDisplay toggleModal={toggleModal} />
+        <MovieDisplay />
       </Container>
     </div>
   );
