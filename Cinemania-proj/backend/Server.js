@@ -8,7 +8,8 @@ const cors = require('cors');
 // app.use(cors());
 const router= require('./routes/movies');
 const routerUser = require('./routes/users');
-const showtimeRoutes = require('./routes/showtimes'); 
+const showtimeRoutes = require('./routes/showtimes');
+const roomsRoutes = require('./routes/rooms'); 
 
 
 // Connect Database
@@ -17,6 +18,7 @@ app.use(express.json({ extended: false }));
 app.use('/movies', router);
 app.use('/users', routerUser);
 app.use('/showtimes', showtimeRoutes);
+app.use('/rooms', roomsRoutes);
 const conn_str = "mongodb+srv://grantprusik5:Temppass2024@cluster0.m3q4sbt.mongodb.net/Cinemania?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.set('strictQuery', false);
 
