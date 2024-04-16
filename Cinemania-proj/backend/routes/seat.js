@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Room = require('../models/Seat');
 
+router.post('/addSeat', async (req, res) => {
+    try {
+        const newSeat = await Seat.create(req.body);
+        res.json({ msg: 'Seat added successfully', movie: newSeat });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 // Route to get all seat
 router.get('/allSeats', async (req, res) => {
     try {

@@ -2,15 +2,35 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const ShowTimes = require('../models/ShowTimes');
+const Seat = require('../models/Seat');
+const Room = require('../models/Room'); 
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 // Route to add a showtime
+// Route to add a showtime
 router.post('/addShowtime', async (req, res) => {
     try {
         console.log('Received POST request to add a showtime');
         const newShowtime = await ShowTimes.create(req.body);
+        
+        // Update the number of seats for the room
+        const roomId = req.body.roomId;
+        const room = await Room.findById(roomId);
+        if (!room) {
+            throw new Error('Room not found');
+        }
+        
+        // Add seats to the room
+        const numberOfSeatsToAdd = req.body.numberOfSeats;
+        for (let i = 0; i < numberOfSeatsToAdd; i++) {
+            await Seat.create({ roomId: roomId }); // Create a seat and associate it with the room
+        }
+        
+        room.numberOfSeats += numberOfSeatsToAdd;
+        await room.save();
+        
         res.json({ msg: 'Showtime added successfully', showtime: newShowtime });
     } catch (error) {
         console.error('Error adding showtime:', error.message);
