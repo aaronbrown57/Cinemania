@@ -21,6 +21,7 @@ const PromotionSchema = new mongoose.Schema({
         type: String,
         default: 'Promotion', // Default title if not provided
     },
-});
+}, { collection: 'promotion' });
+
 
 module.exports = Promotion = mongoose.model('Promotion', PromotionSchema);
