@@ -27,4 +27,17 @@ router.get('/allPromotion', async (req, res) => {
     }
 });
 
+router.put('/updatePromotion/:id', async (req, res) => {
+    try {
+        const movieId = req.params.id;
+        const updatedPromotion = await Promotion.findByIdAndUpdate(movieId, req.body, { new: true });
+        if (!updatedPromotion) {
+            return res.status(404).json({ error: 'Promotion not found' });
+        }
+        res.json({ msg: 'Promotion updated successfully', updatedPromotion });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

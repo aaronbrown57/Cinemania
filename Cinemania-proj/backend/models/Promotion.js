@@ -17,9 +17,18 @@ const PromotionSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    title: {
+    description: {
         type: String,
-        default: 'Promotion', // Default title if not provided
+        required: false
+    },
+    sentToUsers: {
+        type: Boolean,
+        default: 'false'
+    },
+    isActive: {
+        type: Boolean,
+        default: 'false',
+        required: true
     },
 }, { collection: 'promotion' });
 
