@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap'; // Import Form and Button components from react-bootstrap
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Toast } from 'react-bootstrap'; // Import Form, Button, and Toast components from react-bootstrap
+import { useNavigate } from 'react-router-dom';
 
 function AddShowtimeForm() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    movieName: "", // State for selected movie name
-    roomName: "", // State for selected room name
-    period: "", // State for selected period
-    date: "", // State for selected date
+    movieName: "",
+    roomName: "",
+    period: "",
+    date: "",
   });
 
   const [movies, setMovies] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     // Fetch movies data
@@ -59,9 +63,7 @@ function AddShowtimeForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data before submission:", formData); // Log form data
 
-    // Check if required fields are populated
     if (!formData.date || !formData.roomName || !formData.movieName) {
       console.error("Error: Required fields are missing in form data");
       return;
@@ -84,8 +86,12 @@ function AddShowtimeForm() {
       if (!response.ok) {
         throw new Error("Failed to add showtime");
       }
-      console.log("Showtime added successfully!");
-      // Optionally, you can redirect the user or perform any other action upon successful addition of showtime
+
+      setShowToast(true); // Show toast notification on successful addition
+      setTimeout(() => {
+        setShowToast(false); // Hide toast after 3 seconds
+        navigate('/admin');
+      }, 4000);
     } catch (error) {
       console.error("Error adding showtime:", error.message);
     }
@@ -94,6 +100,9 @@ function AddShowtimeForm() {
   return (
     <div className="add-showtime-form">
       <h2>Add Showtime</h2>
+      <Toast show={showToast} onClose={() => setShowToast(false)} delay={3000} autohide>
+        <Toast.Body style={{ color: 'white' }}>Showtime added successfully!</Toast.Body>
+      </Toast>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formMovie">
           <Form.Label>Select Movie</Form.Label>
