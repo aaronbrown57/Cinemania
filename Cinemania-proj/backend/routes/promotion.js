@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
 
 router.put('/sendPromo/:promotionId', async (req, res) => {
     const { promotionId } = req.params;
-    const { email } = req.body;
+    const { email, promoCode } = req.body;
 
     console.log('Received request to send promo:', promotionId, email); // Debugging statement
   
@@ -32,7 +32,7 @@ router.put('/sendPromo/:promotionId', async (req, res) => {
         from: 'cinemaniateam@gmail.com',
         to: email,
         subject: 'New Promotion Available!',
-        text: `Thank you for signing up for email promotions. A new promotion code is available to you! ${promotionId}`,
+        text: `Thank you for signing up for email promotions. A new promotion code is available to you! Code: ${promoCode}`,
       };
 
       console.log('Sending promo email to:', email); // Debugging statement

@@ -78,69 +78,64 @@ const ManagePromotions = () => {
     }
   };
 
-  const handleSendToUsers = async (promotionId) => {
+  const handleSendToUsers = async (promotionId, promoCode) => {
     try {
       // Fetch all users with promoSubscription turned on
-      const usersResponse = await fetch("http://localhost:5000/users/allUsers");
+      const usersResponse = await fetch('http://localhost:5000/users/allUsers');
       if (!usersResponse.ok) {
-        throw new Error("Failed to fetch users");
+        throw new Error('Failed to fetch users');
       }
       const usersData = await usersResponse.json();
-      const subscribedUsers = usersData.filter(
-        (user) => user.promoSubscription
-      );
-
+      const subscribedUsers = usersData.filter((user) => user.promoSubscription);
+  
       if (subscribedUsers.length === 0) {
-        console.error("No subscribed users found");
-        setUpdateMessage("No subscribed users found.");
+        console.error('No subscribed users found');
+        setUpdateMessage('No subscribed users found.');
         return;
       }
-
+  
       // Prepare promo email for each subscribed user and send
       const sendPromoEmails = subscribedUsers.map(async (user) => {
         const mailOptions = {
-          from: "cinemaniateam@gmail.com",
+          from: 'cinemaniateam@gmail.com',
           to: user.email,
-          subject: "New Promotion Available!",
-          text: `Thank you for signing up for email promotions. A new promotion code is available to you! ${promotionId}`,
+          subject: 'New Promotion Available!',
+          text: `Thank you for signing up for email promotions. A new promotion code is available to you! ${promoCode}`,
         };
-
-        const responseEmail = await fetch(
-          `http://localhost:5000/promotion/sendPromo/${promotionId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: user.email }), // Pass the email parameter
-          }
-        );
-
+  
+        const responseEmail = await fetch(`http://localhost:5000/promotion/sendPromo/${promotionId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: user.email, promoCode }), // Pass the email and promoCode parameters
+        });
+  
         if (!responseEmail.ok) {
           throw new Error(`Failed to send promotion email to ${user.email}`);
         }
-
+  
         return responseEmail.json();
       });
-
+  
       // Wait for all promo emails to be sent
       const sentPromoEmails = await Promise.all(sendPromoEmails);
-      console.log("Promotion emails sent:", sentPromoEmails);
-
+      console.log('Promotion emails sent:', sentPromoEmails);
+  
       // Update the promotion's sentToUsers status
       const response = await fetch(
         `http://localhost:5000/promotion/sendToUsers/${promotionId}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ sentToUsers: true }),
         }
       );
-
+  
       if (!response.ok) {
-        throw new Error("Failed to send promotion to users");
+        throw new Error('Failed to send promotion to users');
       }
       const updatedPromotion = await response.json();
       setPromotions((prevPromotions) =>
@@ -149,14 +144,15 @@ const ManagePromotions = () => {
         )
       );
       // Set update message
-      setUpdateMessage("Promotion sent to subscribed users successfully.");
+      setUpdateMessage('Promotion sent to subscribed users successfully.');
       // Optionally, you can show a success message or notification here
-      console.log("Promotion sent to subscribed users successfully!");
+      console.log('Promotion sent to subscribed users successfully!');
     } catch (error) {
-      console.error("Error sending promotion to users:", error.message);
+      console.error('Error sending promotion to users:', error.message);
       // Optionally, you can show an error message or notification here
     }
   };
+  
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -220,7 +216,7 @@ const ManagePromotions = () => {
             Code: {promotion.promoCode} - Description: {promotion.description}
           </label>
           {!promotion.sentToUsers && ( // Render button if promotion has not been sent to users
-            <button onClick={() => handleSendToUsers(promotion._id)}>
+            <button onClick={() => handleSendToUsers(promotion._id, promotion.promoCode)}>
               Send to Users
             </button>
           )}
