@@ -99,7 +99,7 @@ const App = () => {
         </Routes>
     
       </Router>
-    // </UserContext.Provider>
+    </UserContext.Provider>
   )
 
 }
