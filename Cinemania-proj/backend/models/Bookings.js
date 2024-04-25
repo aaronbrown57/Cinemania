@@ -23,6 +23,11 @@ const BookingSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    cardID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PaymentCard',
+        required: true,
+    }
 });
 
 module.exports = Booking = mongoose.model('Booking', BookingSchema);

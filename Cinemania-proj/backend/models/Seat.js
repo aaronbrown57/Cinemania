@@ -15,6 +15,6 @@ const SeatSchema = new mongoose.Schema({
         type: String,
         default: 'Seat', // Default title if not provided
     },
-});
+}, { collection: 'seat' });
 
 module.exports = Seat = mongoose.model('Seat', SeatSchema);

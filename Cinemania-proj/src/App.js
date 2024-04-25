@@ -7,6 +7,7 @@ import './App.css';
 import Home from './Components/Home';
 import Signup from './Components/Signup';
 import Login from './Components/Login';
+import AddShowtime from './Components/AddShowtime.js';
 import ForgotPassword from './Components/ForgotPassword';
 import AuthView from './Components/AuthView/AuthView';
 import axios from 'axios';
@@ -14,6 +15,7 @@ import AdminView from './Components/Admin/AdminView';
 import ConfirmAccountCreation from './Components/ConfirmAccountCreation';
 // Importing new components
 import SelectShowtime from './Components/SelectShowtime';
+import MovieDetails from './Components/MovieDisplays/MovieDetails.js';
 import SelectSeats from './Components/SelectSeats';
 import OrderSummary from './Components/OrderSummary';
 import CheckoutForm from './Components/CheckoutForm';
@@ -86,6 +88,8 @@ const App = () => {
           <Route path='/admin' element={<AdminView/>}/>
           <Route path='/logout' element={<Home />} />
           <Route path='/edit' element={<Edit />}/>
+          <Route path="/movie/:title" element={<MovieDetails />} />
+
           {/* Adding new routes for the movie ticket booking process */}
           <Route path='/select-showtime' element={<SelectShowtime />} />
           <Route path='/select-seats' element={<SelectSeats />} />
@@ -96,6 +100,7 @@ const App = () => {
           {/* Routes for Admin processes */}
           <Route path='/manage-movies' element={<ManageMovies />} />
           <Route path='/manage-promos' element={<ManagePromos />} />
+          <Route path='/add-showtime' element ={<AddShowtime />} />
         </Routes>
     
       </Router>

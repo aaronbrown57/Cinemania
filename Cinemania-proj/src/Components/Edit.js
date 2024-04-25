@@ -247,6 +247,14 @@ const Edit = () => {
               placeholder=""
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check
+            type="checkbox"
+            label="Subscribe to Promotional Content"
+            checked={userData.promoSubscription} // Bind checked prop to promoSubscription state
+            onChange={(e) => setUserData({ ...userData, promoSubscription: e.target.checked })} // Handle checkbox change
+          />
+        </Form.Group>
           <Button variant="primary" type="submit">
             Save Changes
           </Button>
