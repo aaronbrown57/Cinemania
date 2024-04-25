@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import React, { useState, useContext } from "react";
 import SearchResults from '../SearchResults';
 import { NavLink, useNavigate } from 'react-router-dom'; // Import NavLink and useNavigate
-import "./../css/Home.css";
+
 
 
 function NavMenu({ loggedIn, loggedOut, admin }) {
@@ -17,13 +17,10 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
     //goes to search results withthe query
     history(`/searchresults?query=${encodeURIComponent(searchQuery)}`);
   };
-  const handleClick = () => {
-    history('/');
-  }
   return (
     <Navbar expand="lg" className="nav-bar">
       <Container>
-        <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
+        <h1 className='web-name'>Cinemania </h1>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav">

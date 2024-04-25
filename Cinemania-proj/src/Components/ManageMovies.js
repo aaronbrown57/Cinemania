@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import NavMenu from './Navigation/NavMenu';
 import "./css/ManageMovies.css";
-import { Link, useNavigate} from 'react-router-dom';
-
 
 const ManageMovies = () => {
   const [showForm, setShowForm] = useState(false);
@@ -19,15 +17,9 @@ const ManageMovies = () => {
   const [comingSoon, setComingSoon] = useState(false);
   const [showDate, setShowDate] = useState('');
   const [showTime, setShowTime] = useState('');
-  const navigate = useNavigate(); 
 
   const addMovie = () => {
     setShowForm(true);
-  };
-
-
-  const scheduleMovie = () => {
-    navigate('/add-showtime');
   };
 
   const handleSubmit = async (event) => {
@@ -223,10 +215,7 @@ const ManageMovies = () => {
           <button id="form-submit" type="submit">Submit</button>
         </form>
       ) : (
-        <>
-          <button onClick={addMovie}>Add Movie</button>
-          <button onClick={scheduleMovie}>Schedule Movies</button>
-        </>
+        <button onClick={addMovie}>Add Movie</button>
       )}
     </div>
   );

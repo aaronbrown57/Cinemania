@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import "./YoutubeVideo.css"
+
 const YouTubeVideo = ({ videoId }) => {
+  const [showVideo, setShowVideo] = useState(true);
+
+  const handleCloseClick = () => {
+    setShowVideo(false);
+  };
 
   return (
     <div className="video-container">
-      {
+      {showVideo && (
         <div className="video-modal">
           <iframe
             width="640"
@@ -14,8 +21,9 @@ const YouTubeVideo = ({ videoId }) => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
+          <button onClick={handleCloseClick}>Close Trailer</button>
         </div>
-        }
+      )}
     </div>
   );
 }

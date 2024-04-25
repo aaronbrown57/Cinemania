@@ -17,20 +17,10 @@ const PromotionSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    description: {
+    title: {
         type: String,
-        required: false
+        default: 'Promotion', // Default title if not provided
     },
-    sentToUsers: {
-        type: Boolean,
-        default: 'false'
-    },
-    isActive: {
-        type: Boolean,
-        default: 'false',
-        required: true
-    },
-}, { collection: 'promotion' });
-
+});
 
 module.exports = Promotion = mongoose.model('Promotion', PromotionSchema);
