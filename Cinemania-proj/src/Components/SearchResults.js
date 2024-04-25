@@ -48,21 +48,8 @@ const SearchResults = () => {
   const filteredMovies = selectedCategory === 'All' ? movieList : movieList.filter(movie => movie.category === selectedCategory);
 
   return (
-    <div>
-      {/* Category dropdown */}
-      <Select
-        value={selectedCategory}
-        onChange={handleCategoryChange}
-        variant="outlined"
-        className="CategoryDropdown"
-      >
-        <MenuItem value="All">All Categories</MenuItem>
-        <MenuItem value="Action">Action</MenuItem>
-        <MenuItem value="Comedy">Comedy</MenuItem>
-        <MenuItem value="Horror">Horror</MenuItem>
-        {/* Add more categories as needed */}
-      </Select>
-      
+    <div className="Search">
+ 
       {/* Autocomplete search box */}
       <Autocomplete
         style={{ width: 500, margin: "auto" }}
@@ -89,7 +76,28 @@ const SearchResults = () => {
             className="Search"
           />
         )}
+
+
+        
       />
+<span>
+           <Select
+            style={{ width: 200, margin: "auto" }}
+        value={selectedCategory}
+        onChange={handleCategoryChange}
+        variant="outlined"
+        className="Search"
+      >
+        <MenuItem className="GenreWorf" value="All">All Categories</MenuItem>
+        <MenuItem  className="Search" value="Action">Action</MenuItem>
+        <MenuItem className="Search"  value="Animation">Animation</MenuItem>
+        <MenuItem className="Search" value="Comedy">Comedy</MenuItem>
+        <MenuItem className="Search" value="Drama">Drama</MenuItem>
+        <MenuItem className="Search" value="Horror">Horror</MenuItem>
+        <MenuItem className="Search" value="Sci-Fi">Sci-Fi</MenuItem>
+        {/* Add more categories as needed */}
+      </Select>
+      </span>
       {selectedMovie && <MovieDetails movieTitle={selectedMovie} />}
     </div>
   );

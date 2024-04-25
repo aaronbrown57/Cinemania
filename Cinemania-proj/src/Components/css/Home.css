@@ -38,7 +38,9 @@
     /* Your custom styles here */
     opacity: 0.1;
 }
-
+.CategoryDropdown {
+  margin-left: 0px;
+}
 .carousel-indicators{
   opacity: 0.5;
 }
