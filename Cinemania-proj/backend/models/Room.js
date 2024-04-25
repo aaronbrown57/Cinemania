@@ -1,14 +1,26 @@
 const mongoose = require('mongoose');
 
-const RoomSchema = new mongoose.Schema({
-    numberOfSeats: {
-        type: Number,
-        required: true
-    },
-    Title: {
+const PromotionSchema = new mongoose.Schema({
+    promoCode: {
         type: String,
-        required: true
-    }
-}, { collection: 'room' }); // Specify the collection name here
+        required: true,
+    },
+    start: {
+        type: String,
+        required: true,
+    },
+    end: {
+        type: String,
+        required: true,
+    },
+    percentage: {
+        type: Number,
+        required: true,
+    },
+    title: {
+        type: String,
+        default: 'Promotion', 
+    },
+});
 
-module.exports = mongoose.model('Room', RoomSchema);
+module.exports = Promotion = mongoose.model('Promotion', PromotionSchema);

@@ -10,7 +10,10 @@ const PaymentCardSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    
+    nameOnCard: {
+        type: String,
+        required: true,
+    },
     expirationDate: {
         type: String,
         required: true,

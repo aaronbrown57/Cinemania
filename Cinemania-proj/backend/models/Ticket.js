@@ -11,10 +11,6 @@ const TicketSchema = new mongoose.Schema({
         ref: 'Seat', // Assuming there is a Seat model
         required: true,
     },
-    category: {
-        type: String,
-        required: true,
-    }
 });
 
 module.exports = Ticket = mongoose.model('Ticket', TicketSchema);

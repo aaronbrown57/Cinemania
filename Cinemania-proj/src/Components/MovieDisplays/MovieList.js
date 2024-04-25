@@ -1,28 +1,22 @@
-import React from 'react';
-import Movie from './Movie';
+import React, { useState, useEffect } from 'react';
+import Movie from './Movie'; // Assuming you have a Movie component
 
-const MovieList = ({ items, isAdmin, showing }) => {
-  return (
-    <div className="movie-list">
-      {items.map((movie) => (
-        <Movie
-          isAdmin={isAdmin}
-          showing={showing}
+const MovieList = (props) => {
+    return (
+      <div className="movie-list">
+     
+        {props.items.map((movie) => (
+          <Movie isAdmin={props.isAdmin} showing={props.showing}
           key={movie._id}
           title={movie.movieTitle}
-          director={movie.director}
+          pieces={movie.director}
           img={movie.trailerPictureURL}
           trailer={movie.trailerVideoURL}
-          category={movie.category}
-          cast={movie.cast.join(', ')}
-          producer={movie.producer}
-          reviews={movie.reviews.join(', ')}
-          synopsis={movie.synopsis}
-          rating={movie.rating}
-        />
-      ))}
-    </div>
-  );
-}
+          />
+        ))} 
+     
+      </div>
+    );
+  }
 
-export default MovieList;
+  export default MovieList;

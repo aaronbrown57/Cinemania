@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { UserContext } from "../context/UserContext";
 import axios from 'axios';
-import "./css/Home.css";
 
 const Login = () => {
   const [email, setEnteredEmail] = useState('');
@@ -16,7 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { setUserData } = useContext(UserContext);
 
-  async function submitHandler(event) {
+  async function submitHandler(event){
     event.preventDefault();
     setLoading(true);
     try {
@@ -24,11 +23,11 @@ const Login = () => {
         email,
         password,
       };
-  
+
       console.log('Submitting login data:', loginData);
-  
+
       const loginRes = await axios.post("http://localhost:5000/users/login", loginData);
-  
+
       console.log('Login response:', loginRes.data);
       
       const userData = loginRes.data.user;
@@ -36,29 +35,23 @@ const Login = () => {
       
       console.log('user data: ', userData);
       console.log('token:', token)
-  
-      // Check if the user is verified before proceeding
-      if (!userData.verified) {
-        setLoading(false);
-        setError('User is not verified. Please verify your account.');
-        return;
-      }
-  
+
+
       // Set user data and token in context
       setUserData({ user: userData, token });
       localStorage.setItem("auth-token", token);
       
       console.log('user type is: ', userData.type);
-  
+
       setLoading(false);
-  
+
       // Redirect based on user type
       if (userData.type === 1) {
         console.log('Redirecting to AuthView');
         navigate(`/AuthView/${userData.firstName}`); // Redirect regular users to AuthView
       } else if (userData.type === 2) {
         console.log('Redirecting to Admin');
-        navigate('/admin', { state: { isAdmin: true } }); // Redirect admins to AdminView
+        navigate('/admin'); // Redirect admins to AdminView
       }
     } catch (err) {
       setLoading(false);
@@ -67,7 +60,6 @@ const Login = () => {
     setEnteredEmail('');
     setEnteredPassword('');
   }
-  
 
   return (
     <div>
@@ -93,7 +85,7 @@ const Login = () => {
             />
           </Form.Group>
           <Form.Text className="sign-up">
-            <Link to="/forgot-password" className='LinkClass'>Forgot password?</Link>
+            <Link to="/forgot-password">Forgot password?</Link>
           </Form.Text>
           <br />
           {error && <div>{error}</div>}
@@ -102,7 +94,7 @@ const Login = () => {
           </Button>
           <br />
           <Form.Text className="sign-up">
-            Or Sign Up <Link to="/Signup" className='LinkClass'>Here!</Link>
+            Or Sign Up <Link to="/Signup">here</Link>
           </Form.Text>
         </Form>
       </Container>
