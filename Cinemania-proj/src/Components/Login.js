@@ -58,7 +58,7 @@ const Login = () => {
         navigate(`/AuthView/${userData.firstName}`); // Redirect regular users to AuthView
       } else if (userData.type === 2) {
         console.log('Redirecting to Admin');
-        navigate('/admin'); // Redirect admins to AdminView
+        navigate('/admin', { state: { isAdmin: true } }); // Redirect admins to AdminView
       }
     } catch (err) {
       setLoading(false);
