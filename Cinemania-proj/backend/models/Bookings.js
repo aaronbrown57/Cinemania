@@ -28,6 +28,6 @@ const BookingSchema = new mongoose.Schema({
         ref: 'PaymentCard',
         required: true,
     }
-});
+}, { collection: 'booking' });
 
 module.exports = Booking = mongoose.model('Booking', BookingSchema);

@@ -12,6 +12,8 @@ const showtimeRoutes = require('./routes/showtimes');
 const roomsRoutes = require('./routes/rooms'); 
 const seatsRoutes = require('./routes/seat'); 
 const promotionRoutes = require('./routes/promotion'); 
+const bookingsRoutes = require('./routes/bookings'); 
+
 
 
 
@@ -24,6 +26,7 @@ app.use('/showtimes', showtimeRoutes);
 app.use('/rooms', roomsRoutes);
 app.use('/seat', seatsRoutes);
 app.use('/promotion', promotionRoutes);
+app.use('/bookings', bookingsRoutes);
 const conn_str = "mongodb+srv://grantprusik5:Temppass2024@cluster0.m3q4sbt.mongodb.net/Cinemania?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.set('strictQuery', false);
 
