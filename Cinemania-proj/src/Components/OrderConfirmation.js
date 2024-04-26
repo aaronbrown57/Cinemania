@@ -1,12 +1,40 @@
-import React from 'react';
-import './css/OrderConfirmation.css'
+import React, { useEffect } from 'react';
+import './css/OrderConfirmation.css';
 import { useLocation, Link } from 'react-router-dom';
+import axios from 'axios'; // Import Axios for HTTP requests
 
 const OrderConfirmation = () => {
   const location = useLocation();
   const { showtime, chosenMovie, ticketAges, total } = location.state || {};
+  const userEmail = location.state?.userEmail || 'athomas777@icloud.com'; // Set userEmail to dummy email if not provided
+  
+  useEffect(() => {
+    console.log('User email:', userEmail);
+    if (userEmail) {
+      sendConfirmationEmail(userEmail);
+    }
+  }, [userEmail]);
+
+  const sendConfirmationEmail = async (email) => {
+    console.log('Sending confirmation email to:', email);
+    try {
+      await axios.put('http://localhost:5000/bookings/sendBookingConfirmation', {
+        email,
+        movie: chosenMovie,
+        showtime,
+        seat: Object.keys(ticketAges).join(', '), // Combine all selected seats
+        ticketType: Object.values(ticketAges).join(', '), // Combine all ticket types
+        totalPaid: total.toFixed(2),
+      });
+      console.log('Confirmation email sent successfully to:', email);
+    } catch (error) {
+      console.error('Error sending booking confirmation email:', error);
+      // Handle error (e.g., display error message to user)
+    }
+  };
 
   if (!location.state) {
+    console.log('No order details found.');
     return <div>No order details found. Please start your order again.</div>;
   }
 
@@ -16,8 +44,8 @@ const OrderConfirmation = () => {
       <div className="card">
         <div className="card-body">
           <div className='order'>
-          <h5 className="card-title">Thank you for your purchase!</h5>
-          <p className="card-text">Here are your order details:</p>
+            <h5 className="card-title">Thank you for your purchase!</h5>
+            <p className="card-text">Here are your order details:</p>
           </div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">Movie: {chosenMovie}</li>
