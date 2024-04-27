@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './css/OrderConfirmation.css';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios'; // Import Axios for HTTP requests
@@ -6,14 +6,16 @@ import axios from 'axios'; // Import Axios for HTTP requests
 const OrderConfirmation = () => {
   const location = useLocation();
   const { showtime, chosenMovie, ticketAges, total } = location.state || {};
+  const [emailSent, setEmailSent] = useState(false); // State to track if email is already sent
   const userEmail = location.state?.userEmail || 'athomas777@icloud.com'; // Set userEmail to dummy email if not provided
-  
+
   useEffect(() => {
     console.log('User email:', userEmail);
-    if (userEmail) {
+    if (userEmail && !emailSent) {
       sendConfirmationEmail(userEmail);
+      setEmailSent(true); // Mark email as sent
     }
-  }, [userEmail]);
+  }, [userEmail, emailSent]);
 
   const sendConfirmationEmail = async (email) => {
     console.log('Sending confirmation email to:', email);

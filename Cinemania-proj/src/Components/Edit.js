@@ -103,6 +103,7 @@ const Edit = () => {
         firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,
+        password: userData.password, // Include password field
         creditCard: userData.creditCard,
         billingAddress: userData.billingAddress,
         homeAddress: userData.homeAddress,
@@ -143,7 +144,7 @@ const Edit = () => {
       ...prevUserData,
       [name]: newValue,
     }));
-  };    
+  };  
 
   return (
     <div>
@@ -238,13 +239,13 @@ const Edit = () => {
           />
           fieldClassName="input"
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>New Password</Form.Label>
             <Form.Control
               type="password"
               name="password"
               value={userData.password || ""}
-              onChange={handleChange}
-              placeholder=""
+              onChange={(e) => setUserData({ ...userData, password: e.target.value })}
+              placeholder="Enter new password"
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">

@@ -244,7 +244,6 @@ router.delete('/deleteUser/:id', async (req, res) => {
     }
 });
 
-// Update user route (no auth token required)
 router.put('/updateUser/:id', async (req, res) => {
     try {
         const userId = req.params.id;
@@ -256,7 +255,8 @@ router.put('/updateUser/:id', async (req, res) => {
         }
 
         // Fetch user data from the request body
-        const { firstName, lastName, email, phone, creditCard, billingAddress, homeAddress, promoSubscription } = req.body;
+        const { firstName, lastName, email, phone, creditCard, billingAddress, homeAddress, promoSubscription, password } = req.body;
+        console.log('Received user data:', req.body); // Debugging statement
 
         // Construct the updated user object
         const updatedUserData = {
@@ -270,8 +270,16 @@ router.put('/updateUser/:id', async (req, res) => {
             promoSubscription,
         };
 
+        // If password is included, update it
+        if (password) {
+            console.log('New password provided:', password); // Debugging statement
+            const hashedPassword = await bcryptjs.hash(password, 8);
+            updatedUserData.password = hashedPassword;
+        }
+
         // Update the user
         const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
+        console.log('Updated user:', updatedUser); // Debugging statement
 
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' });
@@ -283,6 +291,7 @@ router.put('/updateUser/:id', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while updating user' });
     }
 });
+
 
 
 
