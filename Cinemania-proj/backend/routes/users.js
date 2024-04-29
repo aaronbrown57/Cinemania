@@ -247,7 +247,7 @@ router.delete('/deleteUser/:id', async (req, res) => {
 router.put('/updateUser/:id', async (req, res) => {
     try {
         const userId = req.params.id;
-        console.log('User ID:', userId); // Debugging statement
+        console.log('Updating User ID:', userId); // Debugging statement
 
         // Check if the user ID is valid
         if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -256,7 +256,6 @@ router.put('/updateUser/:id', async (req, res) => {
 
         // Fetch user data from the request body
         const { firstName, lastName, email, phone, creditCard, billingAddress, homeAddress, promoSubscription, password } = req.body;
-        console.log('Received user data:', req.body); // Debugging statement
 
         // Construct the updated user object
         const updatedUserData = {
@@ -272,14 +271,13 @@ router.put('/updateUser/:id', async (req, res) => {
 
         // If password is included, update it
         if (password) {
-            console.log('New password provided:', password); // Debugging statement
             const hashedPassword = await bcryptjs.hash(password, 8);
             updatedUserData.password = hashedPassword;
         }
 
         // Update the user
         const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
-        console.log('Updated user:', updatedUser); // Debugging statement
+        
 
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' });
