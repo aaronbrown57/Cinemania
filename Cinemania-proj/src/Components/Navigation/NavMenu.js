@@ -15,15 +15,14 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     //goes to search results withthe query
-    history(`/searchresults?query=${encodeURIComponent(searchQuery)}`);
+    // history(`/searchresults?query=${encodeURIComponent(searchQuery)}`);
+    history("/search")
   };
-  const handleClick = () => {
-    history('/');
-  }
+ 
   return (
     <Navbar expand="lg" className="nav-bar">
       <Container>
-        <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
+       
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav">
@@ -36,28 +35,16 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
             <br></br>
             {loggedIn && admin === false &&<NavLink to="/order-history" className="nav-link">Order History</NavLink>}
             {admin && <NavLink to="/manage-promos" className="nav-link">Manage Promotions</NavLink>}
-            {/* <Form inline onSubmit={handleSubmit}>
-              <Row>
-                <Col xs="auto">
-                  <Form.Control
-                    type="text"
-                    placeholder="Search"
-                    className="search-box"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </Col>
-                <Col xs="auto">
-                  <Button type="submit" className='search-btn'>Search</Button>
-                </Col>
-              </Row>
-            </Form> */}
+         
+              {searchQuery !== '' && <SearchResults searchQuery={searchQuery} />}
             {!admin && (loggedIn || loggedOut) && <SearchResults />}
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    
   )
 }
 
 export default NavMenu;
+

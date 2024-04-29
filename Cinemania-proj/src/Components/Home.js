@@ -12,8 +12,12 @@ function Home() {
     navigate('/select-showtime', { state: { chosenMovie: movie.title } });
   };
   
+  const handleClick = () => {
+    navigate('/');
+  }
   return (
     <div className="App">
+       <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
       <NavMenu loggedOut={true}></NavMenu>
       <Container>
         <hr />
