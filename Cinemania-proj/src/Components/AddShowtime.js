@@ -64,6 +64,15 @@ function AddShowtimeForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate if the selected date is in the past
+    const currentDate = new Date();
+    const selectedDate = new Date(formData.date);
+    if (selectedDate < currentDate) {
+      setToastMessage("Selected date must be in the future.");
+      setShowToast(true);
+      return;
+    }
+
     if (!formData.date || !formData.roomName || !formData.movieName) {
       console.error("Error: Required fields are missing in form data");
       return;
@@ -112,6 +121,7 @@ function AddShowtimeForm() {
         console.log("Showtime:", showtime); // Log the entire showtime object
         console.log("Comparing:", showtime.roomName, formData.roomName);
         console.log("Periods:", showtime.period, formData.period);
+        console.log("Dates: ", showtime.date, formData.date);
 
         /** for debugging
         console.log(
@@ -126,7 +136,8 @@ function AddShowtimeForm() {
 
         return (
           showtimeRoom === formDataRoom &&
-          showtime.period.toString() === formData.period.toString() // Convert periods to strings for comparison
+          showtime.period.toString() === formData.period.toString() && // Convert periods to strings for comparison
+          showtime.date.toString() === formData.date.toString()
         );
       });
 
