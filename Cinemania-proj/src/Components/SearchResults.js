@@ -76,7 +76,7 @@ const SearchResultsPage = () => {
         placeholder="Search Movies..."
       />
       {noResults && <p>No results found.</p>} {/* Display "No results found" message */}
-      <div className="movie-thumbnails">
+      {/* <div className="movie-thumbnails">
       {filteredMovies.map((movie, index) => (
   <img
     key={index}
@@ -86,7 +86,7 @@ const SearchResultsPage = () => {
   />
 ))}
 
-      </div>
+      </div> */}
       <span>
         <Select
           style={{ width: 200, margin: "auto" }}
