@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/SelectShowtime.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-//I could not figure out how to fix this code so that the title is rendered properly.
-const SelectShowtime = (props) => {
-  const { movie } = props; // Access movie from props
-  const [chosenMovie, setChosenMovie] = useState(props.movie);
+const SelectShowtime = () => {
+  const location = useLocation(); // Use useLocation to access the location object
   const navigate = useNavigate();
+  const [chosenMovie, setChosenMovie] = useState(location.state?.movie); // Access movie from location state
   const [showtimes, setShowtimes] = useState([]);
 
   useEffect(() => {
@@ -17,12 +16,11 @@ const SelectShowtime = (props) => {
   }, [chosenMovie]);
 
   const handleSelectShowtime = (showtime) => {
-    // Example navigation, adjust according to your app's routes and required state
     navigate(`/select-seats`, { state: { chosenMovie, showtime } });
   };
 
   return (
-    <div className="main-container"> {/* Wrapper div for centering content with margin */}
+    <div className="main-container">
       <h2>Select a Showtime for {chosenMovie}</h2>
       <div className="showtime-container">
         {showtimes.map((time, index) => (

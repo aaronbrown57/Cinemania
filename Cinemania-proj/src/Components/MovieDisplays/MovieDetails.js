@@ -11,9 +11,11 @@ const MovieDetail = (props) => {
   const [movie, setMovie] = useState(null);
   const { title } = useParams();
 
-  const bookingClickHandler = () => {
-    navigate("/select-showtime", { state: { movie } });
+  const bookingClickHandler = (movieTitle) => {
+    console.log("Booking for:", movieTitle); // This will show what title is being passed to the function
+    navigate('/select-showtime', { state: { movie: movieTitle } });
   };
+  
 
   useEffect(() => {
     const fetchMovieDetail = async () => {
@@ -42,7 +44,7 @@ const MovieDetail = (props) => {
             <img src={movie.trailerPictureURL} alt={movie.title} />
           )}
           <div className="movie-detail-info">
-            {movie.title && <h2>{movie.title}</h2>}
+            {movie.movieTitle && <h2>{movie.movieTitle}</h2>}
             {movie.category && <p><strong>Category:</strong> {movie.category}</p>}
             {movie.director && <p><strong>Director:</strong> {movie.director}</p>}
             {movie.cast && <p><strong>Cast:</strong> {movie.cast.join(', ')}</p>}
@@ -55,9 +57,9 @@ const MovieDetail = (props) => {
         <div className="movie-detail-booking">
         <button
                 className="book-tickets-button"
-                onClick={bookingClickHandler}
+                onClick={() => bookingClickHandler(movie.movieTitle)}
               >
-                Book Tickets
+                Book Tickets for {movie.movieTitle}
               </button>
         </div>
       </div>
