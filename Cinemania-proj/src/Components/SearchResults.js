@@ -70,6 +70,7 @@ const SearchResultsPage = () => {
   return (
     <div className="Search">
       <input
+       style={{ width: 500, margin: "auto" }}
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
@@ -89,7 +90,7 @@ const SearchResultsPage = () => {
       </div> */}
       <span>
         <Select
-          style={{ width: 200, margin: "auto" }}
+         
           value={selectedCategory}
           onChange={handleCategoryChange}
           variant="outlined"
