@@ -190,97 +190,97 @@ function AddShowtimeForm() {
       console.error("Error adding showtime:", error.message);
     }
   };
+    return (
+     <div className="add-showtime-form">
+        <h2>Add Showtime</h2>
+        <Toast
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          delay={3000}
+          autohide
+        >
+          <Toast.Body style={{ color: "white" }}>
+            {toastMessage} {/* Display the dynamic toast message */}
+          </Toast.Body>
+        </Toast>
 
-  return (
-    <div className="add-showtime-form">
-      <h2>Add Showtime</h2>
-      <Toast
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        delay={3000}
-        autohide
-      >
-        <Toast.Body style={{ color: "white" }}>
-          {toastMessage} {/* Display the dynamic toast message */}
-        </Toast.Body>
-      </Toast>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formMovie">
+            <Form.Label>Select Movie</Form.Label>
+            <Form.Control
+              as="select"
+              value={formData.movieName}
+              onChange={(e) =>
+                setFormData({ ...formData, movieName: e.target.value })
+              }
+              required
+              style={{ color: "black" }} // Add style to change text color
+            >
+              <option value="">Select Movie</option>
+              {movies.map((movie) => (
+                <option key={movie.id} value={movie.movieTitle}>
+                  {movie.movieTitle}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
 
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formMovie">
-          <Form.Label>Select Movie</Form.Label>
-          <Form.Control
-            as="select"
-            value={formData.movieName}
-            onChange={(e) =>
-              setFormData({ ...formData, movieName: e.target.value })
-            }
-            required
-            style={{ color: "black" }} // Add style to change text color
-          >
-            <option value="">Select Movie</option>
-            {movies.map((movie) => (
-              <option key={movie.id} value={movie.movieTitle}>
-                {movie.movieTitle}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+          <Form.Group controlId="formRoom">
+            <Form.Label>Select Room</Form.Label>
+            <Form.Control
+              as="select"
+              value={formData.roomName}
+              onChange={(e) =>
+                setFormData({ ...formData, roomName: e.target.value })
+              }
+              required
+              style={{ color: "black" }} // Add style to change text color
+            >
+              <option value="">Select Room</option>
+              {rooms.map((room) => (
+                <option key={room.id} value={room.Title}>
+                  {room.Title}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
 
-        <Form.Group controlId="formRoom">
-          <Form.Label>Select Room</Form.Label>
-          <Form.Control
-            as="select"
-            value={formData.roomName}
-            onChange={(e) =>
-              setFormData({ ...formData, roomName: e.target.value })
-            }
-            required
-            style={{ color: "black" }} // Add style to change text color
-          >
-            <option value="">Select Room</option>
-            {rooms.map((room) => (
-              <option key={room.id} value={room.Title}>
-                {room.Title}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+          <Form.Group controlId="formPeriod">
+            <Form.Label>Select Time</Form.Label>
+            <Form.Control
+              as="select"
+              value={formData.period}
+              onChange={(e) =>
+                setFormData({ ...formData, period: e.target.value })
+              }
+              required
+              style={{ color: "black" }} // Add style to change text color
+            >
+              <option value="">Select Time</option>
+              <option value="1">10:00am</option>
+              <option value="2">1:00pm</option>
+              <option value="3">4:00pm</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group controlId="formDate">
+            <Form.Label>Select Date</Form.Label>
+            <DatePicker
+              selected={formData.date}
+              onChange={handleDateChange}
+              dateFormat="yyyy-MM-dd"
+              required
+              className="date-picker" // Add a custom class name
+              calendarClassName="calendar-picker" // Add a custom class name for the calendar
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formPeriod">
-          <Form.Label>Select Time</Form.Label>
-          <Form.Control
-            as="select"
-            value={formData.period}
-            onChange={(e) =>
-              setFormData({ ...formData, period: e.target.value })
-            }
-            required
-            style={{ color: "black" }} // Add style to change text color
-          >
-            <option value="">Select Time</option>
-            <option value="1">10:00am</option>
-            <option value="2">1:00pm</option>
-            <option value="3">4:00pm</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group controlId="formDate">
-          <Form.Label>Select Date</Form.Label>
-          <DatePicker
-            selected={formData.date}
-            onChange={handleDateChange}
-            dateFormat="yyyy-MM-dd"
-            required
-            className="date-picker" // Add a custom class name
-            calendarClassName="calendar-picker" // Add a custom class name for the calendar
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Add Showtime
-        </Button>
-      </Form>
-    </div>
-  );
+          <Button variant="primary" type="submit">
+            Add Showtime
+          </Button>
+        </Form>
+      </div>
+    );
+  
 }
 
 export default AddShowtimeForm;

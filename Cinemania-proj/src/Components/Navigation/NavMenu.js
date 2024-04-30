@@ -4,47 +4,53 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import React, { useState, useContext } from "react";
 import SearchResults from '../SearchResults';
-import { NavLink, useNavigate } from 'react-router-dom'; // Import NavLink and useNavigate
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import "./../css/Home.css";
 
 
 function NavMenu({ loggedIn, loggedOut, admin }) {
-  const history = useNavigate();
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+
   const [searchQuery, setSearchQuery] = useState(''); // state to store the query
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //goes to search results withthe query
-    // history(`/searchresults?query=${encodeURIComponent(searchQuery)}`);
-    history("/search")
+    // Goes to search results with the query
+    // navigate(`/searchresults?query=${encodeURIComponent(searchQuery)}`);
+    navigate("/search");
   };
- 
+
   return (
     <Navbar expand="lg" className="nav-bar">
       <Container>
-       
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav">
-            {loggedIn && admin === false && <NavLink to="/edit" className="nav-link">Edit Profile</NavLink>}
-            {admin && <NavLink to="/manage-Users" className="nav-link">Manage Users</NavLink>}
-            {admin && <NavLink to="/manage-Movies" className="nav-link">Manage Movies</NavLink>}
+            
+            {loggedIn && admin === false && <button onClick={() => navigate("/edit")} className="nav-link">Edit Profile</button>}
+            
+            {admin && <button onClick={() => navigate("/manage-Users", { state: { isLoggedIn: true } })} className="nav-link">Manage Users</button>}
+            
+            {admin && <button onClick={() => navigate("/manage-Movies", { state: { isLoggedIn: true } })} className="nav-link">Manage Movies</button>}
             <br></br>
-            {loggedIn && <NavLink to='/Logout' className="nav-link">Logout</NavLink>}
-            {loggedOut && <NavLink to='/Login' className="nav-link">Login</NavLink>}
+            
+            {loggedIn && <button onClick={() => navigate("/Logout")} className="nav-link">Logout</button>}
+            
+            {loggedOut && <button onClick={() => navigate("/Login")} className="nav-link">Login</button>}
             <br></br>
-            {loggedIn && admin === false &&<NavLink to="/order-history" className="nav-link">Order History</NavLink>}
-            {admin && <NavLink to="/manage-promos" className="nav-link">Manage Promotions</NavLink>}
-         
-              {searchQuery !== '' && <SearchResults searchQuery={searchQuery} />}
+            
+            {loggedIn && admin === false && <button onClick={() => navigate("/order-history")} className="nav-link">Order History</button>}
+            
+            {admin && <button onClick={() => navigate("/manage-promos", { state: { isLoggedIn: true } })} className="nav-link">Manage Promotions</button>}
+            
+            {searchQuery !== '' && <SearchResults searchQuery={searchQuery} />}
+            
             {!admin && (loggedIn || loggedOut) && <SearchResults />}
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    
-  )
+  );
 }
 
 export default NavMenu;
-

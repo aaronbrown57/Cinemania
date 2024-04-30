@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavMenu from "./Navigation/NavMenu";
 import "./css/ManagePromotions.css";
+import { useLocation, useParams } from "react-router-dom";
 
 const ManagePromotions = () => {
+
+  const location = useLocation();
+  const isLoggedIn = location.state && location.state.isLoggedIn;
+  console.log('isLoggedIn:', isLoggedIn);
+
   const [promotions, setPromotions] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -251,98 +257,104 @@ const ManagePromotions = () => {
     }
   };
 
-  return (
-    <div>
-      <NavMenu loggedIn={true} admin={true}></NavMenu>
-      <h2>Manage Promotions</h2>
-      <div className="update-message">{updateMessage}</div>{" "}
-      {/* Update message */}
-      <div className="checkbox-label">Is Active</div>{" "}
-      {/* Label above checkboxes */}
-      {promotions.map((promotion) => (
-        <div className="promotion-item" key={promotion._id}>
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              checked={promotion.isActive}
-              onChange={() =>
-                handleCheckboxChange(
-                  promotion._id,
-                  promotion.isActive,
-                  promotion.sentToUsers
-                )
-              }
-            />
-            <span className="promotion-title">{promotion.title}</span> Promo
-            Code: {promotion.promoCode} - Description: {promotion.description}
-          </label>
-          {!promotion.sentToUsers && ( // Render button if promotion has not been sent to users
-            <button
-              onClick={() =>
-                handleSendToUsers(promotion._id, promotion.promoCode)
-              }
-            >
-              Send to Users
-            </button>
-          )}
-        </div>
-      ))}
-      <button onClick={() => setShowForm(true)}>Add Promotion</button>
-      {showForm && (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Promo Code:
-            <input
-              type="text"
-              name="promoCode"
-              value={formData.promoCode}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-          <label>
-            Start Date:
-            <input
-              type="text"
-              name="start"
-              value={formData.start}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-          <label>
-            End Date:
-            <input
-              type="text"
-              name="end"
-              value={formData.end}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-          <label>
-            Percentage:
-            <input
-              type="number"
-              name="percentage"
-              value={formData.percentage}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-          <label>
-            Description:
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-            />
-          </label>
-          <button type="submit">Submit</button>
-        </form>
-      )}
-    </div>
-  );
+  if (isLoggedIn) {
+    return (
+      <div>
+        <NavMenu loggedIn={true} admin={true}></NavMenu>
+        <h2>Manage Promotions</h2>
+        <div className="update-message">{updateMessage}</div>{" "}
+        {/* Update message */}
+        <div className="checkbox-label">Is Active</div>{" "}
+        {/* Label above checkboxes */}
+        {promotions.map((promotion) => (
+          <div className="promotion-item" key={promotion._id}>
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={promotion.isActive}
+                onChange={() =>
+                  handleCheckboxChange(
+                    promotion._id,
+                    promotion.isActive,
+                    promotion.sentToUsers
+                  )
+                }
+              />
+              <span className="promotion-title">{promotion.title}</span> Promo
+              Code: {promotion.promoCode} - Description: {promotion.description}
+            </label>
+            {!promotion.sentToUsers && ( // Render button if promotion has not been sent to users
+              <button
+                onClick={() =>
+                  handleSendToUsers(promotion._id, promotion.promoCode)
+                }
+              >
+                Send to Users
+              </button>
+            )}
+          </div>
+        ))}
+        <button onClick={() => setShowForm(true)}>Add Promotion</button>
+        {showForm && (
+          <form onSubmit={handleSubmit}>
+            <label>
+              Promo Code:
+              <input
+                type="text"
+                name="promoCode"
+                value={formData.promoCode}
+                onChange={handleInputChange}
+                required
+              />
+            </label>
+            <label>
+              Start Date:
+              <input
+                type="text"
+                name="start"
+                value={formData.start}
+                onChange={handleInputChange}
+                required
+              />
+            </label>
+            <label>
+              End Date:
+              <input
+                type="text"
+                name="end"
+                value={formData.end}
+                onChange={handleInputChange}
+                required
+              />
+            </label>
+            <label>
+              Percentage:
+              <input
+                type="number"
+                name="percentage"
+                value={formData.percentage}
+                onChange={handleInputChange}
+                required
+              />
+            </label>
+            <label>
+              Description:
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+              />
+            </label>
+            <button type="submit">Submit</button>
+          </form>
+        )}
+      </div>
+    );
+  }
+  else {
+    navigate('/');
+    return null;
+  }
 };
 
 export default ManagePromotions;

@@ -54,7 +54,7 @@ if (!userData.verified) {
       // Redirect based on user type
       if (userData.type === 1) {
         console.log('Redirecting to AuthView');
-        navigate(`/AuthView/${userData.firstName}`); // Redirect regular users to AuthView
+        navigate(`/AuthView/${userData.firstName}`, { state: { isAuth: true } }); // Redirect regular users to AuthView
       } else if (userData.type === 2) {
         console.log('Redirecting to Admin');
         navigate('/admin', { state: { isAdmin: true } }); // Redirect admins to AdminView
