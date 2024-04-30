@@ -264,7 +264,6 @@ router.put('/updateUser/:id', async (req, res) => {
             email,
             phone,
             creditCard,
-            billingAddress,
             homeAddress,
             promoSubscription,
         };

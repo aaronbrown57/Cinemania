@@ -1,13 +1,37 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const PaymentCard = require('../models/PaymentCard');
+const PaymentCard = require("../models/PaymentCard");
+const bcryptjs = require("bcryptjs");
 
 // Create a payment card
-router.post('/addCard', async (req, res) => {
+router.post("/addCard", async (req, res) => {
   try {
     const { userID, cardNo, expirationDate } = req.body;
-    const paymentCard = new PaymentCard({ userID, cardNo, nameOnCard, expirationDate });
+
+    if (!cardNo) {
+      return res.status(400).json({ error: "Card number is required" });
+    }
+
+    console.log("Card Number:", cardNo); // Log the card number
+    const trimmedCardNo = cardNo.trim(); // Trim leading and trailing whitespace
+    const last4 = cardNo.length >= 4 ? cardNo.slice(-4) : cardNo;
+    console.log("Last 4 Digits:", last4); // Log the extracted last 4 digits
+
+    // Create a new PaymentCard instance with hashed card number and last 4 digits
+    const paymentCard = new PaymentCard({
+      userID,
+      cardNo,
+      expirationDate,
+      last4,
+    });
+
+    const hashedCardNo = await bcryptjs.hash(cardNo, 8);
+    console.log("Hashed Card Number:", hashedCardNo); // Log the hashed card number
+
+    paymentCard.cardNo = hashedCardNo;
+
     await paymentCard.save();
+
     res.status(201).json(paymentCard);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -15,7 +39,7 @@ router.post('/addCard', async (req, res) => {
 });
 
 // Read all payment cards
-router.get('/', async (req, res) => {
+router.get("/allPayements", async (req, res) => {
   try {
     const paymentCards = await PaymentCard.find();
     res.json(paymentCards);
@@ -24,45 +48,24 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Read a payment card by ID
-router.get('/:id', async (req, res) => {
+// Read the users payment cards
+router.get("/userPayments/:id", async (req, res) => {
   try {
-    const paymentCard = await PaymentCard.findById(req.params.id);
-    if (!paymentCard) {
-      return res.status(404).json({ message: 'Payment card not found' });
-    }
-    res.json(paymentCard);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Update a payment card
-router.put('/:id', async (req, res) => {
-  try {
-    const { userID, cardNo, nameOnCard, expirationDate } = req.body;
-    const paymentCard = await PaymentCard.findByIdAndUpdate(
-      req.params.id,
-      { userID, cardNo, nameOnCard, expirationDate },
-      { new: true }
-    );
-    if (!paymentCard) {
-      return res.status(404).json({ message: 'Payment card not found' });
-    }
-    res.json(paymentCard);
+    const paymentCards = await PaymentCard.find(req.params.id);
+    res.json(paymentCards);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
 // Delete a payment card
-router.delete('/:id', async (req, res) => {
+router.delete("/deletePayment/:id", async (req, res) => {
   try {
     const paymentCard = await PaymentCard.findByIdAndDelete(req.params.id);
     if (!paymentCard) {
-      return res.status(404).json({ message: 'Payment card not found' });
+      return res.status(404).json({ message: "Payment card not found" });
     }
-    res.json({ message: 'Payment card deleted successfully' });
+    res.json({ message: "Payment card deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

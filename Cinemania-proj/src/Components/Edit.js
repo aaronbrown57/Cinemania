@@ -26,6 +26,13 @@ const Edit = () => {
     promoSubscription: false,
   });
 
+  const [paymentData, setPaymentData] = useState({
+    // Define paymentData state
+    userID: "", // Assuming you have the user's ID available
+    amount: 0, // Initialize with default amount
+    paymentMethod: "", // Initialize with default payment method
+  });
+
   useEffect(() => {
     // Fetch user data and set it to state
     fetchUserData();
@@ -93,18 +100,16 @@ const Edit = () => {
 
   const handleSubmitUpdateUser = async (e) => {
     e.preventDefault();
-    console.log('Button clicked'); // Debug log for button click
+    console.log("Button clicked"); // Debug log for button click
   
     try {
-      console.log('Starting user update request...'); // Debug log for starting request
+      console.log("Starting user update request..."); // Debug log for starting request
   
       // Create a new userData object without the password field
       const updatedUserData = {
         firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,
-        password: userData.password, // Include password field
-        creditCard: userData.creditCard,
         billingAddress: userData.billingAddress,
         homeAddress: userData.homeAddress,
         phoneNumber: userData.phoneNumber,
@@ -112,30 +117,78 @@ const Edit = () => {
       };
   
       // Log updatedUserData before sending update request
-      console.log('Updated User Data:', updatedUserData);
+      console.log("Updated User Data:", updatedUserData);
   
-      const response = await fetch(`http://localhost:5000/users/updateUser/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(updatedUserData), // Send updatedUserData without the password field
-      });
+      if (userData.creditCard.cardNumber !== "") {
+        console.log("Card number present. Calling addCard..."); // Debug log for calling addCard method
   
-      if (!response.ok) {
-        throw new Error('Failed to update user');
+        // Call the addCard method if the card number is not empty
+        const paymentData = {
+          userID: userId,
+          cardNo: userData.creditCard.cardNumber, // Include cardNo in paymentData
+          expirationDate: userData.creditCard.expiry, // Assuming expirationDate comes from creditCard.expiry
+        };
+  
+        console.log("Payment Data:", paymentData); // Log payment data
+  
+        // Print out paymentData before sending to addCard endpoint
+        console.log("Sending paymentData to addCard:", paymentData);
+  
+        const response = await fetch(
+          "http://localhost:5000/paymentMethods/addCard",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(paymentData), // Send paymentData for adding card
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error("Failed to add card");
+        }
+  
+        const responseData = await response.json();
+        console.log("Response Data:", responseData); // Log response data
+      } else {
+        console.log("No card number present. Skipping addCard..."); // Debug log if no card number is present
       }
   
-      const responseData = await response.json();
-      console.log('Response Data:', responseData); // Log response data
+      // Update user data in the database
+      const updateUserRes = await axios.put(
+        `http://localhost:5000/users/${userId}`,
+        updatedUserData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("Update User Response:", updateUserRes.data); // Log the response data
   
-      // Redirect to homepage upon successful update
-      navigate(`/AuthView/${userData.firstName}`);
+      // Check if the update was successful
+      if (updateUserRes.status === 200) {
+        console.log("User data updated successfully");
+        // Update the user data in the state
+        setUserData(updatedUserData);
+  
+        // Show a success message to the user
+        alert("Profile updated successfully!");
+      } else {
+        console.log("Failed to update user data");
+        // Show an error message to the user
+        alert("Failed to update profile. Please try again.");
+      }
     } catch (error) {
-      console.error('Error updating user:', error);
+      console.error("Error updating user:", error);
+      // Show an error message to the user
+      alert("Failed to update profile. Please try again.");
     }
   };
+  
+  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -144,7 +197,15 @@ const Edit = () => {
       ...prevUserData,
       [name]: newValue,
     }));
-  };  
+  };
+
+  const handlePaymentChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentData((prevPaymentData) => ({
+      ...prevPaymentData,
+      [name]: value,
+    }));
+  };
 
   return (
     <div>
@@ -237,25 +298,32 @@ const Edit = () => {
             }}
             fieldClassName="input"
           />
-          fieldClassName="input"
+
           <Form.Group controlId="formBasicPassword">
             <Form.Label>New Password</Form.Label>
             <Form.Control
               type="password"
               name="password"
               value={userData.password || ""}
-              onChange={(e) => setUserData({ ...userData, password: e.target.value })}
+              onChange={(e) =>
+                setUserData({ ...userData, password: e.target.value })
+              }
               placeholder="Enter new password"
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check
-            type="checkbox"
-            label="Subscribe to Promotional Content"
-            checked={userData.promoSubscription} // Bind checked prop to promoSubscription state
-            onChange={(e) => setUserData({ ...userData, promoSubscription: e.target.checked })} // Handle checkbox change
-          />
-        </Form.Group>
+            <Form.Check
+              type="checkbox"
+              label="Subscribe to Promotional Content"
+              checked={userData.promoSubscription} // Bind checked prop to promoSubscription state
+              onChange={(e) =>
+                setUserData({
+                  ...userData,
+                  promoSubscription: e.target.checked,
+                })
+              } // Handle checkbox change
+            />
+          </Form.Group>
           <Button variant="primary" type="submit">
             Save Changes
           </Button>

@@ -15,6 +15,11 @@ const PaymentCardSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-});
+
+    last4OfPayment: {
+        type: String,
+        required: false,
+    },
+}, { collection: 'paymentcards' });
 
 module.exports = PaymentCard = mongoose.model('PaymentCard', PaymentCardSchema);
