@@ -76,5 +76,13 @@ router.get('/:title', async (req, res) => {
     }
   });
 
+  router.get('/search/:query', async (req, res) => {
+    const query = req.params.query;
+    // Perform search based on the query
+    const results = await performSearch(query);
+    res.json(results);
+  });
+  
+
 
 module.exports = router;
