@@ -67,20 +67,19 @@ router.post('/addShowtime', async (req, res) => {
 
 
 
-// Route to get all showtimes
+/// Route to get all showtimes
 router.get('/allShowtimes', async (req, res) => {
     try {
         console.log('Received GET request to fetch all showtimes');
-        const showtimesQuery = ShowTimes.find(); // Capture the query without executing it
-        console.log('Showtimes query:', showtimesQuery.getQuery());
-        const showtimes = await showtimesQuery.exec(); // Execute the query
+        const showtimes = await ShowTimes.find().exec(); // Execute the query directly
         console.log('Retrieved showtimes:', showtimes);
         res.json(showtimes);
     } catch (error) {
         console.error('Error fetching showtimes:', error.message);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Failed to fetch showtimes' });
     }
 });
+
 
 
 // Route to delete a showtime by ID

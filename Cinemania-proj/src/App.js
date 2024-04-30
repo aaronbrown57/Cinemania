@@ -15,6 +15,7 @@ import AdminView from './Components/Admin/AdminView';
 import ConfirmAccountCreation from './Components/ConfirmAccountCreation';
 // Importing new components
 import SelectShowtime from './Components/SelectShowtime';
+import SearchResultsPage from './Components/Search.js';
 import MovieDetails from './Components/MovieDisplays/MovieDetails.js';
 import SelectSeats from './Components/SelectSeats';
 import OrderSummary from './Components/OrderSummary';
@@ -101,6 +102,7 @@ const App = () => {
           <Route path='/manage-movies' element={<ManageMovies />} />
           <Route path='/manage-promos' element={<ManagePromos />} />
           <Route path='/add-showtime' element ={<AddShowtime />} />
+          <Route path='/search' element={<SearchResultsPage />} />
         </Routes>
     
       </Router>

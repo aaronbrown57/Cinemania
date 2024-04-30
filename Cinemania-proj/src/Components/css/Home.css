@@ -1,134 +1,123 @@
 .custom-carousel-img {
   max-width: 300px;
-    width: 250px; /* Set width to 30% of the screen */
-    height: 400px;
-    margin: auto; /* Center the image horizontally */
-    display: block; /* Ensure the image is a block-level element to allow margin auto to work */
-  }
+  width: 250px; /* Set width to 30% of the screen */
+  height: 400px;
+  margin: auto; /* Center the image horizontally */
+  display: block; /* Ensure the image is a block-level element to allow margin auto to work */
+}
 
-  /* Apply styles to all Link components */
+/* Apply styles to all Link components */
 .LinkClass {
-  color: #C45AB3; /* Set the color of the links to #9A7AA0 */
+  color: #c45ab3; /* Set the color of the links to #9A7AA0 */
   text-decoration: none; /* Optional: Remove underline */
 }
 
 /* Apply styles to Link components on hover */
 .LinkClass:hover {
-  color: #7B5488; /* Set the color of the links to #7B5488 on hover */
+  color: #7b5488; /* Set the color of the links to #7B5488 on hover */
 }
 
+.carousel {
+  padding-bottom: 5%;
+}
 
-  .carousel {
-    padding-bottom: 5%;
-  }
+div {
+  background-color: #1d3557;
+}
 
-  div {
-    background-color: #1D3557;
-  }
-  
-  h1{
-    color: #c1dbdb;
-  }
+h1 {
+  color: #c1dbdb;
+}
 
-  label{
-    color:#c1dbdb;
-  }
+label {
+  color: #c1dbdb;
+}
 
-  .carousel-caption {
-    /* Your custom styles here */
-    opacity: 0.1;
+.carousel-caption {
+  /* Your custom styles here */
+  opacity: 0.1;
 }
 .CategoryDropdown {
   margin-left: 0px;
 }
-.carousel-indicators{
+.carousel-indicators {
   opacity: 0.5;
 }
 
 .Search .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
-  border-color: white; 
+  border-color: white;
 }
 
 .Search .MuiFormLabel-root {
-  color: white; 
+  color: white;
 }
 
-
-Button :hover{
+Button :hover {
   background-color: #457b9d;
 }
 
 .web-name {
   font-size: 56;
   font-family: "Nabla", system-ui;
-  font-optical-sizing:none;
+  font-optical-sizing: none;
   font-weight: 400;
-  font-style:normal;
-  font-variation-settings:
-    "EDPT" 100,
-    "EHLT" 12;
-  color:#c1dbdb;
-}
-
-.login-form{
-  width: 600px; /* Set the width to 100 pixels */
-  border:black;
-}
-
-
-.nav-bar{
-  background-color: #1D3557;
-  margin: 20px;
-}
-
-.search-box{
-  background-color: #c1dbdb;
-}
-
-.nav a{
+  font-style: normal;
+  font-variation-settings: "EDPT" 100, "EHLT" 12;
   color: #c1dbdb;
 }
 
+.login-form {
+  width: 600px; /* Set the width to 100 pixels */
+  border: black;
+}
 
-.movie-card{
+.nav-bar {
+  background-color: #1d3557;
+  margin: 20px;
+}
+
+.search-box {
+  background-color: #c1dbdb;
+}
+
+.nav a {
+  color: #c1dbdb;
+}
+
+.movie-card {
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
-.movie-description{
+.movie-description {
   color: #c1dbdb;
-
 }
 
-
-.movie-img{
+.movie-img {
   max-width: auto; /* Set maximum width to fill the card */
   height: 100%; /* Maintain aspect ratio */
 }
 
-.Movie{
+.Movie {
   padding: 10px; /* Reduced padding */
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    /* Adjust width and height as needed */
-    width: 100%; /* Full width */
-    max-width: 200px; /* Maximum width */
-    height: 100%; /* Full height */
-    max-height: 100px; /* Maximum height */
-
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  /* Adjust width and height as needed */
+  width: 100%; /* Full width */
+  max-width: 200px; /* Maximum width */
+  height: 100%; /* Full height */
+  max-height: 100px; /* Maximum height */
 }
 
-
-.movie-list{
+.movie-list {
   display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns */
-    gap: 20px; /* Gap between cards */
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  gap: 20px; /* Gap between cards */
 }
 
-
-.sign-up{
+.sign-up {
   color: #c1dbdb;
   font-size: 12;
 }
