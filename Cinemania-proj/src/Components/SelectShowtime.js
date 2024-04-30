@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/SelectShowtime.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 
 const SelectShowtime = () => {
   const location = useLocation(); // Use useLocation to access the location object
@@ -30,7 +30,7 @@ const SelectShowtime = () => {
         ))}
       </div>
       <div className="cancel-container">
-        <button className="btn btn-secondary mt-3" onClick={() => navigate('/')}>Cancel</button>
+        <button className="btn btn-secondary mt-3" onClick={() => navigate(-1)}>Cancel</button>
       </div>
     </div>
   );

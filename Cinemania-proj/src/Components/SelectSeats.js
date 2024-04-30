@@ -43,7 +43,7 @@ const SelectSeats = () => {
           className="confirm-button" 
           onClick={handleConfirmSeats}>Confirm Seats
         </button>
-        <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
+        <button className="btn btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
         </div>
       </div>
     </div>

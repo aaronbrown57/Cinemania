@@ -60,7 +60,7 @@ const SelectTicketAge = () => {
         disabled={Object.keys(ticketAges).length === 0}>
         Confirm Selections
       </button>
-      <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
+      <button className="btn btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
       </div>
     </div>
   );

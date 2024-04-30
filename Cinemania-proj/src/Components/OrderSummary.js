@@ -52,7 +52,7 @@ const OrderSummary = () => {
       <div className="mt-3">
         <div className='button-container'>
           <button className="btn btn-primary" onClick={handleSubmit}>Confirm Order</button>
-          <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
+          <button className="btn btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
         </div>
       </div>
     </div>

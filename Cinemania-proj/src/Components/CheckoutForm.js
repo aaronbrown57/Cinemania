@@ -35,7 +35,7 @@ const CheckoutForm = () => {
         </div>
         <div className='button-container'>
           <button className="confirm-button-checkout" type="submit">Submit</button>
-          <button className="btn btn-secondary" onClick={() => navigate('/')}>Cancel</button>
+          <button className="btn btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
         </div>
       </form>
     </div>
