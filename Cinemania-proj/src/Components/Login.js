@@ -36,13 +36,12 @@ const Login = () => {
       
       console.log('user data: ', userData);
       console.log('token:', token)
-  
-      // Check if the user is verified before proceeding
-      if (!userData.verified) {
-        setLoading(false);
-        setError('User is not verified. Please verify your account.');
-        return;
-      }
+  // Assuming userData is the object containing user data and setError is the function to set the error message
+if (!userData.verified) {
+  setLoading(false);
+  setError(<span style={{ color: 'red' }}>User is not verified. Please verify your account.</span>);
+  return;
+}
   
       // Set user data and token in context
       setUserData({ user: userData, token });
