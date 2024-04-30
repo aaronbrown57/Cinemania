@@ -90,7 +90,7 @@ const SearchResultsPage = () => {
       </div> */}
       <span>
         <Select
-         
+          style={{ width: 200, margin: "auto", color: "white" }}
           value={selectedCategory}
           onChange={handleCategoryChange}
           variant="outlined"
