@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Toast } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./css/AddShowtime.css"; // Import custom CSS for styling
+
 
 function AddShowtimeForm() {
   const navigate = useNavigate();
@@ -11,6 +15,10 @@ function AddShowtimeForm() {
     period: "",
     date: "",
   });
+
+  const handleDateChange = (date) => {
+    setFormData((prevData) => ({ ...prevData, date })); // Update date in formData
+  };
 
   const [movies, setMovies] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -239,7 +247,7 @@ function AddShowtimeForm() {
         </Form.Group>
 
         <Form.Group controlId="formPeriod">
-          <Form.Label>Select Period</Form.Label>
+          <Form.Label>Select Time</Form.Label>
           <Form.Control
             as="select"
             value={formData.period}
@@ -249,20 +257,21 @@ function AddShowtimeForm() {
             required
             style={{ color: "black" }} // Add style to change text color
           >
-            <option value="">Select Period</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+            <option value="">Select Time</option>
+            <option value="1">10:00am</option>
+            <option value="2">1:00pm</option>
+            <option value="3">4:00pm</option>
           </Form.Control>
         </Form.Group>
-
         <Form.Group controlId="formDate">
           <Form.Label>Select Date</Form.Label>
-          <Form.Control
-            type="date"
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+          <DatePicker
+            selected={formData.date}
+            onChange={handleDateChange}
+            dateFormat="yyyy-MM-dd"
             required
+            className="date-picker" // Add a custom class name
+            calendarClassName="calendar-picker" // Add a custom class name for the calendar
           />
         </Form.Group>
 
