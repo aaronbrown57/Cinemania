@@ -17,6 +17,15 @@ const SelectSeats = () => {
   const movieID = location.state?.movieID || 'Unknown Movie ID';
   const showtimeID = location.state?.showtimeID || 'Unknown Movie ID';
 
+  var actTime;
+
+  if (showtime === 1) {
+    actTime = "10am";
+  } else if (showtime === 2) {
+    actTime = "1pm";
+  } else {
+    actTime = "4pm";
+  }
   useEffect(() => {
     const fetchRoomDetails = async () => {
       try {
@@ -58,7 +67,7 @@ const SelectSeats = () => {
   if (isLoggedIn) {
     return (
       <div>
-          <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {showtime}</h2>
+          <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {actTime}</h2>
         <div className="seats-container">
           {seats.length > 0 ? (
           seats.map(seat => (
