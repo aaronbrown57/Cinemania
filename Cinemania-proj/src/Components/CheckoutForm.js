@@ -56,6 +56,7 @@ const CheckoutForm = () => {
         const response = await axios.get(
           `http://localhost:5000/paymentMethods/userPayments/${userId}`
         );
+        
         console.log("User payments response:", response.data);
 
         if (response.data.length < 1) {
