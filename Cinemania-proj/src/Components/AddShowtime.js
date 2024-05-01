@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./css/AddShowtime.css"; // Import custom CSS for styling
+import { useLocation } from "react-router-dom";
 
 
 function AddShowtimeForm() {
+  const location = useLocation();
+  const isAdding = location.state && location.state.isAdding;
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -190,6 +193,8 @@ function AddShowtimeForm() {
       console.error("Error adding showtime:", error.message);
     }
   };
+
+  if(isAdding) {
     return (
      <div className="add-showtime-form">
         <h2>Add Showtime</h2>
@@ -282,7 +287,11 @@ function AddShowtimeForm() {
         </Form>
       </div>
     );
-  
+  }
+  else {
+    navigate('/');
+    return null;
+  }
 }
 
 export default AddShowtimeForm;
