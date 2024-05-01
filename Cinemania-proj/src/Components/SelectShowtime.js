@@ -62,7 +62,7 @@ const SelectShowtime = () => {
         period: showtime.period,
         roomID: showtime.roomID,
         isLoggedIn: true,
-        movieID,
+        showtimeID:showtime._id,
       }
     });
   };
