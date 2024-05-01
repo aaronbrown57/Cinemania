@@ -76,6 +76,8 @@ const ManageMovies = () => {
       }
 
       console.log('Movie added successfully!');
+      alert('Movie successfully added');
+      navigate("/admin")
     } catch (error) {
       console.error('Error adding movie:', error.message);
     }

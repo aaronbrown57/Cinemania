@@ -30,7 +30,7 @@ const RemoveMovie = () => {
       setMovies(updatedMovies);
       setSelectedMovie('');
       alert('Movie successfully deleted');
-      navigate("/manage-Movies")
+      navigate("/admin")
     } catch (error) {
       console.error('Error removing movie:', error);
     } finally {
