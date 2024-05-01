@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const CheckoutForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const isLoggedIn = location.state && location.state.isLoggedIn;
   const { selectedSeats, showtime, chosenMovie, ticketAges, total, userEmail } =
     location.state || {};
   const [userPayments, setUserPayments] = useState([]); // State to store user payment methods
@@ -56,7 +57,7 @@ const CheckoutForm = () => {
         const response = await axios.get(
           `http://localhost:5000/paymentMethods/userPayments/${userId}`
         );
-        
+
         console.log("User payments response:", response.data);
 
         if (response.data.length < 1) {
@@ -88,9 +89,9 @@ const CheckoutForm = () => {
       const filteredPromos = response.data.filter(
         (promotion) => promotion.promoCode === promoId
       );
-  
+
       console.log("Filtered Promos:", filteredPromos);
-  
+
       if (filteredPromos.length > 0) {
         const validPromo = filteredPromos[0]; // Assuming there's only one valid promo with the given code
         const discountPercentage = validPromo.percentage; // Get the discount percentage from the promotion
@@ -103,7 +104,7 @@ const CheckoutForm = () => {
         setDiscount(0); // Reset discount amount if promo is invalid
         setUpdatedTotal(total); // Reset the updated total
       }
-  
+
     } catch (error) {
       console.error("Error checking promo validity:", error);
       // Handle error (e.g., display error message to user)
@@ -112,74 +113,80 @@ const CheckoutForm = () => {
 
   const handlePaymentMethodClick = (paymentMethod) => {
     // Redirect to OrderConfirmation screen with payment method details
-    navigate('/order-confirmation', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total: total - discount, userEmail } });
+    navigate('/order-confirmation', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total: total - discount, userEmail, isLoggedIn: true } });
   };
-
+/*
   if (!location.state) {
     console.log("No order details found.");
     return <div>No order details found. Please start your order again.</div>;
   }
-
+*/
   // Inside the OrderConfirmation component
 
-  return (
-    <div className="container mt-3">
-      <h2>Checkout</h2>
-      <div className="card">
-        <div className="card-body">
-          <div className="order">
-            <p className="card-text">Here are your order details:</p>
-          </div>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">Movie: {chosenMovie}</li>
-            <li className="list-group-item">Showtime: {showtime}</li>
-            {Object.entries(ticketAges).map(([seat, age], index) => (
-              <li key={index} className="list-group-item">
-                Seat {seat}: {age}
+  if (isLoggedIn) {
+    return (
+      <div className="container mt-3">
+        <h2>Checkout</h2>
+        <div className="card">
+          <div className="card-body">
+            <div className="order">
+              <p className="card-text">Here are your order details:</p>
+            </div>
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item">Movie: {chosenMovie}</li>
+              <li className="list-group-item">Showtime: {showtime}</li>
+              {Object.entries(ticketAges).map(([seat, age], index) => (
+                <li key={index} className="list-group-item">
+                  Seat {seat}: {age}
+                </li>
+              ))}
+              <li className="list-group-item">
+                Total to Pay: ${updatedTotal.toFixed(2)}
               </li>
-            ))}
-            <li className="list-group-item">
-              Total to Pay: ${updatedTotal.toFixed(2)}
-            </li>
-          </ul>
-          <div className="form-group">
-            <label htmlFor="promoId">Enter Promo ID:</label>
-            <input
-              type="text"
-              className="form-control"
-              id="promoId"
-              value={promoId}
-              onChange={handlePromoIdChange}
-            />
-            <button className="btn btn-primary" onClick={checkPromoValidity}>
-              Apply Promo
-            </button>
+            </ul>
+            <div className="form-group">
+              <label htmlFor="promoId">Enter Promo ID:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="promoId"
+                value={promoId}
+                onChange={handlePromoIdChange}
+              />
+              <button className="btn btn-primary" onClick={checkPromoValidity}>
+                Apply Promo
+              </button>
+            </div>
+            <h5 className="mt-3">Payment Methods:</h5>
+            <div className="payment-buttons">
+              {userPayments && userPayments.length > 0 ? (
+                userPayments.map((paymentMethod, index) => (
+                  <div key={index} className="payment-method">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => handlePaymentMethodClick(paymentMethod)}
+                    >
+                      {paymentMethod.cardType}Card Ending in{" "}
+                      {paymentMethod.last4OfPayment}
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p>No payment methods found.</p>
+              )}
+            </div>
+            <Link to="/" className="btn btn-primary mt-3">
+              Home
+            </Link>
           </div>
-          <h5 className="mt-3">Payment Methods:</h5>
-          <div className="payment-buttons">
-            {userPayments && userPayments.length > 0 ? (
-              userPayments.map((paymentMethod, index) => (
-                <div key={index} className="payment-method">
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handlePaymentMethodClick(paymentMethod)}
-                  >
-                    {paymentMethod.cardType}Card Ending in{" "}
-                    {paymentMethod.last4OfPayment}
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No payment methods found.</p>
-            )}
-          </div>
-          <Link to="/" className="btn btn-primary mt-3">
-            Home
-          </Link>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+  else {
+    navigate('/');
+    return null;
+  }
 };
 
 export default CheckoutForm;

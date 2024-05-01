@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import "./css/OrderConfirmation.css";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios"; // Import Axios for HTTP requests
+import { useNavigate } from 'react-router-dom';
+
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId; // Import ObjectId from mongoose
 
 
 const OrderConfirmation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { showtime, chosenMovie, ticketAges, total } = location.state || {};
+  const isLoggedIn = location.state && location.state.isLoggedIn;
   const [emailSent, setEmailSent] = useState(false); // State to track if email is already sent
   const userEmail = location.state?.userEmail; // Set userEmail to dummy email if not provided
 
@@ -91,12 +95,14 @@ const OrderConfirmation = () => {
       // Handle error (e.g., display error message to user)
     }
   };
-
+/*
   if (!location.state) {
     console.log("No order details found.");
     return <div>No order details found. Please start your order again.</div>;
   }
-
+  */
+ 
+  if(isLoggedIn) {
   return (
     <div className="container mt-3">
       <h2>Order Confirmation</h2>
@@ -123,6 +129,11 @@ const OrderConfirmation = () => {
       </div>
     </div>
   );
+}
+else {
+  navigate('/');
+  return null;
+}
 };
 
 export default OrderConfirmation;

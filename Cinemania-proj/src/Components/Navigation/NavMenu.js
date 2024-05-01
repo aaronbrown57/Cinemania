@@ -39,7 +39,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
             {loggedOut && <button onClick={() => navigate("/Login")} className="nav-link">Login</button>}
             <br></br>
             
-            {loggedIn && admin === false && <button onClick={() => navigate("/order-history")} className="nav-link">Order History</button>}
+            {loggedIn && admin === false && <button onClick={() => navigate("/order-history", { state: { isLoggedIn: true } })} className="nav-link">Order History</button>}
             
             {admin && <button onClick={() => navigate("/manage-promos", { state: { isLoggedIn: true } })} className="nav-link">Manage Promotions</button>}
             

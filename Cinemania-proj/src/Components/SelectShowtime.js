@@ -9,6 +9,7 @@ const SelectShowtime = () => {
   const navigate = useNavigate();
   const movieTitle = location.state?.movie;  // Access movie title passed from MovieDetail
   const movieID = location.state?.id;
+  const isLoggedIn = location.state && location.state.isLoggedIn;
   const [showtimes, setShowtimes] = useState([]);
 
   useEffect(() => {
@@ -58,35 +59,41 @@ const SelectShowtime = () => {
       state: {
         movieTitle, // Pass other necessary details as needed
         date: showtime.date,
-        period: showtime.period
+        period: showtime.period,
+        isLoggedIn: true
       }
     });
   };
-
-  return (
-    <div className="main-container">
-      <h2>Select a Showtime for {movieTitle}</h2>
-      <div className="showtime-container">
-        {Object.keys(showtimes).length > 0 ? (
-          Object.entries(showtimes).map(([date, times]) => (
-            <div key={date}>
-              <h3>{date}</h3>
-              {times.map((time, index) => (
-                <button key={index} className="showtime-button" onClick={() => handleSelectShowtime(time)}>
-                  {convertTimePeriod(time.period)}
-                </button>
-              ))}
-            </div>
-          ))
-        ) : (
-          <p>No showtimes available.</p>
-        )}
+  if (isLoggedIn) {
+    return (
+      <div className="main-container">
+        <h2>Select a Showtime for {movieTitle}</h2>
+        <div className="showtime-container">
+          {Object.keys(showtimes).length > 0 ? (
+            Object.entries(showtimes).map(([date, times]) => (
+              <div key={date}>
+                <h3>{date}</h3>
+                {times.map((time, index) => (
+                  <button key={index} className="showtime-button" onClick={() => handleSelectShowtime(time)}>
+                    {convertTimePeriod(time.period)}
+                  </button>
+                ))}
+              </div>
+            ))
+          ) : (
+            <p>No showtimes available.</p>
+          )}
+        </div>
+        <div className="cancel-container">
+          <button className="btn btn-secondary mt-3" onClick={() => navigate(-1)}>Cancel</button>
+        </div>
       </div>
-      <div className="cancel-container">
-        <button className="btn btn-secondary mt-3" onClick={() => navigate(-1)}>Cancel</button>
-      </div>
-    </div>
-  );
+    );
+  }
+  else {
+    navigate('/');
+    return null;
+  }
 
 };
 

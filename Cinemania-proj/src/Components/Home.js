@@ -9,7 +9,7 @@ function Home() {
   const navigate = useNavigate();
 
   const handleMovieSelect = (movie) => {
-    navigate('/select-showtime', { state: { chosenMovie: movie.title } });
+    navigate('/select-showtime', { state: { chosenMovie: movie.title, isLoggedIn: true } });
   };
   
   const handleClick = () => {

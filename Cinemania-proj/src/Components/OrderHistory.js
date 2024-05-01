@@ -4,10 +4,11 @@ import { useLocation, Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 const OrderHistory = () => {
-    const location = useLocation();
+  const location = useLocation();
   const [bookings, setBookings] = useState([]);
   const { selectedSeats, showtime, chosenMovie, ticketAges, total, userEmail } =
-  location.state || {};
+    location.state || {};
+  const isLoggedIn = location.state && location.state.isLoggedIn;
 
   const navigate = useNavigate();
   const fetchAndFilterUsers = async () => {
@@ -45,22 +46,27 @@ const OrderHistory = () => {
       // Handle error (e.g., display error message to user)
     }
   };
-
-  return (
-    <div>
-      <h2>Order History</h2>
-      <ul>
-        {bookings.map((booking, index) => (
-          <li key={index}>
-            <p>Booking ID: {booking._id}</p>
-            <p>Movie: {booking.movie}</p>
-            <p>Showtime: {booking.showtime}</p>
-            {/* Add more booking details as needed */}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  if (isLoggedIn) {
+    return (
+      <div>
+        <h2>Order History</h2>
+        <ul>
+          {bookings.map((booking, index) => (
+            <li key={index}>
+              <p>Booking ID: {booking._id}</p>
+              <p>Movie: {booking.movie}</p>
+              <p>Showtime: {booking.showtime}</p>
+              {/* Add more booking details as needed */}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+  else {
+    navigate('/');
+    return null;
+  }
 };
 
 export default OrderHistory;
