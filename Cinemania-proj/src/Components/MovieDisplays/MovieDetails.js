@@ -35,8 +35,16 @@ const MovieDetail = (props) => {
     return <div className="movie-detail">Loading...</div>;
   }
 
+
+  
+  const handleClick = () => {
+    navigate('/');
+  }
+
+
   return (
     <div>
+              <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
       <NavMenu></NavMenu>
       <div className="movie-detail">
         <div className="movie-detail-header">
