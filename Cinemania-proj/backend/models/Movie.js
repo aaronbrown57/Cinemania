@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const MovieSchema = new mongoose.Schema({
   category: {
-    type: String,
+    type: [String], // Change type to an array of strings
     required: true,
   },
   cast: {

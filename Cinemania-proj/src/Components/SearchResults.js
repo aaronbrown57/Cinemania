@@ -64,8 +64,12 @@ const SearchResultsPage = () => {
     setSelectedCategory(event.target.value); // Update selected category
   };
 
-  // Filter movies based on selected category
-  const filteredMovies = selectedCategory === 'All' ? searchResults : searchResults.filter(movie => movie.category === selectedCategory);
+  // // Filter movies based on selected category
+  // const filteredMovies = selectedCategory === 'All' ? searchResults : searchResults.filter(movie => movie.category === selectedCategory);
+// Filter movies based on selected category
+const filteredMovies = selectedCategory === 'All' ? searchResults : searchResults.filter(movie =>
+  movie.category.includes(selectedCategory)
+);
 
   return (
     <div className="Search">
@@ -78,14 +82,7 @@ const SearchResultsPage = () => {
       />
       {noResults && <p>No results found.</p>} {/* Display "No results found" message */}
       {/* <div className="movie-thumbnails">
-      {filteredMovies.map((movie, index) => (
-  <img
-    key={index}
-    src={movie.trailerPictureURL}
-    alt={movie.title}
-    onClick={() => handleMovieSelect(movie)}
-  />
-))}
+     
 
       </div> */}
       <span>
