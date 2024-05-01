@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NavMenu from "./Navigation/NavMenu";
 import { Container, Form, Button } from "react-bootstrap";
 import CreditCardInput from "react-credit-card-input";
 import axios from "axios";
 
 const Edit = () => {
+
+  const location = useLocation();
+  const isLoggedIn = location.state && location.state.isLoggedIn;
+
   const navigate = useNavigate();
   const [currentEmail, setCurrentEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
@@ -257,144 +261,150 @@ const Edit = () => {
     }
   };
 
-  return (
-    <div>
-      <NavMenu />
-      <Container>
-        <h1>Edit Profile</h1>
-        <Form onSubmit={handleSubmitCurrentInfo}>
-          <Form.Group controlId="formBasicCurrentEmail">
-            <Form.Label>Current Email</Form.Label>
-            <Form.Control
-              type="email"
-              name="currentEmail"
-              value={currentEmail}
-              onChange={(e) => setCurrentEmail(e.target.value)}
-              placeholder="Enter your current email"
-            />
-          </Form.Group>
+  if (isLoggedIn) {
+    return (
+      <div>
+        <NavMenu />
+        <Container>
+          <h1>Edit Profile</h1>
+          <Form onSubmit={handleSubmitCurrentInfo}>
+            <Form.Group controlId="formBasicCurrentEmail">
+              <Form.Label>Current Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="currentEmail"
+                value={currentEmail}
+                onChange={(e) => setCurrentEmail(e.target.value)}
+                placeholder="Enter your current email"
+              />
+            </Form.Group>
 
-          <Form.Group controlId="formBasicCurrentPassword">
-            <Form.Label>Current Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="currentPassword"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Enter your current password"
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit Current Info
-          </Button>
-        </Form>
+            <Form.Group controlId="formBasicCurrentPassword">
+              <Form.Label>Current Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="currentPassword"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter your current password"
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Submit Current Info
+            </Button>
+          </Form>
 
-        <Form onSubmit={handleSubmitUpdateUser}>
-          <Form.Group controlId="formBasicFirstName">
-            <Form.Label>First Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="firstName"
-              value={userData.firstName || ""}
-              onChange={handleChange}
-              placeholder=""
+          <Form onSubmit={handleSubmitUpdateUser}>
+            <Form.Group controlId="formBasicFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                value={userData.firstName || ""}
+                onChange={handleChange}
+                placeholder=""
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastName"
+                value={userData.lastName || ""}
+                onChange={handleChange}
+                placeholder=""
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Billing Address</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={userData.email || ""}
+                onChange={handleChange}
+                placeholder=""
+              />
+            </Form.Group>
+            <p>Add payment method</p>
+            <CreditCardInput
+              cardNumberInputProps={{
+                value: userData.creditCard ? userData.creditCard.cardNumber : "", // Check if userData.creditCard exists
+                onChange: (e) => {
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    creditCard: {
+                      ...prevUserData.creditCard,
+                      cardNumber: e.target.value,
+                    },
+                  }));
+                },
+              }}
+              cardExpiryInputProps={{
+                value: userData.creditCard ? userData.creditCard.expiry : "", // Check if userData.creditCard exists
+                onChange: (e) => {
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    creditCard: {
+                      ...prevUserData.creditCard,
+                      expiry: e.target.value,
+                    },
+                  }));
+                },
+              }}
+              fieldClassName="input"
             />
-          </Form.Group>
-          <Form.Group controlId="formBasicLastName">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="lastName"
-              value={userData.lastName || ""}
-              onChange={handleChange}
-              placeholder=""
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Billing Address</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              value={userData.email || ""}
-              onChange={handleChange}
-              placeholder=""
-            />
-          </Form.Group>
-          <p>Add payment method</p>
-          <CreditCardInput
-            cardNumberInputProps={{
-              value: userData.creditCard ? userData.creditCard.cardNumber : "", // Check if userData.creditCard exists
-              onChange: (e) => {
-                setUserData((prevUserData) => ({
-                  ...prevUserData,
-                  creditCard: {
-                    ...prevUserData.creditCard,
-                    cardNumber: e.target.value,
-                  },
-                }));
-              },
-            }}
-            cardExpiryInputProps={{
-              value: userData.creditCard ? userData.creditCard.expiry : "", // Check if userData.creditCard exists
-              onChange: (e) => {
-                setUserData((prevUserData) => ({
-                  ...prevUserData,
-                  creditCard: {
-                    ...prevUserData.creditCard,
-                    expiry: e.target.value,
-                  },
-                }));
-              },
-            }}
-            fieldClassName="input"
-          />
 
-          {showRemoveButtons && (
-            <>
-              <h2>Payment Methods</h2>
-              {paymentMethods.map((method) => (
-                <div key={method._id}>
-                  <p>Last 4 digits: {method.last4OfPayment}</p>
-                  <Button onClick={() => handleRemoveCard(method._id)}>
-                    Remove Card
-                  </Button>
-                </div>
-              ))}
-            </>
-          )}
+            {showRemoveButtons && (
+              <>
+                <h2>Payment Methods</h2>
+                {paymentMethods.map((method) => (
+                  <div key={method._id}>
+                    <p>Last 4 digits: {method.last4OfPayment}</p>
+                    <Button onClick={() => handleRemoveCard(method._id)}>
+                      Remove Card
+                    </Button>
+                  </div>
+                ))}
+              </>
+            )}
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>New Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              value={userData.password || ""}
-              onChange={(e) =>
-                setUserData({ ...userData, password: e.target.value })
-              }
-              placeholder="Enter new password"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check
-              type="checkbox"
-              label="Subscribe to Promotional Content"
-              checked={userData.promoSubscription} // Bind checked prop to promoSubscription state
-              onChange={(e) =>
-                setUserData({
-                  ...userData,
-                  promoSubscription: e.target.checked,
-                })
-              } // Handle checkbox change
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Save Changes
-          </Button>
-        </Form>
-      </Container>
-    </div>
-  );
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>New Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                value={userData.password || ""}
+                onChange={(e) =>
+                  setUserData({ ...userData, password: e.target.value })
+                }
+                placeholder="Enter new password"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check
+                type="checkbox"
+                label="Subscribe to Promotional Content"
+                checked={userData.promoSubscription} // Bind checked prop to promoSubscription state
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    promoSubscription: e.target.checked,
+                  })
+                } // Handle checkbox change
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Form>
+        </Container>
+      </div>
+    );
+  }
+  else {
+    navigate('/');
+    return null;
+  }
 };
 
 export default Edit;
