@@ -316,7 +316,7 @@ const Edit = () => {
               />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Billing Address</Form.Label>
+              <Form.Label>Billing Address (Electronic)</Form.Label>
               <Form.Control
                 type="email"
                 name="email"

@@ -19,17 +19,15 @@ const SelectSeats = () => {
   useEffect(() => {
     const fetchRoomDetails = async () => {
       try {
-        const roomResponse = await axios.get(`http://localhost:5000/rooms/${roomID}`);
+        const roomResponse = await axios.get('http://localhost:5000/rooms/allRooms');
         console.log("Room response data:", roomResponse.data);  // Debugging the room response
   
         const seatsResponse = await axios.get('http://localhost:5000/seat/allSeats');
         console.log("Seats response data:", seatsResponse.data);  // Debugging the seats response
   
         // Filter seats based on availability and matching roomID and movieID
-        const availableRoom = roomResponse.data.filter(room =>
-          room._id === roomID);
         const availableSeats = seatsResponse.data.filter(seat => 
-          seat.status === 'Available'
+          seat.status === 'Available' && seat.roomID === roomID && seat.movieID === movieID
         );
   
         setSeats(availableSeats);
@@ -40,7 +38,8 @@ const SelectSeats = () => {
     };
   
     fetchRoomDetails();
-  }, [roomID, movieID]);  
+  }, [roomID, movieID]);
+  
   
 
   const toggleSeatSelection = (seat) => {
