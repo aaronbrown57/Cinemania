@@ -37,7 +37,7 @@ const SelectSeats = () => {
   
         // Filter seats based on availability and matching roomID and movieID
         const availableSeats = seatsResponse.data.filter(seat => 
-          seat.status === 'Available' && seat.roomID === roomID && seat.movieID === movieID
+          seat.status === 'Available' && seat.show
         );
   
         setSeats(availableSeats);
