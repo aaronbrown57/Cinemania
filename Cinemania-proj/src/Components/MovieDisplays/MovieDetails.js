@@ -11,9 +11,9 @@ const MovieDetail = (props) => {
   const [movie, setMovie] = useState(null);
   const { title } = useParams();
 
-  const bookingClickHandler = (movieTitle) => {
-    console.log("Booking for:", movieTitle); // This will show what title is being passed to the function
-    navigate('/select-showtime', { state: { movie: movieTitle } });
+  const bookingClickHandler = (movieTitle, movieID) => {
+    console.log("Booking for:", movieTitle, movieID); // This will show what title is being passed to the function
+    navigate('/select-showtime', { state: { movie: movieTitle, id: movieID } });
   };
   
 
@@ -52,12 +52,13 @@ const MovieDetail = (props) => {
             {movie.rating && <p><strong>Rating:</strong> {movie.rating}</p>}
             {movie.reviews && <p><strong>Reviews:</strong> {movie.reviews}</p>}
             {movie.synopsis && <p><strong>Synopsis:</strong> {movie.synopsis}</p>}
+            {movie._id && <p><strong>ID: </strong> {movie._id}</p>}
           </div>
         </div>
         <div className="movie-detail-booking">
         <button
                 className="book-tickets-button"
-                onClick={() => bookingClickHandler(movie.movieTitle)}
+                onClick={() => bookingClickHandler(movie.movieTitle, movie._id)}
               >
                 Book Tickets for {movie.movieTitle}
               </button>
