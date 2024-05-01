@@ -20,7 +20,8 @@ function AddShowtimeForm() {
   });
 
   const handleDateChange = (date) => {
-    setFormData((prevData) => ({ ...prevData, date })); // Update date in formData
+    const selectedDate = date.toISOString().split('T')[0];
+    setFormData((prevData) => ({ ...prevData, date: selectedDate })); // Update date in formData
   };
 
   const [movies, setMovies] = useState([]);
