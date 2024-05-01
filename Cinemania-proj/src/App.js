@@ -25,6 +25,7 @@ import OrderConfirmation from './Components/OrderConfirmation';
 import SelectTicketAge from './Components/SelectTicketAge';
 import ManagePromos from "./Components/ManagePromos"
 import ManageMovies from "./Components/ManageMovies.js"
+import OrderHistory from './Components/OrderHistory.js';
 import { UserContext } from './context/UserContext.js';
 import Edit from "./Components/Edit.js";
 import RemoveMovie from './Components/RemoveMovie.js';
@@ -100,6 +101,7 @@ const App = () => {
           <Route path='/order-summary' element={<OrderSummary />} />
           <Route path='/checkout' element={<CheckoutForm />} />
           <Route path='/order-confirmation' element={<OrderConfirmation />} />
+          <Route path='/order-history' element={<OrderHistory />} />
           {/* Routes for Admin processes */}
           <Route path='/manage-Movies' element={<ManageMovies />} />
           <Route path='/manage-promos' element={<ManagePromos />} />

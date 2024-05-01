@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Bookings = require('../models/Bookings'); // Import the Bookings model
+const Room = require('../models/Room'); // Import the Room model
+
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
@@ -76,5 +78,16 @@ router.put('/sendBookingConfirmation', async (req, res) => {
     }
   });
 
+  // Endpoint to fetch bookings for a specific user
+router.get('/bookings/:userId', async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      const bookings = await Booking.find({ userId }); // Query the database to find bookings associated with the provided user ID
+      res.json(bookings);
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
 module.exports = router;
