@@ -9,6 +9,7 @@ const SelectSeats = () => {
   const navigate = useNavigate();
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const isLoggedIn = location.state && location.state.isLoggedIn;
   const chosenMovie = location.state?.movieTitle || 'Unknown Movie';
   const showtime = location.state?.period || 'Unknnown showtime';
   const date = location.state?.date || 'Unknown date';
@@ -28,9 +29,7 @@ const SelectSeats = () => {
         const availableRoom = roomResponse.data.filter(room =>
           room._id === roomID);
         const availableSeats = seatsResponse.data.filter(seat => 
-          seat.status === 'Available' && 
-          seat.show === roomID && 
-          seat.movieID === movieID
+          seat.status === 'Available'
         );
   
         setSeats(availableSeats);
@@ -59,7 +58,7 @@ const SelectSeats = () => {
   if (isLoggedIn) {
     return (
       <div>
-          <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {actTime}</h2>
+          <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {time}</h2>
         <div className="seats-container">
           {seats.length > 0 ? (
           seats.map(seat => (
