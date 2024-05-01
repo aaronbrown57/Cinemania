@@ -61,7 +61,8 @@ const SelectShowtime = () => {
         date: showtime.date,
         period: showtime.period,
         roomID: showtime.roomID,
-        isLoggedIn: true
+        isLoggedIn: true,
+        movieID,
       }
     });
   };
