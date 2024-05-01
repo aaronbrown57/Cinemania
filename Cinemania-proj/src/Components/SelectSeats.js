@@ -6,11 +6,15 @@ import axios from 'axios';
 
 const SelectSeats = () => {
   const location = useLocation();
+<<<<<<< HEAD
+=======
+  const [selectedSeats, setSelectedSeats] = useState([]);
+>>>>>>> 57018b83c376cbf381ab8013226a4cd31747df6d
   const navigate = useNavigate();
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const chosenMovie = location.state?.movieTitle || 'Unknown Movie';
-  const showtime = location.state?.period || 'Unknown showtime';
+  const showtime = location.state?.period || 'Unknnown showtime';
   const date = location.state?.date || 'Unknown date';
   const roomID = location.state?.roomID || 'Unknown room ID';
   const movieID = location.state?.movieID || 'Unknown Movie ID';
@@ -52,39 +56,45 @@ const SelectSeats = () => {
     }
   };
 
-  const handleConfirmSeats = () => {
-    navigate('/select-ticket-age', { state: { chosenMovie, showtime, selectedSeats } });
+  const handleConfirmSeats = () => { // Renamed to avoid conflict with prop
+    navigate('/select-ticket-age', { state: { chosenMovie, showtime, selectedSeats, isLoggedIn: true } });
   };
   
-  return (
-    <div>
-      <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {showtime}</h2>
-      <div className="seats-container">
-        {seats.length > 0 ? (
+  if (isLoggedIn) {
+    return (
+      <div>
+          <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {actTime}</h2>
+        <div className="seats-container">
+          {seats.length > 0 ? (
           seats.map(seat => (
-            <button
-              key={seat._id}
-              className={`seat ${selectedSeats.includes(seat._id) ? "selected" : ""}`}
-              onClick={() => toggleSeatSelection(seat._id)}
+              <button
+                key={seat._id}
+                className={`seat ${selectedSeats.includes(seat._id) ? "selected" : ""}`}
+                onClick={() => toggleSeatSelection(seat._id)}
               disabled={seat.status !== 'available'}>
-              Seat {seat._id}
-            </button>
-          ))
+                Seat {seat._id}
+              </button>
+            ))
         ) : (
           <p>No seats available for this showtime.</p>
         )}
       </div>
-      <div className='button-container'>
-        <button 
-          disabled={selectedSeats.length === 0}
-          className="confirm-button" 
-          onClick={handleConfirmSeats}>Confirm Seats
-        </button>
-        <button className="btn btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
+        <div className='button-container'>
+            <button
+              disabled={selectedSeats.length === 0}
+              className="confirm-button"
+              onClick={handleConfirmSeats}>Confirm Seats
+            </button>
+            <button className="btn btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
+          </div>
       </div>
-    </div>
-  );
+    );
     
+  }
+  else {
+    navigate('/');
+    return null;
+  }
 };
 
 export default SelectSeats;

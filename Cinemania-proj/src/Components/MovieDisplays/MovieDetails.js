@@ -13,7 +13,7 @@ const MovieDetail = (props) => {
 
   const bookingClickHandler = (movieTitle, movieID) => {
     console.log("Booking for:", movieTitle, movieID); // This will show what title is being passed to the function
-    navigate('/select-showtime', { state: { movie: movieTitle, id: movieID } });
+    navigate('/select-showtime', { state: { movie: movieTitle, id: movieID, isLoggedIn: true } });
   };
 
   useEffect(() => {

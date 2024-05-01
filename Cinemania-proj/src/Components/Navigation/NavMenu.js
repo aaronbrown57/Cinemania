@@ -27,7 +27,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav">
             
-            {loggedIn && admin === false && <button onClick={() => navigate("/edit")} className="nav-link">Edit Profile</button>}
+            {loggedIn && admin === false && <button onClick={() => navigate("/edit", { state: { isLoggedIn: true } })} className="nav-link">Edit Profile</button>}
             
             {admin && <button onClick={() => navigate("/manage-Users", { state: { isLoggedIn: true } })} className="nav-link">Manage Users</button>}
             
@@ -39,7 +39,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
             {loggedOut && <button onClick={() => navigate("/Login")} className="nav-link">Login</button>}
             <br></br>
             
-            {loggedIn && admin === false && <button onClick={() => navigate("/order-history")} className="nav-link">Order History</button>}
+            {loggedIn && admin === false && <button onClick={() => navigate("/order-history", { state: { isLoggedIn: true } })} className="nav-link">Order History</button>}
             
             {admin && <button onClick={() => navigate("/manage-promos", { state: { isLoggedIn: true } })} className="nav-link">Manage Promotions</button>}
             
