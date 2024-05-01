@@ -51,22 +51,33 @@ router.get("/allPayements", async (req, res) => {
 // Read the users payment cards
 router.get("/userPayments/:id", async (req, res) => {
   try {
-    const paymentCards = await PaymentCard.find(req.params.id);
+    const userId = req.params.id; // Get the user ID from the request parameters
+    const paymentCards = await PaymentCard.find({ userID: userId }); // Use the user ID in the filter object
     res.json(paymentCards);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
+
+
 // Delete a payment card
 router.delete("/deletePayment/:id", async (req, res) => {
   try {
-    const paymentCard = await PaymentCard.findByIdAndDelete(req.params.id);
+    console.log("Request received to delete payment card"); // Log when the request is received
+    const paymentCardId = req.params.id; // Get the ID of the payment card to delete
+    console.log("Payment Card ID to delete:", paymentCardId); // Log the ID of the payment card
+    
+    const paymentCard = await PaymentCard.findByIdAndDelete(paymentCardId); // Find and delete the payment card
     if (!paymentCard) {
+      console.log("Payment card not found"); // Log if the payment card is not found
       return res.status(404).json({ message: "Payment card not found" });
     }
+
+    console.log("Payment card deleted successfully"); // Log if the payment card is deleted successfully
     res.json({ message: "Payment card deleted successfully" });
   } catch (error) {
+    console.error("Error deleting payment card:", error); // Log any errors that occur during deletion
     res.status(500).json({ error: error.message });
   }
 });
