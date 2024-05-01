@@ -10,6 +10,7 @@ const AdminView = () => {
   if (isAdmin) {
     return (
       <div className="App">
+         <h1 className='web-name' >Cinemania </h1>
         <NavMenu loggedIn={true} admin={true}></NavMenu>
         <h1>Welcome to Admin!</h1>
       </div>

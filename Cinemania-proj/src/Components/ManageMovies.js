@@ -240,10 +240,10 @@ const ManageMovies = () => {
           </form>
         ) : (
           <>
-            <button onClick={addMovie}>Add Movie</button>
-            <button onClick={removeMovie}>Remove Movie</button>
-            <button onClick={scheduleMovie}>Schedule Movies</button>
-            <button onClick={removeShowtime}>Remove Scheduled Movies</button>
+            <button style={{ marginRight: '50px' }} onClick={addMovie}>Add Movie</button>
+            <button style={{ marginRight: '50px' }} onClick={removeMovie}>Remove Movie</button>
+            <button style={{ marginRight: '50px' }} onClick={scheduleMovie}>Schedule Movies</button>
+            <button style={{ marginRight: '50px' }} onClick={removeShowtime}>Remove Scheduled Movies</button>
           </>
         )}
       </div>
