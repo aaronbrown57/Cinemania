@@ -79,7 +79,7 @@ const OrderConfirmation = () => {
 
       // Make the POST request with the correct customerID as a string
       const response = await axios.post(
-        "http://localhost:5000/bookings/addBooking",
+        `http://localhost:5000/bookings/addBooking/${customerID}`,
         {
           bookingNumber,
           customerID, // Use customerID as a string
@@ -87,7 +87,7 @@ const OrderConfirmation = () => {
           totalPaid: total.toFixed(2),
         }
       );
-
+      console.log(response.bookingNumber)
       console.log("Confirmation email sent successfully to:", email);
       bookingNumber++;
     } catch (error) {

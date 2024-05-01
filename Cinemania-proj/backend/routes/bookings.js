@@ -21,17 +21,14 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-router.post('/addBooking', async (req, res) => {
-    console.log("add booking called, body was: ", req.body); // Log the received request body
+router.post('/addBooking/:customerId', async (req, res) => {
     try {
-        const newBooking = await Bookings.create(req.body); // Create a new booking
-        console.log("New booking created:", newBooking); // Log the newly created booking
-        res.json({ msg: 'Booking added successfully', booking: newBooking }); // Send success response
+        const customerId = req.params.customerId;
+        const newBooking = await Booking.create({ ...req.body, customerID: customerId });
+        res.json({ msg: 'Booking added successfully', booking: newBooking });
     } catch (error) {
-        console.error("Error creating booking:", error); // Log the error
-        console.log("Request body:", req.body); // Log the request body for further inspection
-        console.log("Error stack:", error.stack); // Log the full error stack for debugging
-        res.status(400).json({ error: error.message }); // Send error response
+        console.error("Error creating booking:", error);
+        res.status(400).json({ error: 'Failed to add booking' });
     }
 });
 
@@ -51,6 +48,22 @@ router.get('/allBookings', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
+// GET Route to Fetch Bookings by Customer ID
+router.get('/allBookings/:customerId', async (req, res) => {
+    try {
+        const customerId = req.params.customerId;
+        const bookings = await Booking.find({ customerID: customerId }).lean();
+        res.json(bookings);
+    } catch (error) {
+        console.error('Error fetching bookings:', error.message);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+
 
 router.put('/sendBookingConfirmation', async (req, res) => {
     const { email, movie, showtime, seat, ticketType, totalPaid } = req.body;
