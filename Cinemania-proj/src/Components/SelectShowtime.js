@@ -61,6 +61,7 @@ const SelectShowtime = () => {
         date: showtime.date,
         period: showtime.period,
         roomID: showtime.roomID,
+        showtimeID: showtime._id,
         isLoggedIn: true
       }
     });
