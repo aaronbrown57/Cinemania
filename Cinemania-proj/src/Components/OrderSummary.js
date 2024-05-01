@@ -11,6 +11,8 @@ const OrderSummary = () => {
   const selectedSeats = location.state?.selectedSeats;
 
   const [email, setEmail] = useState('');
+  const [promoId, setPromoId] = useState(""); // State to store promo ID
+
 
   // Ticket prices
   const ticketPrices = {
@@ -34,7 +36,12 @@ const OrderSummary = () => {
   const total = subtotal + (subtotal * salesTaxRate);
 
   const handleSubmit = () => {
-    navigate('/checkout', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total, userEmail: email } });
+    navigate('/checkout', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total, userEmail: email, promoId } });
+  };
+
+  // Handler function to update promo ID state
+  const handlePromoIdChange = (e) => {
+    setPromoId(e.target.value);
   };
 
   if (!ticketAges) {
@@ -62,6 +69,16 @@ const OrderSummary = () => {
             required
           />
         </div>
+        <div className="form-group">
+            <label htmlFor="promoId">Enter Promo ID:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="promoId"
+              value={promoId}
+              onChange={handlePromoIdChange}
+            />
+          </div>
       <div className='order'>
         <p className="mt-3">Subtotal: ${subtotal.toFixed(2)}</p>
         <p>Sales Tax (7%): ${(subtotal * salesTaxRate).toFixed(2)}</p>

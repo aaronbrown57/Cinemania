@@ -17,6 +17,31 @@ const OrderConfirmation = () => {
     }
   }, [userEmail, emailSent]);
 
+  const fetchAndFilterUsers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/users/allUsers"
+      );
+      console.log("All users response:", response.data);
+
+      // Filter users by email
+      const filteredUsers = response.data.filter(
+        (user) => user.email === userEmail
+      );
+      console.log("Filtered users:", filteredUsers);
+
+      if (filteredUsers.length > 0) {
+        const userId = filteredUsers[0]._id; // Assuming the API returns the first user's ID
+        console.log("User ID:", userId);
+      } else {
+        console.warn("No user found with email:", userEmail);
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      // Handle error (e.g., display error message to user)
+    }
+  };
+
   const sendConfirmationEmail = async (email) => {
     console.log('Sending confirmation email to:', email);
     try {
@@ -33,6 +58,27 @@ const OrderConfirmation = () => {
       console.error('Error sending booking confirmation email:', error);
       // Handle error (e.g., display error message to user)
     }
+
+    const bookingNumber = 1234;
+
+    try {
+      const customerID =  fetchAndFilterUsers(email);
+      await axios.put('http://localhost:5000/bookings/addBooking', {
+        bookingNumber,
+        customerID,
+        showtime,
+        seat: Object.keys(ticketAges).join(', '), // Combine all selected seats
+        ticketType: Object.values(ticketAges).join(', '), // Combine all ticket types
+        totalPaid: total.toFixed(2),
+      });
+      console.log('Confirmation email sent successfully to:', email);
+      bookingNumber++;
+    } catch (error) {
+      console.error('Error sending booking confirmation email:', error);
+      // Handle error (e.g., display error message to user)
+    }
+
+
   };
 
   if (!location.state) {
