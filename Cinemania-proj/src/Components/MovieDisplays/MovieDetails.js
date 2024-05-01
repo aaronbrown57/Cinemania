@@ -4,7 +4,7 @@ import axios from 'axios';
 import NavMenu from '../Navigation/NavMenu';
 import YoutubeVideo from '../YoutubeVideo';
 import "./../css/MovieDetails.css";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MovieDetail = (props) => {
   const navigate = useNavigate();
@@ -60,12 +60,16 @@ const MovieDetail = (props) => {
           </div>
         </div>
         <div className="movie-detail-booking">
-        <button
-                className="book-tickets-button"
-                onClick={() => bookingClickHandler(movie.movieTitle, movie._id)}
-              >
-                Book Tickets for {movie.movieTitle}
-              </button>
+          {movie.comingSoon ? (
+            <p>This movie is coming soon. Booking is not available yet.</p>
+          ) : (
+            <button
+              className="book-tickets-button"
+              onClick={() => bookingClickHandler(movie.movieTitle, movie._id)}
+            >
+              Book Tickets for {movie.movieTitle}
+            </button>
+          )}
         </div>
       </div>
       <div className="trailer-container">
