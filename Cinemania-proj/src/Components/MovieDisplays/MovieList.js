@@ -1,10 +1,9 @@
 import React from 'react';
 import Movie from './Movie';
-import "./MovieList.css"; // Import CSS file for styling
+// import "./MovieList.css"; // Import CSS file for styling
 
 const MovieList = ({ items, isAdmin, showing }) => {
-  return (
-    <div className="movie-list-container"> {/* Container for horizontal scrolling */}
+  return ( 
       <div className="movie-list"> {/* Wrapper for movie items */}
         {items.map((movie) => (
           <Movie
@@ -24,7 +23,6 @@ const MovieList = ({ items, isAdmin, showing }) => {
           />
         ))}
       </div>
-    </div>
   );
 }
 

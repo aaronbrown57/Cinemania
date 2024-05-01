@@ -95,8 +95,8 @@ Button :hover {
 }
 
 .movie-img {
-  max-width: auto; /* Set maximum width to fill the card */
-  height: 100%; /* Maintain aspect ratio */
+  max-width: auto;
+  height: 100%; 
 }
 
 .Movie {

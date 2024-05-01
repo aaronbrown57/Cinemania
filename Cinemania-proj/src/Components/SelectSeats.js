@@ -8,8 +8,17 @@ const SelectSeats = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const navigate = useNavigate();
   const chosenMovie = location.state?.movieTitle || 'Unknown Movie';
-  const showtime = location.state?.period || 'Unkown showtime';
+  const showtime = location.state?.period || 'Unknown showtime';
   const date = location.state?.date || 'Unknown date';
+  var actTime;
+
+  if (showtime === 1) {
+    actTime = "10am";
+  } else if (showtime === 2) {
+    actTime = "1pm";
+  } else {
+    actTime = "4pm";
+  }
 
   const toggleSeatSelection = (seat) => {
     if (selectedSeats.includes(seat)) {
@@ -28,7 +37,7 @@ const SelectSeats = () => {
 
   return (
     <div>
-    <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {showtime}</h2>
+    <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {actTime}</h2>
       <div className="seats-container">
         {seats.map((seat, index) => (
           <button
