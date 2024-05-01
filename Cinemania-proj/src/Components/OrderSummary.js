@@ -71,16 +71,6 @@ const OrderSummary = () => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="promoId">Enter Promo ID:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="promoId"
-            value={promoId}
-            onChange={handlePromoIdChange}
-          />
-        </div>
         <div className='order'>
           <p className="mt-3">Subtotal: ${subtotal.toFixed(2)}</p>
           <p>Sales Tax (7%): ${(subtotal * salesTaxRate).toFixed(2)}</p>
