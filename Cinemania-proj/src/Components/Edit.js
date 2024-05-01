@@ -10,6 +10,8 @@ const Edit = () => {
   const [currentEmail, setCurrentEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [userId, setUserId] = useState(""); // Separate state for user ID
+  const [showRemoveButtons, setShowRemoveButtons] = useState(false);
+  const [paymentMethods, setPaymentMethods] = useState([]); // Define paymentMethods state
   const [userData, setUserData] = useState({
     firstName: "", // Initialize with empty string
     lastName: "", // Initialize with empty string
@@ -100,10 +102,33 @@ const Edit = () => {
 
   const handleSubmitUpdateUser = async (e) => {
     e.preventDefault();
-    console.log("Button clicked"); // Debug log for button click
 
     try {
-      console.log("Starting user update request..."); // Debug log for starting request
+      // Fetch the user's payment methods to determine the number of cards on file
+      const paymentMethodsResponse = await axios.get(
+        `http://localhost:5000/paymentMethods/userPayments/${userId}`, // Assuming userId is available
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      const fetchedPaymentMethods = paymentMethodsResponse.data;
+      console.log("User Payment Methods:", fetchedPaymentMethods); // Log user payment methods
+
+      // Check if the user already has 3 cards on file
+      if (fetchedPaymentMethods.length >= 3) {
+        // Update state to show payment methods and remove buttons
+        setPaymentMethods(fetchedPaymentMethods);
+        setShowRemoveButtons(true);
+        return;
+      } else {
+        setShowRemoveButtons(false); // Hide remove buttons if less than 3 cards
+      }
+
+      // Continue with the update if the user has less than 3 cards on file
+      console.log("Proceeding with user update...");
 
       // Create a new userData object without the password field
       const updatedUserData = {
@@ -205,6 +230,33 @@ const Edit = () => {
     }));
   };
 
+  const handleRemoveCard = async (cardId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/paymentMethods/deletePayment/${cardId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Card removed successfully
+        alert("Card removed successfully.");
+        // Update paymentMethods state after removal
+        setPaymentMethods((prevMethods) =>
+          prevMethods.filter((method) => method._id !== cardId)
+        );
+      } else {
+        throw new Error("Failed to remove card");
+      }
+    } catch (error) {
+      console.error("Error removing card:", error);
+      alert("Failed to remove card. Please try again.");
+    }
+  };
+
   return (
     <div>
       <NavMenu />
@@ -296,6 +348,20 @@ const Edit = () => {
             }}
             fieldClassName="input"
           />
+
+          {showRemoveButtons && (
+            <>
+              <h2>Payment Methods</h2>
+              {paymentMethods.map((method) => (
+                <div key={method._id}>
+                  <p>Last 4 digits: {method.last4OfPayment}</p>
+                  <Button onClick={() => handleRemoveCard(method._id)}>
+                    Remove Card
+                  </Button>
+                </div>
+              ))}
+            </>
+          )}
 
           <Form.Group controlId="formBasicPassword">
             <Form.Label>New Password</Form.Label>
