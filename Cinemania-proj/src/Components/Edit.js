@@ -101,10 +101,10 @@ const Edit = () => {
   const handleSubmitUpdateUser = async (e) => {
     e.preventDefault();
     console.log("Button clicked"); // Debug log for button click
-  
+
     try {
       console.log("Starting user update request..."); // Debug log for starting request
-  
+
       // Create a new userData object without the password field
       const updatedUserData = {
         firstName: userData.firstName,
@@ -115,25 +115,25 @@ const Edit = () => {
         phoneNumber: userData.phoneNumber,
         promoSubscription: userData.promoSubscription,
       };
-  
+
       // Log updatedUserData before sending update request
       console.log("Updated User Data:", updatedUserData);
-  
+
       if (userData.creditCard.cardNumber !== "") {
         console.log("Card number present. Calling addCard..."); // Debug log for calling addCard method
-  
+
         // Call the addCard method if the card number is not empty
         const paymentData = {
           userID: userId,
           cardNo: userData.creditCard.cardNumber, // Include cardNo in paymentData
           expirationDate: userData.creditCard.expiry, // Assuming expirationDate comes from creditCard.expiry
         };
-  
+
         console.log("Payment Data:", paymentData); // Log payment data
-  
+
         // Print out paymentData before sending to addCard endpoint
         console.log("Sending paymentData to addCard:", paymentData);
-  
+
         const response = await fetch(
           "http://localhost:5000/paymentMethods/addCard",
           {
@@ -145,20 +145,20 @@ const Edit = () => {
             body: JSON.stringify(paymentData), // Send paymentData for adding card
           }
         );
-  
+
         if (!response.ok) {
           throw new Error("Failed to add card");
         }
-  
+
         const responseData = await response.json();
         console.log("Response Data:", responseData); // Log response data
       } else {
         console.log("No card number present. Skipping addCard..."); // Debug log if no card number is present
       }
-  
+
       // Update user data in the database
       const updateUserRes = await axios.put(
-        `http://localhost:5000/users/${userId}`,
+        `http://localhost:5000/users/updateUser/${userId}`,
         updatedUserData,
         {
           headers: {
@@ -167,13 +167,13 @@ const Edit = () => {
         }
       );
       console.log("Update User Response:", updateUserRes.data); // Log the response data
-  
+
       // Check if the update was successful
       if (updateUserRes.status === 200) {
         console.log("User data updated successfully");
         // Update the user data in the state
         setUserData(updatedUserData);
-  
+
         // Show a success message to the user
         alert("Profile updated successfully!");
       } else {
@@ -187,8 +187,6 @@ const Edit = () => {
       alert("Failed to update profile. Please try again.");
     }
   };
-  
-  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -273,7 +271,7 @@ const Edit = () => {
           <p>Add payment method</p>
           <CreditCardInput
             cardNumberInputProps={{
-              value: userData.creditCard.cardNumber,
+              value: userData.creditCard ? userData.creditCard.cardNumber : "", // Check if userData.creditCard exists
               onChange: (e) => {
                 setUserData((prevUserData) => ({
                   ...prevUserData,
@@ -285,7 +283,7 @@ const Edit = () => {
               },
             }}
             cardExpiryInputProps={{
-              value: userData.creditCard.expiry,
+              value: userData.creditCard ? userData.creditCard.expiry : "", // Check if userData.creditCard exists
               onChange: (e) => {
                 setUserData((prevUserData) => ({
                   ...prevUserData,

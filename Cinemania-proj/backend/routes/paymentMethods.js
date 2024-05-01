@@ -14,15 +14,15 @@ router.post("/addCard", async (req, res) => {
 
     console.log("Card Number:", cardNo); // Log the card number
     const trimmedCardNo = cardNo.trim(); // Trim leading and trailing whitespace
-    const last4 = cardNo.length >= 4 ? cardNo.slice(-4) : cardNo;
-    console.log("Last 4 Digits:", last4); // Log the extracted last 4 digits
+    const last4OfPayment = cardNo.length >= 4 ? cardNo.slice(-4) : cardNo;
+    console.log("Last 4 Digits:", last4OfPayment); // Log the extracted last 4 digits
 
     // Create a new PaymentCard instance with hashed card number and last 4 digits
     const paymentCard = new PaymentCard({
       userID,
       cardNo,
       expirationDate,
-      last4,
+      last4OfPayment,
     });
 
     const hashedCardNo = await bcryptjs.hash(cardNo, 8);
