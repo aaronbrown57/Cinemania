@@ -37,6 +37,14 @@ const ManageMovies = () => {
     navigate('/add-showtime', { state: { isAdding: true } });
   };
 
+  const removeMovie = () => {
+    navigate('/remove-movie', { state: { isAdding: true } });
+  };
+
+  const removeShowtime = () => {
+    navigate('/remove-showtime', { state: { isAdding: true } });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const movieData = {
@@ -233,7 +241,9 @@ const ManageMovies = () => {
         ) : (
           <>
             <button onClick={addMovie}>Add Movie</button>
+            <button onClick={removeMovie}>Remove Movie</button>
             <button onClick={scheduleMovie}>Schedule Movies</button>
+            <button onClick={removeShowtime}>Remove Scheduled Movies</button>
           </>
         )}
       </div>

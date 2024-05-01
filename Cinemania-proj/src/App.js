@@ -8,6 +8,7 @@ import Home from './Components/Home';
 import Signup from './Components/Signup';
 import Login from './Components/Login';
 import AddShowtime from './Components/AddShowtime.js';
+import RemoveShowtime from './Components/RemoveShowtime.js';
 import ForgotPassword from './Components/ForgotPassword';
 import AuthView from './Components/AuthView/AuthView';
 import axios from 'axios';
@@ -102,6 +103,7 @@ const App = () => {
           <Route path='/manage-movies' element={<ManageMovies />} />
           <Route path='/manage-promos' element={<ManagePromos />} />
           <Route path='/add-showtime' element ={<AddShowtime />} />
+          <Route path='/remove-showtime' element ={<RemoveShowtime />} />
           <Route path='/search' element={<SearchResultsPage />} />
         </Routes>
     
