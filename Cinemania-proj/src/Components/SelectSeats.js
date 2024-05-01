@@ -58,7 +58,7 @@ const SelectSeats = () => {
   if (isLoggedIn) {
     return (
       <div>
-          <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {time}</h2>
+          <h2 className='movie-select'>Select seats for {chosenMovie} on {date} at {showtime}</h2>
         <div className="seats-container">
           {seats.length > 0 ? (
           seats.map(seat => (
