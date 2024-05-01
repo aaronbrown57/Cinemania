@@ -77,7 +77,7 @@ const SelectSeats = () => {
                 key={seat._id}
                 className={`seat ${selectedSeats.includes(seat._id) ? "selected" : ""}`}
                 onClick={() => toggleSeatSelection(seat._id)}
-              disabled={seat.status !== 'available'}>
+              >
                 Seat {seat._id}
               </button>
             ))
