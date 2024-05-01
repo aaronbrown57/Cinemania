@@ -6,10 +6,6 @@ import axios from 'axios';
 
 const SelectSeats = () => {
   const location = useLocation();
-<<<<<<< HEAD
-=======
-  const [selectedSeats, setSelectedSeats] = useState([]);
->>>>>>> 57018b83c376cbf381ab8013226a4cd31747df6d
   const navigate = useNavigate();
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
