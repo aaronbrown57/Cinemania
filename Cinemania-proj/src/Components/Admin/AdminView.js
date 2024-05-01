@@ -16,7 +16,7 @@ const AdminView = () => {
     );
   } else {
     navigate('/');
-    return null; // Or any other content you want to render before redirection
+    return null;
   }
 };
 
