@@ -15,6 +15,7 @@ const SelectSeats = () => {
   const date = location.state?.date || 'Unknown date';
   const roomID = location.state?.roomID || 'Unknown room ID';
   const movieID = location.state?.movieID || 'Unknown Movie ID';
+  const showtimeID = location.state?.showtimeID || 'Unknown Movie ID';
 
   var actTime;
 
