@@ -39,7 +39,18 @@ const SelectShowtime = () => {
     }
   }, [movieTitle, movieID]);
   
-  
+  function convertTimePeriod(periodValue) {
+    switch (periodValue) {
+        case 1:
+            return '10am';
+        case 2:
+            return '1pm';
+        case 3:
+            return '4pm';
+        default:
+            return ''; // Handle other cases if needed
+    }
+}
 
   const handleSelectShowtime = (showtime) => {
     // Navigate to the select-seats page and pass the necessary showtime details
@@ -62,7 +73,7 @@ const SelectShowtime = () => {
               <h3>{date}</h3>
               {times.map((time, index) => (
                 <button key={index} className="showtime-button" onClick={() => handleSelectShowtime(time)}>
-                  {time.period}
+                  {convertTimePeriod(time.period)}
                 </button>
               ))}
             </div>
