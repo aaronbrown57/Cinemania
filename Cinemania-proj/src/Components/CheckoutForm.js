@@ -108,9 +108,6 @@ const CheckoutForm = () => {
       // Handle error (e.g., display error message to user)
     }
   };
-  
-  
-
 
   const handlePaymentMethodClick = (paymentMethod) => {
     // Redirect to OrderConfirmation screen with payment method details

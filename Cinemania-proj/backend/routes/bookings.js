@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Room = require('../models/Bookings');
+const Bookings = require('../models/Bookings'); // Import the Bookings model
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
@@ -20,13 +20,20 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post('/addBooking', async (req, res) => {
+    console.log("add booking called, body was: ", req.body); // Log the received request body
     try {
-        const newBookings = await Bookings.create(req.body);
-        res.json({ msg: 'Booking added successfully', movie: newBookings });
+        const newBooking = await Bookings.create(req.body); // Create a new booking
+        console.log("New booking created:", newBooking); // Log the newly created booking
+        res.json({ msg: 'Booking added successfully', booking: newBooking }); // Send success response
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        console.error("Error creating booking:", error); // Log the error
+        console.log("Request body:", req.body); // Log the request body for further inspection
+        console.log("Error stack:", error.stack); // Log the full error stack for debugging
+        res.status(400).json({ error: error.message }); // Send error response
     }
 });
+
+
 
 // Route to get all seat
 router.get('/allBookings', async (req, res) => {

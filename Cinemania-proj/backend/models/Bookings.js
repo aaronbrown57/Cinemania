@@ -11,22 +11,27 @@ const BookingSchema = new mongoose.Schema({
         required: true,
     },
     showID: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Show', 
-        required: true,
+        required: false,
     },
     promoID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Promo', 
+        required: false,
     },
-    totalAfterTax: {
+    seat: {
+        type: String,
+        required: true,
+    },
+    totalPaid: {
         type: Number,
         required: true,
     },
     cardID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PaymentCard',
-        required: true,
+        required: false,
     }
 }, { collection: 'booking' });
 
