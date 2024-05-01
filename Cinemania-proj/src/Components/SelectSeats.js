@@ -35,9 +35,11 @@ const SelectSeats = () => {
         const seatsResponse = await axios.get('http://localhost:5000/seat/allSeats');
         console.log("Seats response data:", seatsResponse.data);  // Debugging the seats response
   
+        console.log("showtime id: ", showtimeID);
+
         // Filter seats based on availability and matching roomID and movieID
         const availableSeats = seatsResponse.data.filter(seat => 
-          seat.status === 'Available' && seat.show
+          seat.status === 'Available' && seat.show == showtimeID
         );
   
         setSeats(availableSeats);
