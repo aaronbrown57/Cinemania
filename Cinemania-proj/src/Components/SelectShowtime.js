@@ -22,7 +22,7 @@ const SelectShowtime = () => {
         return acc;
       }, {});
     };
-    
+
     console.log("Received movie title from MovieDetail:", movieTitle);
     if (movieTitle) {
       const url = `http://localhost:5000/showtimes/allShowtimes`;
@@ -38,19 +38,19 @@ const SelectShowtime = () => {
         });
     }
   }, [movieTitle, movieID]);
-  
+
   function convertTimePeriod(periodValue) {
     switch (periodValue) {
-        case 1:
-            return '10am';
-        case 2:
-            return '1pm';
-        case 3:
-            return '4pm';
-        default:
-            return ''; // Handle other cases if needed
+      case 1:
+        return '10am';
+      case 2:
+        return '1pm';
+      case 3:
+        return '4pm';
+      default:
+        return ''; // Handle other cases if needed
     }
-}
+  }
 
   const handleSelectShowtime = (showtime) => {
     // Navigate to the select-seats page and pass the necessary showtime details
@@ -61,7 +61,7 @@ const SelectShowtime = () => {
         period: showtime.period
       }
     });
-  };  
+  };
 
   return (
     <div className="main-container">
@@ -87,7 +87,7 @@ const SelectShowtime = () => {
       </div>
     </div>
   );
-  
+
 };
 
 export default SelectShowtime;

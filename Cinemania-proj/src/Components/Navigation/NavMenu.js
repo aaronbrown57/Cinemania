@@ -27,7 +27,7 @@ function NavMenu({ loggedIn, loggedOut, admin }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav">
             
-            {loggedIn && admin === false && <button onClick={() => navigate("/edit")} className="nav-link">Edit Profile</button>}
+            {loggedIn && admin === false && <button onClick={() => navigate("/edit", { state: { isLoggedIn: true } })} className="nav-link">Edit Profile</button>}
             
             {admin && <button onClick={() => navigate("/manage-Users", { state: { isLoggedIn: true } })} className="nav-link">Manage Users</button>}
             
