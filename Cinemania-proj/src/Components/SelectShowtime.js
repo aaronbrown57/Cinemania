@@ -58,7 +58,8 @@ const SelectShowtime = () => {
       state: {
         movieTitle, // Pass other necessary details as needed
         date: showtime.date,
-        period: showtime.period
+        period: showtime.period,
+        roomID: showtime.roomID
       }
     });
   };  
