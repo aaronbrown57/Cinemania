@@ -10,14 +10,11 @@ const AuthView = ( {loggedIn} ) => { // Modify the props destructuring to includ
   const isAuth = location.state && location.state.isAuth;
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate('/');
-  }
-
+ 
   if(isAuth) {
     return (
       <div className="App">
-        <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
+        <h1 className='web-name' >Cinemania </h1>
         <NavMenu loggedIn={true} admin={false}></NavMenu>
         <h1>Welcome back {userId}!</h1>
         <Container>
