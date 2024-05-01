@@ -15,7 +15,6 @@ const MovieDetail = (props) => {
     console.log("Booking for:", movieTitle); // This will show what title is being passed to the function
     navigate('/select-showtime', { state: { movie: movieTitle } });
   };
-  
 
   useEffect(() => {
     const fetchMovieDetail = async () => {
@@ -35,16 +34,13 @@ const MovieDetail = (props) => {
     return <div className="movie-detail">Loading...</div>;
   }
 
-
-  
   const handleClick = () => {
     navigate('/');
-  }
-
+  };
 
   return (
     <div>
-              <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
+      <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
       <NavMenu></NavMenu>
       <div className="movie-detail">
         <div className="movie-detail-header">
@@ -63,12 +59,18 @@ const MovieDetail = (props) => {
           </div>
         </div>
         <div className="movie-detail-booking">
-        <button
-                className="book-tickets-button"
-                onClick={() => bookingClickHandler(movie.movieTitle)}
-              >
-                Book Tickets for {movie.movieTitle}
-              </button>
+          {movie.comingSoon === true ? (
+            <div>
+              <p>Please check back with us soon for more booking updates!</p>
+            </div>
+          ) : (
+            <button
+              className="book-tickets-button"
+              onClick={() => bookingClickHandler(movie.movieTitle)}
+            >
+              Book Tickets for {movie.movieTitle}
+            </button>
+          )}
         </div>
       </div>
       <div className="trailer-container">
