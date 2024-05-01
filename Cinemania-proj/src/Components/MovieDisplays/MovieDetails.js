@@ -56,7 +56,7 @@ const MovieDetail = (props) => {
             {movie.rating && <p><strong>Rating:</strong> {movie.rating}</p>}
             {movie.reviews && <p><strong>Reviews:</strong> {movie.reviews}</p>}
             {movie.synopsis && <p><strong>Synopsis:</strong> {movie.synopsis}</p>}
-            {movie._id && <p><strong>ID: </strong> {movie._id}</p>}
+            {/* {movie._id && <p><strong>ID: </strong> {movie._id}</p>} */}
           </div>
         </div>
         <div className="movie-detail-booking">
