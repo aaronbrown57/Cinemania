@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './css/OrderSummary.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -10,11 +10,18 @@ const OrderSummary = () => {
   const { showtime } = location.state || { showtime: 'Unknown Showtime' };
   const selectedSeats = location.state?.selectedSeats;
 
+  const [email, setEmail] = useState('');
+
   // Ticket prices
   const ticketPrices = {
     Adult: 7,
     Senior: 6,
     Child: 5,
+  };
+
+  // Function to handle email input change
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   // Calculate subtotal
@@ -27,7 +34,7 @@ const OrderSummary = () => {
   const total = subtotal + (subtotal * salesTaxRate);
 
   const handleSubmit = () => {
-    navigate('/checkout', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total } });
+    navigate('/checkout', { state: { chosenMovie, showtime, selectedSeats, ticketAges, total, userEmail: email } });
   };
 
   if (!ticketAges) {
@@ -44,6 +51,17 @@ const OrderSummary = () => {
           </li>
         ))}
       </ul>
+      <div className="form-group mt-3">
+          <label htmlFor="emailInput">Confirm Email:</label>
+          <input
+            type="email"
+            id="emailInput"
+            className="form-control"
+            value={email}
+            onChange={handleEmailChange}
+            required
+          />
+        </div>
       <div className='order'>
         <p className="mt-3">Subtotal: ${subtotal.toFixed(2)}</p>
         <p>Sales Tax (7%): ${(subtotal * salesTaxRate).toFixed(2)}</p>

@@ -7,7 +7,7 @@ const OrderConfirmation = () => {
   const location = useLocation();
   const { showtime, chosenMovie, ticketAges, total } = location.state || {};
   const [emailSent, setEmailSent] = useState(false); // State to track if email is already sent
-  const userEmail = location.state?.userEmail || 'athomas777@icloud.com'; // Set userEmail to dummy email if not provided
+  const userEmail = location.state?.userEmail; // Set userEmail to dummy email if not provided
 
   useEffect(() => {
     console.log('User email:', userEmail);
