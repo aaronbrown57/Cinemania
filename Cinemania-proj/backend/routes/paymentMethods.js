@@ -39,7 +39,7 @@ router.post("/addCard", async (req, res) => {
 });
 
 // Read all payment cards
-router.get("/allPayements", async (req, res) => {
+router.get("/allPayments", async (req, res) => {
   try {
     const paymentCards = await PaymentCard.find();
     res.json(paymentCards);
