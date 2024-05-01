@@ -15,7 +15,6 @@ const MovieDetail = (props) => {
     console.log("Booking for:", movieTitle, movieID); // This will show what title is being passed to the function
     navigate('/select-showtime', { state: { movie: movieTitle, id: movieID } });
   };
-  
 
   useEffect(() => {
     const fetchMovieDetail = async () => {
@@ -35,8 +34,13 @@ const MovieDetail = (props) => {
     return <div className="movie-detail">Loading...</div>;
   }
 
+  const handleClick = () => {
+    navigate('/');
+  };
+
   return (
     <div>
+      <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
       <NavMenu></NavMenu>
       <div className="movie-detail">
         <div className="movie-detail-header">

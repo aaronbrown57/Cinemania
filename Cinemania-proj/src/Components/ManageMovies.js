@@ -37,6 +37,14 @@ const ManageMovies = () => {
     navigate('/add-showtime', { state: { isAdding: true } });
   };
 
+  const removeMovie = () => {
+    navigate('/remove-movie', { state: { isAdding: true } });
+  };
+
+  const removeShowtime = () => {
+    navigate('/remove-showtime', { state: { isAdding: true } });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const movieData = {
@@ -68,6 +76,8 @@ const ManageMovies = () => {
       }
 
       console.log('Movie added successfully!');
+      alert('Movie successfully added');
+      navigate("/admin")
     } catch (error) {
       console.error('Error adding movie:', error.message);
     }
@@ -232,8 +242,10 @@ const ManageMovies = () => {
           </form>
         ) : (
           <>
-            <button onClick={addMovie}>Add Movie</button>
-            <button onClick={scheduleMovie}>Schedule Movies</button>
+            <button style={{ marginRight: '50px' }} onClick={addMovie}>Add Movie</button>
+            <button style={{ marginRight: '50px' }} onClick={removeMovie}>Remove Movie</button>
+            <button style={{ marginRight: '50px' }} onClick={scheduleMovie}>Schedule Movies</button>
+            <button style={{ marginRight: '50px' }} onClick={removeShowtime}>Remove Scheduled Movies</button>
           </>
         )}
       </div>

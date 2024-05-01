@@ -67,11 +67,16 @@ if (!userData.verified) {
     setEnteredPassword('');
   }
   
+  const handleClick = () => {
+    navigate('/');
+  }
 
   return (
     <div>
-      <NavMenu loggedOut={true} />
+          <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
+      {/* <NavMenu loggedOut={true} /> */}
       <Container>
+  
         <Form className="login-form" onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -95,7 +100,8 @@ if (!userData.verified) {
             <Link to="/forgot-password" className='LinkClass'>Forgot password?</Link>
           </Form.Text>
           <br />
-          {error && <div>{error}</div>}
+          {error && <div style={{ color: 'red' }}>{error}</div>}
+
           <Button variant="primary" type="submit">
             Signin
           </Button>

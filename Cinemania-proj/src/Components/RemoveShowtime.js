@@ -7,7 +7,7 @@ import "./css/AddShowtime.css"; // Import custom CSS for styling
 import { useLocation } from "react-router-dom";
 
 
-function AddShowtimeForm() {
+function RemoveShowtimeForm() {
   const location = useLocation();
   const isAdding = location.state && location.state.isAdding;
   const navigate = useNavigate();
@@ -129,76 +129,68 @@ function AddShowtimeForm() {
       // Inside the conflict check block
       console.log("Existing Showtimes with Room Names:", existingShowtimes);
 
+      let conflictingShowtimeId = null;
+
       const conflict = existingShowtimes.some((showtime) => {
         console.log("Showtime:", showtime); // Log the entire showtime object
         console.log("Comparing:", showtime.roomName, formData.roomName);
         console.log("Periods:", showtime.period, formData.period);
         console.log("Dates: ", showtime.date, formData.date);
-
-        /** for debugging
-        console.log(
-          "conflict gives us:",
-          showtimeRoom === formDataRoom &&
-          showtime.period.toString() === formData.period.toString() // Convert periods to strings for comparison
-        );
-        */
-
+    
         const showtimeRoom = showtime.roomName.trim(); // Convert to string and trim excess spaces
         const formDataRoom = formData.roomName.trim(); // Convert to string and trim excess spaces
-
-        return (
-          showtimeRoom === formDataRoom &&
-          showtime.period.toString() === formData.period.toString() && // Convert periods to strings for comparison
-          showtime.date.toString() === formData.date.toString()
-        );
-      });
+    
+        if (
+            showtimeRoom === formDataRoom &&
+            showtime.period.toString() === formData.period.toString() &&
+            showtime.date.toString() === formData.date.toString()
+        ) {
+            conflictingShowtimeId = showtime._id; // Store the ID of the conflicting showtime
+            return true; // Return true to indicate conflict
+        }
+        });
 
       console.log("Conflict:", conflict);
 
-      if (conflict) {
+      if (!conflict) {
         setToastMessage(
-          "Another movie is already booked for this period, date, and room."
+          "A showtime with these attributes is not found."
         );
         setShowToast(true);
         return;
       }
 
-      const addResponse = await fetch(
-        "http://localhost:5000/showtimes/addShowtime",
+      const removeResponse = await fetch(
+        `http://localhost:5000/showtimes/deleteShowtime/${conflictingShowtimeId}`, // Use the conflicting showtime ID for deletion
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            roomName: formData.roomName,
-            movieName: formData.movieName,
-            date: formData.date,
-            period: formData.period,
-          }),
+            method: "DELETE", // Change the method to DELETE
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
         }
-      );
+    );
+    
 
-      if (!addResponse.ok) {
+      if (!removeResponse.ok) {
         throw new Error("Failed to add showtime");
       }
 
       // Success message
-      setToastMessage("Showtime add success!");
+      setToastMessage("Showtime remove success!");
       setShowToast(true);
       setTimeout(() => {
         setShowToast(false);
       }, 4000);
     } catch (error) {
-      console.error("Error adding showtime:", error.message);
+      console.error("Error removing showtime:", error.message);
     }
   };
 
   if(isAdding) {
     return (
      <div className="add-showtime-form">
-        <h2>Add Showtime</h2>
+        <h2>Remove Showtime</h2>
         <Toast
           show={showToast}
           onClose={() => setShowToast(false)}
@@ -283,7 +275,7 @@ function AddShowtimeForm() {
         </Form.Group>
 
           <Button variant="primary" type="submit">
-            Add Showtime
+            Remove Showtime
           </Button>
         </Form>
       </div>
@@ -295,4 +287,4 @@ function AddShowtimeForm() {
   }
 }
 
-export default AddShowtimeForm;
+export default RemoveShowtimeForm;

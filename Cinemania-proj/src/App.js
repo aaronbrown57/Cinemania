@@ -8,6 +8,7 @@ import Home from './Components/Home';
 import Signup from './Components/Signup';
 import Login from './Components/Login';
 import AddShowtime from './Components/AddShowtime.js';
+import RemoveShowtime from './Components/RemoveShowtime.js';
 import ForgotPassword from './Components/ForgotPassword';
 import AuthView from './Components/AuthView/AuthView';
 import axios from 'axios';
@@ -26,6 +27,7 @@ import ManagePromos from "./Components/ManagePromos"
 import ManageMovies from "./Components/ManageMovies.js"
 import { UserContext } from './context/UserContext.js';
 import Edit from "./Components/Edit.js";
+import RemoveMovie from './Components/RemoveMovie.js';
 
 
 const App = () => {
@@ -99,10 +101,12 @@ const App = () => {
           <Route path='/checkout' element={<CheckoutForm />} />
           <Route path='/order-confirmation' element={<OrderConfirmation />} />
           {/* Routes for Admin processes */}
-          <Route path='/manage-movies' element={<ManageMovies />} />
+          <Route path='/manage-Movies' element={<ManageMovies />} />
           <Route path='/manage-promos' element={<ManagePromos />} />
           <Route path='/add-showtime' element ={<AddShowtime />} />
+          <Route path='/remove-showtime' element ={<RemoveShowtime />} />
           <Route path='/search' element={<SearchResultsPage />} />
+          <Route path='/remove-movie' element={<RemoveMovie/>}/>
         </Routes>
     
       </Router>

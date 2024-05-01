@@ -10,6 +10,8 @@ const Edit = () => {
   const [currentEmail, setCurrentEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [userId, setUserId] = useState(""); // Separate state for user ID
+  const [showRemoveButtons, setShowRemoveButtons] = useState(false);
+  const [paymentMethods, setPaymentMethods] = useState([]); // Define paymentMethods state
   const [userData, setUserData] = useState({
     firstName: "", // Initialize with empty string
     lastName: "", // Initialize with empty string
@@ -100,11 +102,34 @@ const Edit = () => {
 
   const handleSubmitUpdateUser = async (e) => {
     e.preventDefault();
-    console.log("Button clicked"); // Debug log for button click
-  
+
     try {
-      console.log("Starting user update request..."); // Debug log for starting request
-  
+      // Fetch the user's payment methods to determine the number of cards on file
+      const paymentMethodsResponse = await axios.get(
+        `http://localhost:5000/paymentMethods/userPayments/${userId}`, // Assuming userId is available
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      const fetchedPaymentMethods = paymentMethodsResponse.data;
+      console.log("User Payment Methods:", fetchedPaymentMethods); // Log user payment methods
+
+      // Check if the user already has 3 cards on file
+      if (fetchedPaymentMethods.length >= 3) {
+        // Update state to show payment methods and remove buttons
+        setPaymentMethods(fetchedPaymentMethods);
+        setShowRemoveButtons(true);
+        return;
+      } else {
+        setShowRemoveButtons(false); // Hide remove buttons if less than 3 cards
+      }
+
+      // Continue with the update if the user has less than 3 cards on file
+      console.log("Proceeding with user update...");
+
       // Create a new userData object without the password field
       const updatedUserData = {
         firstName: userData.firstName,
@@ -115,25 +140,25 @@ const Edit = () => {
         phoneNumber: userData.phoneNumber,
         promoSubscription: userData.promoSubscription,
       };
-  
+
       // Log updatedUserData before sending update request
       console.log("Updated User Data:", updatedUserData);
-  
+
       if (userData.creditCard.cardNumber !== "") {
         console.log("Card number present. Calling addCard..."); // Debug log for calling addCard method
-  
+
         // Call the addCard method if the card number is not empty
         const paymentData = {
           userID: userId,
           cardNo: userData.creditCard.cardNumber, // Include cardNo in paymentData
           expirationDate: userData.creditCard.expiry, // Assuming expirationDate comes from creditCard.expiry
         };
-  
+
         console.log("Payment Data:", paymentData); // Log payment data
-  
+
         // Print out paymentData before sending to addCard endpoint
         console.log("Sending paymentData to addCard:", paymentData);
-  
+
         const response = await fetch(
           "http://localhost:5000/paymentMethods/addCard",
           {
@@ -145,20 +170,20 @@ const Edit = () => {
             body: JSON.stringify(paymentData), // Send paymentData for adding card
           }
         );
-  
+
         if (!response.ok) {
           throw new Error("Failed to add card");
         }
-  
+
         const responseData = await response.json();
         console.log("Response Data:", responseData); // Log response data
       } else {
         console.log("No card number present. Skipping addCard..."); // Debug log if no card number is present
       }
-  
+
       // Update user data in the database
       const updateUserRes = await axios.put(
-        `http://localhost:5000/users/${userId}`,
+        `http://localhost:5000/users/updateUser/${userId}`,
         updatedUserData,
         {
           headers: {
@@ -167,13 +192,13 @@ const Edit = () => {
         }
       );
       console.log("Update User Response:", updateUserRes.data); // Log the response data
-  
+
       // Check if the update was successful
       if (updateUserRes.status === 200) {
         console.log("User data updated successfully");
         // Update the user data in the state
         setUserData(updatedUserData);
-  
+
         // Show a success message to the user
         alert("Profile updated successfully!");
       } else {
@@ -187,8 +212,6 @@ const Edit = () => {
       alert("Failed to update profile. Please try again.");
     }
   };
-  
-  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -205,6 +228,33 @@ const Edit = () => {
       ...prevPaymentData,
       [name]: value,
     }));
+  };
+
+  const handleRemoveCard = async (cardId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/paymentMethods/deletePayment/${cardId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Card removed successfully
+        alert("Card removed successfully.");
+        // Update paymentMethods state after removal
+        setPaymentMethods((prevMethods) =>
+          prevMethods.filter((method) => method._id !== cardId)
+        );
+      } else {
+        throw new Error("Failed to remove card");
+      }
+    } catch (error) {
+      console.error("Error removing card:", error);
+      alert("Failed to remove card. Please try again.");
+    }
   };
 
   return (
@@ -273,7 +323,7 @@ const Edit = () => {
           <p>Add payment method</p>
           <CreditCardInput
             cardNumberInputProps={{
-              value: userData.creditCard.cardNumber,
+              value: userData.creditCard ? userData.creditCard.cardNumber : "", // Check if userData.creditCard exists
               onChange: (e) => {
                 setUserData((prevUserData) => ({
                   ...prevUserData,
@@ -285,7 +335,7 @@ const Edit = () => {
               },
             }}
             cardExpiryInputProps={{
-              value: userData.creditCard.expiry,
+              value: userData.creditCard ? userData.creditCard.expiry : "", // Check if userData.creditCard exists
               onChange: (e) => {
                 setUserData((prevUserData) => ({
                   ...prevUserData,
@@ -298,6 +348,20 @@ const Edit = () => {
             }}
             fieldClassName="input"
           />
+
+          {showRemoveButtons && (
+            <>
+              <h2>Payment Methods</h2>
+              {paymentMethods.map((method) => (
+                <div key={method._id}>
+                  <p>Last 4 digits: {method.last4OfPayment}</p>
+                  <Button onClick={() => handleRemoveCard(method._id)}>
+                    Remove Card
+                  </Button>
+                </div>
+              ))}
+            </>
+          )}
 
           <Form.Group controlId="formBasicPassword">
             <Form.Label>New Password</Form.Label>
