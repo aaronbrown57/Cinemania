@@ -18,7 +18,7 @@ const paymentsRoutes = require('./routes/paymentMethods');
 
 
 // Connect Database
- app.use(cors());
+app.use(cors());
 app.use(express.json({ extended: false }));
 app.use('/movies', router);
 app.use('/users', routerUser);
