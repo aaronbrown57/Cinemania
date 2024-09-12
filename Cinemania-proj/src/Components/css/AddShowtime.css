@@ -1,0 +1,32 @@
+/* Custom styling for the DatePicker component */
+.date-picker {
+  /* Add a border */
+  /* border: 1px solid #ccc; */
+  background-color: white !important;
+  color: black !important;
+}
+
+ .react-datepicker__month-container .react-datepicker__current-month {
+  color: white; /* Example text color */
+}
+
+.react-datepicker__day-name {
+  color: white
+}
+.react-datepicker__day {
+  color: white;
+}
+
+
+
+/* Custom styling for the calendar box */
+.calendar-picker {
+  /* Set background color to white */
+  background-color: white !important;
+  /* Add a border */
+  border: 1px solid #ccc;
+  /* Optional: Add padding for better visual appearance */
+  padding: 10px;
+  /* Optional: Add box shadow for a subtle effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

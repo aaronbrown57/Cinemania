@@ -1,0 +1,118 @@
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import NavMenu from './Navigation/NavMenu';
+import { Container } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { UserContext } from "../context/UserContext";
+import axios from 'axios';
+import "./css/Home.css";
+
+const Login = () => {
+  const [email, setEnteredEmail] = useState('');
+  const [password, setEnteredPassword] = useState('');
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { setUserData } = useContext(UserContext);
+
+  async function submitHandler(event) {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const loginData = {
+        email,
+        password,
+      };
+  
+      console.log('Submitting login data:', loginData);
+  
+      const loginRes = await axios.post("http://localhost:5000/users/login", loginData);
+  
+      console.log('Login response:', loginRes.data);
+      
+      const userData = loginRes.data.user;
+      const token = loginRes.data.token;
+      
+      console.log('user data: ', userData);
+      console.log('token:', token)
+  // Assuming userData is the object containing user data and setError is the function to set the error message
+if (!userData.verified) {
+  setLoading(false);
+  setError(<span style={{ color: 'red' }}>User is not verified. Please verify your account.</span>);
+  return;
+}
+  
+      // Set user data and token in context
+      setUserData({ user: userData, token });
+      localStorage.setItem("auth-token", token);
+      
+      console.log('user type is: ', userData.type);
+  
+      setLoading(false);
+  
+      // Redirect based on user type
+      if (userData.type === 1) {
+        console.log('Redirecting to AuthView');
+        navigate(`/AuthView/${userData.firstName}`, { state: { isAuth: true } }); // Redirect regular users to AuthView
+      } else if (userData.type === 2) {
+        console.log('Redirecting to Admin');
+        navigate('/admin', { state: { isAdmin: true } }); // Redirect admins to AdminView
+      }
+    } catch (err) {
+      setLoading(false);
+      err.response.data.msg && setError(err.response.data.msg);
+    }
+    setEnteredEmail('');
+    setEnteredPassword('');
+  }
+  
+  const handleClick = () => {
+    navigate('/');
+  }
+
+  return (
+    <div>
+          <h1 className='web-name' onClick={handleClick}>Cinemania </h1>
+      {/* <NavMenu loggedOut={true} /> */}
+      <Container>
+  
+        <Form className="login-form" onSubmit={submitHandler}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEnteredEmail(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setEnteredPassword(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Text className="sign-up">
+            <Link to="/forgot-password" className='LinkClass'>Forgot password?</Link>
+          </Form.Text>
+          <br />
+          {error && <div style={{ color: 'red' }}>{error}</div>}
+
+          <Button variant="primary" type="submit">
+            Signin
+          </Button>
+          <br />
+          <Form.Text className="sign-up">
+            Or Sign Up <Link to="/Signup" className='LinkClass'>Here!</Link>
+          </Form.Text>
+        </Form>
+      </Container>
+    </div>
+  );
+};
+
+export default Login;

@@ -1,0 +1,260 @@
+import React, { useState } from 'react';
+import NavMenu from './Navigation/NavMenu';
+import "./css/ManageMovies.css";
+import { Link, useNavigate} from 'react-router-dom';
+import { useLocation, useParams } from "react-router-dom";
+
+
+const ManageMovies = () => {
+
+  const location = useLocation();
+  const isLoggedIn = location.state && location.state.isLoggedIn;
+  console.log('isLoggedIn:', isLoggedIn);
+
+
+  const [showForm, setShowForm] = useState(false);
+  const [movieTitle, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [cast, setCast] = useState([]);
+  const [director, setDirector] = useState('');
+  const [producer, setProducer] = useState('');
+  const [synopsis, setSynopsis] = useState('');
+  const [reviews, setReviews] = useState('');
+  const [trailerPictureURL, setPoster] = useState('');
+  const [trailerVideoURL, setTrailerVideo] = useState('');
+  const [rating, setRating] = useState('');
+  const [comingSoon, setComingSoon] = useState(false);
+  const [showDate, setShowDate] = useState('');
+  const [showTime, setShowTime] = useState('');
+  const navigate = useNavigate(); 
+
+  const addMovie = () => {
+    setShowForm(true);
+  };
+
+
+  const scheduleMovie = () => {
+    navigate('/add-showtime', { state: { isAdding: true } });
+  };
+
+  const removeMovie = () => {
+    navigate('/remove-movie', { state: { isAdding: true } });
+  };
+
+  const removeShowtime = () => {
+    navigate('/remove-showtime', { state: { isAdding: true } });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const movieData = {
+      category,
+      cast,
+      director,
+      producer,
+      reviews,
+      synopsis,
+      trailerPictureURL,
+      trailerVideoURL,
+      movieTitle,
+      rating,
+      comingSoon,
+      showDate,
+      showTime,
+    }; 
+    try {
+      const response = await fetch('http://localhost:5000/movies/addMovie', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(movieData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add movie');
+      }
+
+      console.log('Movie added successfully!');
+      alert('Movie successfully added');
+      navigate("/admin")
+    } catch (error) {
+      console.error('Error adding movie:', error.message);
+    }
+
+    // Reset form state and hide the form after submission
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setTitle('');
+    setCategory('');
+    setCast([]);
+    setDirector('');
+    setProducer('');
+    setSynopsis('');
+    setReviews('');
+    setPoster('');
+    setTrailerVideo('');
+    setRating('');
+    setComingSoon(false);
+    setShowDate('');
+    setShowTime('');
+    setShowForm(false);
+  };
+
+  const handleCastChange = (event) => {
+    const castArray = event.target.value.split(',').map((item) => item.trim());
+    setCast(castArray);
+  };
+
+  if (isLoggedIn) {
+    return (
+      <div>
+        <NavMenu loggedIn={true} admin={true}></NavMenu>
+        <h2>Manage Movies</h2>
+        {showForm ? (
+          <form id="form-container" onSubmit={handleSubmit}>
+            <label>
+              Title:
+              <input
+                type="text"
+                value={movieTitle}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Category:
+              <input
+                type="text"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Cast:
+              <textarea
+                value={cast.join(', ')}
+                onChange={handleCastChange}
+                required
+              />
+            </label>
+            <label>
+              Director:
+              <input
+                type="text"
+                value={director}
+                onChange={(e) => setDirector(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Image:
+              <input
+                type="text"
+                value={trailerPictureURL}
+                onChange={(e) => setPoster(e.target.value)}
+                required
+              />
+            </label>
+
+            <label>
+              Trailer Video ID:
+              <input
+                type="text"
+                value={trailerVideoURL}
+                onChange={(e) => setTrailerVideo(e.target.value)}
+                required
+              />
+            </label>
+
+            <label>
+              Producer:
+              <input
+                type="text"
+                value={producer}
+                onChange={(e) => setProducer(e.target.value)}
+                required
+              />
+            </label>
+
+            <label>
+              Synopsis:
+              <input
+                type="text"
+                value={synopsis}
+                onChange={(e) => setSynopsis(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Reviews:
+              <input
+                type="text"
+                value={reviews}
+                onChange={(e) => setReviews(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Rating:
+              <input
+                type="text"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Coming Soon:
+              <input
+                type="checkbox"
+                checked={comingSoon}
+                onChange={(e) => setComingSoon(e.target.checked)}
+              />
+            </label>
+            {!comingSoon && (
+              <>
+                <label>
+                  Show Dates:
+                  <input
+                    type="text"
+                    value={showDate}
+                    onChange={(e) => setShowDate(e.target.value)}
+                    required
+                  />
+                </label>
+                <label>
+                  Show Times:
+                  <input
+                    type="text"
+                    value={showTime}
+                    onChange={(e) => setShowTime(e.target.value)}
+                    required
+                  />
+                </label>
+              </>
+            )}
+
+            <button id="form-submit" type="submit">Submit</button>
+          </form>
+        ) : (
+          <>
+            <button style={{ marginRight: '50px' }} onClick={addMovie}>Add Movie</button>
+            <button style={{ marginRight: '50px' }} onClick={removeMovie}>Remove Movie</button>
+            <button style={{ marginRight: '50px' }} onClick={scheduleMovie}>Schedule Movies</button>
+            <button style={{ marginRight: '50px' }} onClick={removeShowtime}>Remove Scheduled Movies</button>
+          </>
+        )}
+      </div>
+    );
+  }
+  else {
+    navigate('/');
+    return null;
+  }
+};
+
+export default ManageMovies;
